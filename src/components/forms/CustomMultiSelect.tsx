@@ -17,7 +17,7 @@ import Select, {
   StylesConfig,
   ValueContainerProps,
 } from 'react-select';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import classNames from 'classnames';
 import { Checkbox } from '$app/components/forms';
 import { ChevronDown } from '$app/components/icons/ChevronDown';
@@ -200,6 +200,7 @@ function Option(props: OptionProps<SelectOption, true>) {
       {...innerProps}
       className="flex space-x-3 items-center w-full truncate px-[0.75rem] py-2 cursor-pointer rounded-[0.1875rem]"
       theme={{
+        ...useFullTheme(),
         backgroundColor: colors.$1,
         hoverBackgroundColor: colors.$4,
       }}

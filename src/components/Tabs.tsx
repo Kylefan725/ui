@@ -8,7 +8,7 @@
  * @license https://www.elastic.co/licensing/elastic-license
  */
 
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { route } from '$app/common/helpers/route';
 import classNames from 'classnames';
 import { MouseEvent, ReactNode, useEffect, useRef } from 'react';
@@ -175,6 +175,7 @@ export function Tabs(props: Props) {
                     to={tab.href}
                     onClick={(event) => handleScroll(event)}
                     theme={{
+                      ...useFullTheme(),
                       textColor: isActive(tab) ? colors.$3 : colors.$17,
                       hoverTextColor: colors.$3,
                     }}

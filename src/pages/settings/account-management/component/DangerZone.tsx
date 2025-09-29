@@ -182,10 +182,6 @@ export function DangerZone() {
       <div className="flex flex-col space-y-4 px-4 sm:px-6 pt-2 pb-4">
         <Box
           className="flex space-x-2 items-center p-4 border shadow-sm w-full rounded-md cursor-pointer text-red-500 hover:text-red-600"
-          theme={{
-            backgroundColor: colors.$1,
-            hoverBackgroundColor: colors.$4,
-          }}
           onClick={() => setIsPurgeModalOpen(true)}
           style={{ borderColor: colors.$24 }}
         >
@@ -198,10 +194,6 @@ export function DangerZone() {
 
         <Box
           className="flex space-x-2 items-center p-4 border shadow-sm w-full rounded-md cursor-pointer text-red-500 hover:text-red-600"
-          theme={{
-            backgroundColor: colors.$1,
-            hoverBackgroundColor: colors.$4,
-          }}
           onClick={() => setIsDeleteModalOpen(true)}
           style={{ borderColor: colors.$24 }}
         >

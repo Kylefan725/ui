@@ -24,7 +24,7 @@ import { useClickAway } from 'react-use';
 import classNames from 'classnames';
 import { useAccentColor } from '$app/common/hooks/useAccentColor';
 import { styled } from 'styled-components';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 
 interface Props extends CommonProps {
   label?: string | null;
@@ -87,7 +87,7 @@ export function Dropdown(props: Props) {
         interactive={true}
         render={() => (
           <DropdownElements
-            theme={{ hoverColor: colors.$2 }}
+            theme={{ ...useFullTheme(), hoverColor: colors.$2 }}
             className={`border box rounded-md shadow-lg focus:outline-none whitespace-normal ${props.className}`}
             style={{
               backgroundColor: colors.$1,
@@ -125,6 +125,7 @@ export function Dropdown(props: Props) {
         ) : (
           <LabelButton
             theme={{
+              ...useFullTheme(),
               backgroundColor: colors.$18,
               color: colors.$1,
               borderColor: props.labelButtonBorderColor || colors.$24,

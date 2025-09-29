@@ -34,6 +34,7 @@ import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
 import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
 import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
+import { ThemeProvider } from './components/ThemeProvider';
 
 Sentry.init({
   dsn: import.meta.env.VITE_SENTRY_URL as unknown as string,
@@ -95,9 +96,11 @@ createRoot(container).render(
       <Provider store={store}>
         <GoogleOAuth>
           <Router>
-            <ScrollToTop>
-              <App />
-            </ScrollToTop>
+            <ThemeProvider>
+              <ScrollToTop>
+                <App />
+              </ScrollToTop>
+            </ThemeProvider>
           </Router>
         </GoogleOAuth>
       </Provider>

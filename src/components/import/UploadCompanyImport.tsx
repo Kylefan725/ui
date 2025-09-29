@@ -34,6 +34,7 @@ import { sha256 } from 'js-sha256';
 import { CloudUpload } from '../icons/CloudUpload';
 import styled from 'styled-components';
 import { ErrorMessage } from '../ErrorMessage';
+import { useFullTheme } from '$app/common/colors';
 
 interface Props {
   entity: string;
@@ -542,10 +543,15 @@ export function UploadCompanyImport(props: Props) {
               className="flex flex-col md:flex-row md:items-center"
             >
               <Box
-                className="relative block w-full border-2 border-dashed rounded-lg p-12 text-center"
+                className="flex items-center justify-center py-2 px-3 border-2 border-dashed rounded cursor-pointer"
                 theme={{
-                  borderColor: colors.$21,
-                  hoverBorderColor: colors.$17,
+                  ...useFullTheme(),
+                  borderColor: colors.$24,
+                  hoverBorderColor: colors.$5,
+                }}
+                onClick={() => {
+                  // This onClick is for the Box itself, not the input
+                  // The input is handled by getInputProps()
                 }}
               >
                 <input {...getInputProps()} />

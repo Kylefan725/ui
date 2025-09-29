@@ -83,7 +83,8 @@ export default function Create() {
 
   const tabs: Tab[] = [
     {
-      name: t('create'),
+      name:
+        searchParams.get('internal') === 'true' ? t('internal') : t('create'),
       href: '/invoices/create',
     },
     {
@@ -250,7 +251,12 @@ export default function Create() {
         title={documentTitle}
         breadcrumbs={pages}
         onSaveClick={() => save(invoice as Invoice)}
-        disableSaveButton={invoice?.client_id.length === 0 || isFormBusy}
+        disableSaveButton={
+          invoice?.client_id.length === 0 ||
+          isFormBusy ||
+          (searchParams.get('internal') === 'true' &&
+            (invoice?.invitations?.length ?? 0) === 0)
+        }
       >
         {!isLoading ? (
           <div className="space-y-4">

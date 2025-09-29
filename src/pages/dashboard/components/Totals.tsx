@@ -26,7 +26,7 @@ import {
 } from '$app/common/hooks/useReactSettings';
 import { usePreferences } from '$app/common/hooks/usePreferences';
 import collect from 'collect.js';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { CurrencySelector } from '$app/components/CurrencySelector';
 import { useQuery } from 'react-query';
 import dayjs from 'dayjs';
@@ -302,8 +302,9 @@ export function Totals() {
                   update('preferences.dashboard_charts.default_view', 'day')
                 }
                 theme={{
-                  backgroundColor: chartScale === 'day' ? colors.$3 : colors.$1,
-                  hoverBgColor: chartScale === 'day' ? colors.$3 : colors.$4,
+                  ...useFullTheme(),
+                  backgroundColor: colors.$1,
+                  hoverBackgroundColor: colors.$4,
                 }}
                 style={{
                   borderColor: colors.$24,
@@ -319,9 +320,9 @@ export function Totals() {
                   update('preferences.dashboard_charts.default_view', 'week')
                 }
                 theme={{
-                  backgroundColor:
-                    chartScale === 'week' ? colors.$3 : colors.$1,
-                  hoverBgColor: chartScale === 'week' ? colors.$3 : colors.$4,
+                  ...useFullTheme(),
+                  backgroundColor: colors.$1,
+                  hoverBackgroundColor: colors.$4,
                 }}
                 style={{
                   borderColor: colors.$24,
@@ -337,9 +338,9 @@ export function Totals() {
                   update('preferences.dashboard_charts.default_view', 'month')
                 }
                 theme={{
-                  backgroundColor:
-                    chartScale === 'month' ? colors.$3 : colors.$1,
-                  hoverBgColor: chartScale === 'month' ? colors.$3 : colors.$4,
+                  ...useFullTheme(),
+                  backgroundColor: colors.$1,
+                  hoverBackgroundColor: colors.$4,
                 }}
                 style={{
                   borderColor: colors.$24,

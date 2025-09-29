@@ -33,7 +33,7 @@ import { useTranslation } from 'react-i18next';
 import { usePreventNavigation } from '$app/common/hooks/usePreventNavigation';
 import styled from 'styled-components';
 import { ChevronLeft } from './icons/ChevronLeft';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { ChevronRight } from './icons/ChevronRight';
 
 const Button = styled.div`
@@ -210,7 +210,8 @@ export function PreviousNextNavigation({ entity, entityEndpointName }: Props) {
             });
           }}
           theme={{
-            hoverColor: colors.$4,
+            ...useFullTheme(),
+            hoverColor: colors.$25,
             backgroundColor: colors.$1,
             borderColor: colors.$24,
           }}
@@ -240,7 +241,8 @@ export function PreviousNextNavigation({ entity, entityEndpointName }: Props) {
             });
           }}
           theme={{
-            hoverColor: colors.$4,
+            ...useFullTheme(),
+            hoverColor: colors.$25,
             backgroundColor: colors.$1,
             borderColor: colors.$24,
           }}

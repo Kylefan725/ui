@@ -27,6 +27,7 @@ import classNames from 'classnames';
 import styled from 'styled-components';
 import { useColorScheme } from '$app/common/colors';
 import { SquareActivityChart } from '$app/components/icons/SquareActivityChart';
+import { useFullTheme } from '$app/common/colors';
 
 const Box = styled.div`
   background-color: ${({ theme }) => theme.backgroundColor};
@@ -170,8 +171,9 @@ export default function Activities() {
             key={activity.id}
             className="flex space-x-3 p-4 rounded-md flex-1 min-w-0"
             theme={{
+              ...useFullTheme(),
               backgroundColor: colors.$1,
-              hoverBackgroundColor: colors.$25,
+              hoverBackgroundColor: colors.$4,
             }}
           >
             <div className="flex items-center justify-center">

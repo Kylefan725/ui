@@ -47,10 +47,6 @@ export function Integrations() {
         isAdmin && (
           <Box
             className="flex justify-between items-center p-4 border shadow-sm w-full rounded-md cursor-pointer"
-            theme={{
-              backgroundColor: colors.$1,
-              hoverBackgroundColor: colors.$4,
-            }}
             onClick={() => navigate('/settings/integrations/api_tokens')}
             style={{ borderColor: colors.$24 }}
           >
@@ -70,10 +66,6 @@ export function Integrations() {
 
       <Box
         className="flex justify-between items-center p-4 border shadow-sm w-full rounded-md cursor-pointer"
-        theme={{
-          backgroundColor: colors.$1,
-          hoverBackgroundColor: colors.$4,
-        }}
         onClick={() => navigate('/settings/integrations/api_webhooks')}
         style={{ borderColor: colors.$24 }}
       >
@@ -96,10 +88,6 @@ export function Integrations() {
 
       <Box
         className="flex justify-between items-center p-4 border shadow-sm w-full rounded-md cursor-pointer"
-        theme={{
-          backgroundColor: colors.$1,
-          hoverBackgroundColor: colors.$4,
-        }}
         onClick={() => window.open('https://invoiceninja.github.io', '_blank')}
         style={{ borderColor: colors.$24 }}
       >
@@ -126,10 +114,6 @@ export function Integrations() {
 
       <Box
         className="flex justify-between items-center p-4 border shadow-sm w-full rounded-md cursor-pointer"
-        theme={{
-          backgroundColor: colors.$1,
-          hoverBackgroundColor: colors.$4,
-        }}
         onClick={() =>
           window.open(
             'https://zapier.com/apps/invoice-ninja/integrations',
@@ -153,10 +137,6 @@ export function Integrations() {
 
       <Box
         className="flex justify-between items-center p-4 border shadow-sm w-full rounded-md cursor-pointer"
-        theme={{
-          backgroundColor: colors.$1,
-          hoverBackgroundColor: colors.$4,
-        }}
         onClick={() => navigate('/settings/integrations/analytics')}
         style={{ borderColor: colors.$24 }}
       >

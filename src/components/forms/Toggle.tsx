@@ -12,7 +12,7 @@ import { useState } from 'react';
 import { Switch } from '@headlessui/react';
 import CommonProps from '../../common/interfaces/common-props.interface';
 import { useEffect } from 'react';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { styled } from 'styled-components';
 import classNames from 'classnames';
 
@@ -48,6 +48,7 @@ export default function Toggle(props: Props) {
     <Switch.Group as="div" className="flex items-center">
       <StyledSwitch
         theme={{
+          ...useFullTheme(),
           ringColor: colors.$5,
           borderColor: colors.$5,
           backgroundColor: checked ? colors.$3 : colors.$5,

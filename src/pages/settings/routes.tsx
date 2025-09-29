@@ -13,6 +13,7 @@ import { admin, owner } from '$app/common/guards/guards/admin';
 import { Outlet, Route } from 'react-router-dom';
 import { plan } from '$app/common/guards/guards/plan';
 import * as Settings from './index';
+import { InternalInvoiceSettings } from './company/InternalInvoiceSettings';
 import { isDemo, isHosted } from '$app/common/helpers';
 import { invoiceDesignRoutes } from '$app/pages/settings/invoice-design/routes';
 import { or } from '$app/common/guards/guards/or';
@@ -56,6 +57,7 @@ export const settingsRoutes = (
       <Route path="task_settings" element={<Settings.TaskSettings />} />
       <Route path="expense_settings" element={<Settings.ExpenseSettings />} />
       <Route path="workflow_settings" element={<Settings.WorkflowSettings />} />
+      <Route path="internal_invoicing" element={<InternalInvoiceSettings />} />
       <Route path="import_export" element={<Settings.ImportExport />} />
       <Route path="account_management" element={<Settings.AccountManagement />}>
         <Route

@@ -11,7 +11,7 @@
 import { useTranslation } from 'react-i18next';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { Import } from '../icons/Import';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import styled from 'styled-components';
 
 interface Props {
@@ -37,7 +37,8 @@ export function ImportButton(props: Props) {
       <Button
         className="flex items-center space-x-2.5 border rounded-md px-3 2xl:px-4 py-2 shadow-sm"
         theme={{
-          hoverColor: colors.$4,
+          ...useFullTheme(),
+          hoverColor: colors.$20,
           borderColor: colors.$24,
           backgroundColor: colors.$1,
         }}

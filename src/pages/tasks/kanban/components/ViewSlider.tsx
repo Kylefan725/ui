@@ -126,12 +126,8 @@ export function ViewSlider() {
               {currentTaskTimeLogs?.map(([date, start, end], i) => (
                 <Box
                   key={i}
-                  className="flex items-center justify-between p-4 w-full shadow-sm border rounded-md"
-                  style={{ borderColor: colors.$20 }}
-                  theme={{
-                    backgroundColor: colors.$1,
-                    hoverBackgroundColor: colors.$4,
-                  }}
+                  className="flex space-x-3 p-4 rounded-md flex-1 min-w-0"
+                  style={{ borderColor: colors.$24 }}
                 >
                   <div className="flex flex-col">
                     <p

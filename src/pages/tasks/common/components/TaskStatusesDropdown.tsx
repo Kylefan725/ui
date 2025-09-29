@@ -8,7 +8,7 @@
  * @license https://www.elastic.co/licensing/elastic-license
  */
 
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { useTaskStatusesQuery } from '$app/common/queries/task-statuses';
 import Tippy from '@tippyjs/react/headless';
 import { Dispatch, SetStateAction, useState } from 'react';
@@ -74,14 +74,11 @@ export function TaskStatusesDropdown(props: Props) {
               {taskStatuses?.data.map((taskStatus, index) => (
                 <OptionElement
                   key={index}
-                  className="flex items-center p-2 space-x-2 rounded-sm"
-                  onClick={() => {
-                    setVisible(false);
-                    handleUpdateTask({ ...task, status_id: taskStatus.id });
-                  }}
-                  theme={{
-                    hoverColor: colors.$7,
-                  }}
+                  className="cursor-pointer"
+                  onClick={() =>
+                    handleUpdateTask({ ...task, status_id: taskStatus.id })
+                  }
+                  theme={{ ...useFullTheme(), hoverColor: colors.$25 }}
                 >
                   <div>
                     {taskStatus.id === task.status_id ? (
@@ -113,9 +110,7 @@ export function TaskStatusesDropdown(props: Props) {
                   setIsModalOpen(true);
                   setVisible(false);
                 }}
-                theme={{
-                  hoverColor: colors.$7,
-                }}
+                theme={{ ...useFullTheme(), hoverColor: colors.$25 }}
               >
                 <div className="flex items-center gap-2">
                   <Plus color={colors.$17} size="1.2rem" />

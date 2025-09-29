@@ -8,7 +8,7 @@
  * @license https://www.elastic.co/licensing/elastic-license
  */
 
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { endpoint } from '$app/common/helpers';
 import { request } from '$app/common/helpers/request';
 import { Card } from '$app/components/cards';
@@ -80,7 +80,11 @@ export default function Settings() {
                 <Div
                   key={key}
                   className="flex w-full items-center space-x-2 px-2 py-1.5 rounded-sm"
-                  theme={{ hoverColor: colors.$4, color: colors.$1 }}
+                  theme={{
+                    ...useFullTheme(),
+                    hoverColor: colors.$4,
+                    color: colors.$1,
+                  }}
                 >
                   <div
                     className="font-medium w-1/2 whitespace-nowrap truncate"
@@ -126,7 +130,11 @@ export default function Settings() {
                 <Div
                   key={key}
                   className="flex w-full items-center space-x-2 px-2 py-1.5 rounded-sm"
-                  theme={{ hoverColor: colors.$4, color: colors.$1 }}
+                  theme={{
+                    ...useFullTheme(),
+                    hoverColor: colors.$4,
+                    color: colors.$1,
+                  }}
                 >
                   <div
                     className="font-medium w-1/2 whitespace-nowrap truncate"

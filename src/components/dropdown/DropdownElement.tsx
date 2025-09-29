@@ -11,7 +11,7 @@
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import CommonProps from '../../common/interfaces/common-props.interface';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { styled } from 'styled-components';
 import { useAtomValue } from 'jotai';
 import { usePreventNavigation } from '$app/common/hooks/usePreventNavigation';
@@ -57,6 +57,7 @@ export function DropdownElement(props: Props) {
       <div className="p-1">
         <StyledLink
           theme={{
+            ...useFullTheme(),
             color: colors.$3,
             hoverColor: colors.$20,
           }}
@@ -92,10 +93,7 @@ export function DropdownElement(props: Props) {
   return (
     <div className="p-1">
       <Button
-        theme={{
-          color: colors.$3,
-          hoverColor: colors.$20,
-        }}
+        theme={{ ...useFullTheme(), color: colors.$3, hoverColor: colors.$20 }}
         type="button"
         onClick={(event) =>
           preventNavigation({

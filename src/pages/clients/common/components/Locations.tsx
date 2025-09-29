@@ -8,7 +8,7 @@
  * @license https://www.elastic.co/licensing/elastic-license
  */
 
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { Card } from '$app/components/cards';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -143,6 +143,7 @@ export default function Locations() {
             <NewLocationCard
               className="flex flex-col space-y-2 items-center justify-center border-dashed border p-6 rounded-md cursor-pointer h-48"
               theme={{
+                ...useFullTheme(),
                 backgroundColor: colors.$1,
                 hoverBackgroundColor: colors.$20,
                 borderColor: colors.$24,
@@ -157,6 +158,7 @@ export default function Locations() {
               <LocationCard
                 key={index}
                 theme={{
+                  ...useFullTheme(),
                   borderColor: colors.$24,
                 }}
                 className="px-3 py-4 flex justify-between space-x-4 border rounded-md h-48"
@@ -213,6 +215,7 @@ export default function Locations() {
                     )}
                     style={{ borderColor: colors.$24 }}
                     theme={{
+                      ...useFullTheme(),
                       hoverBackgroundColor: colors.$20,
                       backgroundColor: colors.$1,
                     }}
@@ -233,6 +236,7 @@ export default function Locations() {
                     )}
                     style={{ borderColor: colors.$24 }}
                     theme={{
+                      ...useFullTheme(),
                       hoverBackgroundColor: colors.$20,
                       backgroundColor: colors.$1,
                     }}

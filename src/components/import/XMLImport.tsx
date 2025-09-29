@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { request } from '$app/common/helpers/request';
 import { endpoint } from '$app/common/helpers';
 import { MdClose } from 'react-icons/md';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { ValidationBag } from '$app/common/interfaces/validation-bag';
 import { AxiosError } from 'axios';
 import { Button } from '../forms';
@@ -191,8 +191,9 @@ export function XMLImport(props: Props) {
             <Div
               className="relative block w-full border-2 border-dashed rounded-lg p-12 text-center"
               theme={{
-                borderColor: colors.$21,
-                hoverBorderColor: colors.$17,
+                ...useFullTheme(),
+                borderColor: colors.$24,
+                hoverBorderColor: colors.$5,
               }}
             >
               <input {...getInputProps()} />

@@ -36,6 +36,7 @@ import classNames from 'classnames';
 import { useClickAway } from 'react-use';
 import styled from 'styled-components';
 import { useReactSettings } from '$app/common/hooks/useReactSettings';
+import { useFullTheme } from '$app/common/colors';
 
 export interface SelectOption {
   value: string;
@@ -221,6 +222,7 @@ export function SelectWithApplyButton(props: any) {
               })}
               onClick={handleReset}
               theme={{
+                ...useFullTheme(),
                 textColor: colors.$3,
                 backgroundColor: '#09090B1A',
               }}

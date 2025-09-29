@@ -8,7 +8,7 @@
  * @license https://www.elastic.co/licensing/elastic-license
  */
 
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { useCurrentUser } from '$app/common/hooks/useCurrentUser';
 import { User } from '$app/common/interfaces/user';
 import { Button, SelectField } from '$app/components/forms';
@@ -141,6 +141,7 @@ export function CardsCustomizationModal() {
       <Box
         className="p-1.5 sm:p-[0.6rem] border rounded-md shadow-sm cursor-pointer"
         theme={{
+          ...useFullTheme(),
           hoverColor: colors.$4,
           backgroundColor: colors.$1,
           borderColor: colors.$24,

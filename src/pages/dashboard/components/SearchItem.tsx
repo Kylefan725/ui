@@ -16,6 +16,7 @@ import { SetStateAction } from 'react';
 import { Dispatch } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useFullTheme } from '$app/common/colors';
 
 interface Props {
   entry: Entry<SearchRecord>;
@@ -48,7 +49,8 @@ export function SearchItem({
     <Div
       key={entry.id}
       theme={{
-        backgroundColor: index === selectedIndex ? colors.$5 : 'transparent',
+        ...useFullTheme(),
+        backgroundColor: colors.$1,
         color: colors.$3,
       }}
       className="cursor-pointer py-2.5 font-medium active:font-semibold search-option text-sm px-4"

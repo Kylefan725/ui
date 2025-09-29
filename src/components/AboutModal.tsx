@@ -29,7 +29,7 @@ import { toast } from '$app/common/helpers/toast/toast';
 import { Icon } from './icons/Icon';
 import { MdInfo, MdWarning } from 'react-icons/md';
 import styled from 'styled-components';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import {
   updateCompanyUsers,
   resetChanges,
@@ -353,6 +353,7 @@ export function AboutModal(props: Props) {
               <Div
                 className="flex justify-between items-center cursor-pointer py-1 px-3"
                 theme={{
+                  ...useFullTheme(),
                   hoverColor: colors.$5,
                 }}
                 onClick={() =>
@@ -386,6 +387,7 @@ export function AboutModal(props: Props) {
             <Div
               className="flex justify-between items-center cursor-pointer py-1 px-3"
               theme={{
+                ...useFullTheme(),
                 hoverColor: colors.$5,
               }}
               onClick={() =>
@@ -415,6 +417,7 @@ export function AboutModal(props: Props) {
             <Div
               className="flex justify-between items-center cursor-pointer py-1 px-3"
               theme={{
+                ...useFullTheme(),
                 hoverColor: colors.$5,
               }}
               onClick={() =>

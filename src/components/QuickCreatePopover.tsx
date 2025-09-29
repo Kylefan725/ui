@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { useQuickCreateSections } from '$app/common/hooks/entities/useQuickCreateSections';
 import { useQuickCreateActions } from '$app/common/hooks/entities/useQuickCreateActions';
 import { isHosted, isSelfHosted } from '$app/common/helpers';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { styled } from 'styled-components';
 import { useInjectUserChanges } from '$app/common/hooks/useInjectUserChanges';
 import { usePreventNavigation } from '$app/common/hooks/usePreventNavigation';
@@ -55,6 +55,7 @@ export function QuickCreatePopover() {
             className="flex items-center justify-center h-10 w-10 rounded-lg border shadow-sm focus:outline-none"
             style={{ height: '2.3rem', borderColor: colors.$5 }}
             theme={{
+              ...useFullTheme(),
               hoverBackgroundColor: colors.$4,
               backgroundColor: colors.$1,
             }}
@@ -124,6 +125,7 @@ export function QuickCreatePopover() {
                                 action.visible && (
                                   <Div
                                     theme={{
+                                      ...useFullTheme(),
                                       hoverColor: colors.$4,
                                       textColor: colors.$3,
                                       hoverTextColor: colors.$3,

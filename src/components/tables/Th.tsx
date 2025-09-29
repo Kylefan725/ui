@@ -11,7 +11,7 @@
 import React, { useState, useCallback, ReactNode } from 'react';
 import classNames from 'classnames';
 import CommonProps from '../../common/interfaces/common-props.interface';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { useResizeColumn } from '$app/common/hooks/useResizeColumn';
 import { ChevronDown } from '../icons/ChevronDown';
 import { ChevronUp } from '../icons/ChevronUp';
@@ -183,6 +183,7 @@ export function Th$(props: Props) {
         <StyledSpan
           className="column-resizer block absolute inset-y-0 right-0 m-0 w-1 h-full p-0 cursor-col-resize border border-transparent hover:transition duration-50"
           theme={{
+            ...useFullTheme(),
             backgroundColor: isResizing ? colors.$3 : 'transparent',
             hoverBackgroundColor: colors.$3,
           }}

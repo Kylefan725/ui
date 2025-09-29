@@ -24,7 +24,7 @@ import { PurchaseOrderActivity } from '$app/common/interfaces/purchase-order-act
 import reactStringReplace from 'react-string-replace';
 import { useCompanyTimeFormat } from '$app/common/hooks/useCompanyTimeFormat';
 import styled from 'styled-components';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import classNames from 'classnames';
 import { SquareActivityChart } from '$app/components/icons/SquareActivityChart';
 
@@ -175,8 +175,9 @@ export default function Activities() {
               key={activity.id}
               className="flex space-x-3 p-4 rounded-md flex-1 min-w-0 w-full"
               theme={{
+                ...useFullTheme(),
                 backgroundColor: colors.$1,
-                hoverBackgroundColor: colors.$25,
+                hoverBackgroundColor: colors.$4,
               }}
             >
               <div className="flex items-center justify-center">

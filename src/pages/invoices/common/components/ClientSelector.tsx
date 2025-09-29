@@ -35,6 +35,8 @@ interface Props {
   disableWithSpinner?: boolean;
   textOnly?: boolean;
   onLocationChange?: (locationId: string) => void;
+  /** When true, only show internal clients in the selector */
+  internalOnly?: boolean;
 }
 
 export function ClientSelector(props: Props) {
@@ -93,6 +95,7 @@ export function ClientSelector(props: Props) {
             initiallyVisible={!resource?.client_id}
             errorMessage={props.errorMessage}
             disableWithSpinner={props.disableWithSpinner}
+            queryString={props.internalOnly ? 'is_internal=true' : undefined}
           />
         )}
 

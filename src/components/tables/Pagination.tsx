@@ -10,7 +10,7 @@
 
 import { useTranslation } from 'react-i18next';
 import CommonProps from '../../common/interfaces/common-props.interface';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { SelectField } from '../forms';
 import { PerPage } from '../DataTable';
 import { ChevronLeft } from '../icons/ChevronLeft';
@@ -74,6 +74,7 @@ export function Pagination(props: Props) {
           <PaginationButton
             className="p-2 sm:p-[0.725rem] border rounded-l-md shadow-sm cursor-pointer"
             theme={{
+              ...useFullTheme(),
               hoverColor: colors.$4,
               backgroundColor: colors.$1,
               borderColor: colors.$24,
@@ -86,6 +87,7 @@ export function Pagination(props: Props) {
           <PaginationButton
             className="p-2 sm:p-[0.725rem] border-b border-t border-r rounded-r-md shadow-sm cursor-pointer"
             theme={{
+              ...useFullTheme(),
               hoverColor: colors.$4,
               backgroundColor: colors.$1,
               borderColor: colors.$24,
@@ -104,6 +106,7 @@ export function Pagination(props: Props) {
           <PaginationButton
             className="p-2 sm:p-[0.725rem] border-t border-b border-l rounded-l-md shadow-sm cursor-pointer"
             theme={{
+              ...useFullTheme(),
               hoverColor: colors.$4,
               backgroundColor: colors.$1,
               borderColor: colors.$24,
@@ -116,6 +119,7 @@ export function Pagination(props: Props) {
           <PaginationButton
             className="p-2 sm:p-[0.725rem] border rounded-r-md shadow-sm cursor-pointer"
             theme={{
+              ...useFullTheme(),
               hoverColor: colors.$4,
               backgroundColor: colors.$1,
               borderColor: colors.$24,

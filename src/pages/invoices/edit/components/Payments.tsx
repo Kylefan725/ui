@@ -21,7 +21,7 @@ import { useCurrentCompanyDateFormats } from '$app/common/hooks/useCurrentCompan
 import { useFormatMoney } from '$app/common/hooks/money/useFormatMoney';
 import { Card } from '$app/components/cards';
 import styled from 'styled-components';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { route } from '$app/common/helpers/route';
 import classNames from 'classnames';
 
@@ -86,6 +86,7 @@ function Payments() {
                       borderColor: colors.$20,
                     }}
                     theme={{
+                      ...useFullTheme(),
                       backgroundColor: colors.$1,
                       hoverBackgroundColor: colors.$4,
                     }}

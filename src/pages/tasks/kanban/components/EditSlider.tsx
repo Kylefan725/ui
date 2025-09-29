@@ -42,7 +42,7 @@ import { useCurrentCompanyDateFormats } from '$app/common/hooks/useCurrentCompan
 import { TaskStatusSelector } from '$app/components/task-statuses/TaskStatusSelector';
 import { TaskClock } from './TaskClock';
 import styled from 'styled-components';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { isTaskRunning } from '../../common/helpers/calculate-entity-state';
 
 const Box = styled.div`
@@ -280,6 +280,7 @@ export function EditSlider() {
                 className="flex items-center justify-between p-4 w-full shadow-sm border rounded-md cursor-pointer focus:outline-none focus:ring-0"
                 style={{ borderColor: colors.$20 }}
                 theme={{
+                  ...useFullTheme(),
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$4,
                 }}

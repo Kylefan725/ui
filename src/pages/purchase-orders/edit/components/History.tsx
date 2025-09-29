@@ -25,7 +25,7 @@ import { Spinner } from '$app/components/Spinner';
 import { PurchaseOrder } from '$app/common/interfaces/purchase-order';
 import { useCompanyTimeFormat } from '$app/common/hooks/useCompanyTimeFormat';
 import styled from 'styled-components';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import classNames from 'classnames';
 import { route } from '$app/common/helpers/route';
 import { History as HistoryIcon } from '$app/components/icons/History';
@@ -115,8 +115,9 @@ export default function History() {
                         )
                       }
                       theme={{
+                        ...useFullTheme(),
                         backgroundColor: colors.$1,
-                        hoverBackgroundColor: colors.$25,
+                        hoverBackgroundColor: colors.$4,
                       }}
                     >
                       <div

@@ -126,13 +126,7 @@ export function UploadImport(props: Props) {
           {...getRootProps()}
           className="flex flex-col md:flex-row md:items-center"
         >
-          <Box
-            className="relative block w-full border-2 border-dashed rounded-lg p-12 text-center"
-            theme={{
-              borderColor: colors.$21,
-              hoverBorderColor: colors.$17,
-            }}
-          >
+          <Box className="relative block w-full border-2 border-dashed rounded-lg p-12 text-center">
             <input {...getInputProps()} />
 
             <div className="flex justify-center">

@@ -123,28 +123,7 @@ export function Upload(props: Props) {
           {...getRootProps()}
           className="flex flex-col md:flex-row md:items-center"
         >
-          <Box
-            className="relative block w-full border-2 border-dashed rounded-lg p-12 text-center"
-            theme={{
-              borderColor: colors.$21,
-              hoverBorderColor: colors.$17,
-            }}
-          >
-            <input {...getInputProps()} />
-
-            <div className="flex justify-center">
-              <CloudUpload size="2.3rem" color={colors.$3} />
-            </div>
-
-            <span
-              className="mt-3 block text-sm font-medium"
-              style={{ color: colors.$17 }}
-            >
-              {isDragActive
-                ? t('drop_file_here')
-                : t('dropzone_default_message')}
-            </span>
-          </Box>
+          <Box className="cursor-pointer">{/* for upload or drag area */}</Box>
         </div>
 
         {errors &&
@@ -184,24 +163,7 @@ export function Upload(props: Props) {
             {...getRootProps()}
             className="flex flex-col md:flex-row md:items-center"
           >
-            <Box
-              className="relative block w-full border-2 border-dashed rounded-lg p-12 text-center"
-              theme={{
-                borderColor: colors.$21,
-                hoverBorderColor: colors.$17,
-              }}
-            >
-              <input {...getInputProps()} />
-              <Image className="mx-auto h-12 w-12 text-gray-400" />
-              <span
-                className="mt-2 block text-sm font-medium"
-                style={{ color: colors.$3 }}
-              >
-                {isDragActive
-                  ? 'drop_file_here'
-                  : t('dropzone_default_message')}
-              </span>
-            </Box>
+            <Box className="cursor-pointer">{/* for another instance */}</Box>
           </div>
         </Element>
       </Card>

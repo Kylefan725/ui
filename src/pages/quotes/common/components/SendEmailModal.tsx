@@ -16,6 +16,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useBulkAction } from '../hooks/useBulkAction';
+import { useFullTheme } from '$app/common/colors';
 
 interface Props {
   visible: boolean;
@@ -99,7 +100,7 @@ export function SendEmailModal(props: Props) {
               bulk(quoteIds, 'email', { email_type: type.value });
               props.setSelected([]);
             }}
-            theme={{ hoverColor: colors.$5 }}
+            theme={{ ...useFullTheme(), hoverColor: colors.$5 }}
           >
             {t(type.label)}
           </Div>

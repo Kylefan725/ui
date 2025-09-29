@@ -228,13 +228,7 @@ export function Edit() {
 
                   setHeader({});
                 }}
-                style={{
-                  borderColor: colors.$21,
-                }}
-                theme={{
-                  backgroundColor: colors.$1,
-                  hoverBackgroundColor: colors.$4,
-                }}
+                style={{ borderColor: colors.$24 }}
               >
                 <Plus size="1.1rem" color={colors.$3} />
               </Box>

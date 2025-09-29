@@ -33,7 +33,7 @@ import { Person } from './icons/Person';
 import { Exit } from './icons/Exit';
 import { useCurrentUser } from '$app/common/hooks/useCurrentUser';
 import { useInjectUserChanges } from '$app/common/hooks/useInjectUserChanges';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import companySettings from '$app/common/constants/company-settings';
 
 const SwitcherDiv = styled.div`
@@ -208,7 +208,7 @@ export function CompanySwitcher() {
 
                       <SwitcherDiv
                         className="flex items-center px-2 justify-between py-1.5 rounded-md cursor-pointer"
-                        theme={{ hoverColor: colors.$5 }}
+                        theme={{ ...useFullTheme(), hoverColor: colors.$5 }}
                         onClick={() =>
                           preventNavigation({
                             fn: () => switchCompany(index),
@@ -251,7 +251,7 @@ export function CompanySwitcher() {
                   <div className="px-1">
                     <SwitcherDiv
                       className="flex items-center pl-3 space-x-3 py-2 rounded-md cursor-pointer"
-                      theme={{ hoverColor: colors.$5 }}
+                      theme={{ ...useFullTheme(), hoverColor: colors.$5 }}
                       onClick={() => setIsCompanyCreateModalOpened(true)}
                     >
                       <Plus />
@@ -267,7 +267,7 @@ export function CompanySwitcher() {
                   <div className="px-1">
                     <SwitcherDiv
                       className="flex items-center space-x-3 pl-3 py-2 rounded-md cursor-pointer"
-                      theme={{ hoverColor: colors.$5 }}
+                      theme={{ ...useFullTheme(), hoverColor: colors.$5 }}
                       onClick={() =>
                         preventNavigation({
                           url: '/settings/account_management',
@@ -286,7 +286,7 @@ export function CompanySwitcher() {
                 <div className="pl-1.5 pr-1">
                   <SwitcherDiv
                     className="flex items-center space-x-3 pl-3 py-2 rounded-md cursor-pointer"
-                    theme={{ hoverColor: colors.$5 }}
+                    theme={{ ...useFullTheme(), hoverColor: colors.$5 }}
                     onClick={() =>
                       preventNavigation({
                         url: '/logout',

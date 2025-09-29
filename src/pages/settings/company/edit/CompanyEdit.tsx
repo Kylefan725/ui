@@ -33,7 +33,7 @@ import { route } from '$app/common/helpers/route';
 import { GatewayTypeIcon } from '$app/pages/clients/show/components/GatewayTypeIcon';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 
 interface Props {
   isModalOpen: boolean;
@@ -43,7 +43,7 @@ interface Props {
 const Div = styled.div`
   &:hover {
     background-color: ${(props) => props.theme.hoverColor};
-  }: 
+  }:
 `;
 
 export function CompanyEdit(props: Props) {
@@ -210,7 +210,7 @@ export function CompanyEdit(props: Props) {
           <div className="flex flex-col items-center">
             <Div
               className="flex w-full justify-center h-28 cursor-pointer"
-              theme={{ hoverColor: colors.$5 }}
+              theme={{ ...useFullTheme(), hoverColor: colors.$5 }}
               onClick={() => handleConnectPaymentGateway('stripe_connect')}
             >
               <GatewayTypeIcon name="stripe" style={{ width: '64%' }} />
@@ -218,7 +218,7 @@ export function CompanyEdit(props: Props) {
 
             <Div
               className="flex w-full justify-center h-28 cursor-pointer"
-              theme={{ hoverColor: colors.$5 }}
+              theme={{ ...useFullTheme(), hoverColor: colors.$5 }}
               onClick={() => handleConnectPaymentGateway('paypal_ppcp')}
             >
               <GatewayTypeIcon

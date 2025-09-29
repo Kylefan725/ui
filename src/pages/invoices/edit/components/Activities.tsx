@@ -21,7 +21,7 @@ import { Card } from '$app/components/cards';
 import { Spinner } from '$app/components/Spinner';
 import { useGenerateActivityElement } from '../../common/components/InvoiceSlider';
 import { useCompanyTimeFormat } from '$app/common/hooks/useCompanyTimeFormat';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { SquareActivityChart } from '$app/components/icons/SquareActivityChart';
 import styled from 'styled-components';
 import classNames from 'classnames';
@@ -86,8 +86,9 @@ export default function Activities() {
               key={activity.id}
               className="flex space-x-3 p-4 rounded-md flex-1 min-w-0 w-full"
               theme={{
+                ...useFullTheme(),
                 backgroundColor: colors.$1,
-                hoverBackgroundColor: colors.$25,
+                hoverBackgroundColor: colors.$4,
               }}
             >
               <div className="flex items-center justify-center">

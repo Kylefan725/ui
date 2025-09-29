@@ -112,10 +112,6 @@ export default function History() {
                       })
                     )
                   }
-                  theme={{
-                    backgroundColor: colors.$1,
-                    hoverBackgroundColor: colors.$25,
-                  }}
                 >
                   <div
                     className="p-2 rounded-full"

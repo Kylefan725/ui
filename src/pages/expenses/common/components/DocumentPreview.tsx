@@ -8,7 +8,7 @@
  * @license https://www.elastic.co/licensing/elastic-license
  */
 
-import { useColorScheme } from '$app/common/colors';
+import { useFullTheme } from '$app/common/colors';
 import { endpoint } from '$app/common/helpers';
 import { request } from '$app/common/helpers/request';
 import { Document } from '$app/common/interfaces/document.interface';
@@ -42,7 +42,7 @@ export function DocumentPreview(props: Props) {
 
   const { documents } = props;
 
-  const colors = useColorScheme();
+  const colors = useFullTheme();
   const queryClient = useQueryClient();
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -129,7 +129,8 @@ export function DocumentPreview(props: Props) {
               <Button
                 className="p-2 border rounded-l-md shadow-sm cursor-pointer"
                 theme={{
-                  hoverColor: colors.$4,
+                  ...useFullTheme(),
+                  hoverColor: colors.$5,
                   backgroundColor: colors.$1,
                   borderColor: colors.$24,
                 }}
@@ -141,7 +142,8 @@ export function DocumentPreview(props: Props) {
               <Button
                 className="p-2 border-b border-t border-r rounded-r-md shadow-sm cursor-pointer"
                 theme={{
-                  hoverColor: colors.$4,
+                  ...useFullTheme(),
+                  hoverColor: colors.$5,
                   backgroundColor: colors.$1,
                   borderColor: colors.$24,
                 }}
@@ -156,7 +158,8 @@ export function DocumentPreview(props: Props) {
               <Button
                 className="p-2 border-t border-b border-l rounded-l-md shadow-sm cursor-pointer ml-2"
                 theme={{
-                  hoverColor: colors.$4,
+                  ...useFullTheme(),
+                  hoverColor: colors.$5,
                   backgroundColor: colors.$1,
                   borderColor: colors.$24,
                 }}
@@ -171,7 +174,8 @@ export function DocumentPreview(props: Props) {
               <Button
                 className="p-2 border rounded-r-md shadow-sm cursor-pointer"
                 theme={{
-                  hoverColor: colors.$4,
+                  ...useFullTheme(),
+                  hoverColor: colors.$5,
                   backgroundColor: colors.$1,
                   borderColor: colors.$24,
                 }}
@@ -194,7 +198,6 @@ export function DocumentPreview(props: Props) {
             }
             tabIndex={-1}
             loading="lazy"
-
           />
 
           {unableToPreview && (

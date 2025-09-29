@@ -8,7 +8,7 @@
  * @license https://www.elastic.co/licensing/elastic-license
  */
 
-import { useColorScheme } from '$app/common/colors';
+import { useFullTheme } from '$app/common/colors';
 import { Lock, Smartphone, Book } from 'react-feather';
 import { styled } from 'styled-components';
 
@@ -19,7 +19,7 @@ const StyledLink = styled.a`
 `;
 
 export function HostedLinks() {
-  const colors = useColorScheme();
+  const colors = useFullTheme();
 
   return (
     <div
@@ -32,7 +32,7 @@ export function HostedLinks() {
     >
       <div className="col-span-3 md:col-span-1">
         <StyledLink
-          theme={{ hoverColor: colors.$2 }}
+          theme={{ ...useFullTheme(), hoverColor: colors.$2 }}
           href="https://status.invoiceninja.com/"
           target="_blank"
           className="py-3 w-full px-2 inline-flex justify-center items-center rounded-l"
@@ -44,7 +44,7 @@ export function HostedLinks() {
       </div>
       <div className="col-span-3 md:col-span-1">
         <StyledLink
-          theme={{ hoverColor: colors.$2 }}
+          theme={{ ...useFullTheme(), hoverColor: colors.$2 }}
           href="https://www.invoiceninja.com/mobile/"
           target="_blank"
           className="py-3 w-full px-2 inline-flex justify-center items-center"
@@ -56,7 +56,7 @@ export function HostedLinks() {
       </div>
       <div className="col-span-3 md:col-span-1">
         <StyledLink
-          theme={{ hoverColor: colors.$2 }}
+          theme={{ ...useFullTheme(), hoverColor: colors.$2 }}
           href="https://invoiceninja.github.io"
           target="_blank"
           className="py-3 w-full hover:bg-gray-100 px-2 inline-flex justify-center items-center rounded-r"

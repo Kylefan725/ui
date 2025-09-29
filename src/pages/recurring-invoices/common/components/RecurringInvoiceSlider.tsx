@@ -326,10 +326,6 @@ export const RecurringInvoiceSlider = () => {
               style={{
                 borderColor: colors.$20,
               }}
-              theme={{
-                backgroundColor: colors.$1,
-                hoverBackgroundColor: colors.$4,
-              }}
             >
               <CloudPlay
                 color={colors.$17}
@@ -357,10 +353,6 @@ export const RecurringInvoiceSlider = () => {
                 }}
                 style={{
                   borderColor: colors.$20,
-                }}
-                theme={{
-                  backgroundColor: colors.$1,
-                  hoverBackgroundColor: colors.$4,
                 }}
               >
                 <CopyToClipboard
@@ -399,10 +391,6 @@ export const RecurringInvoiceSlider = () => {
                         })
                       )
                     }
-                    theme={{
-                      backgroundColor: colors.$1,
-                      hoverBackgroundColor: colors.$25,
-                    }}
                   >
                     <div
                       className="p-2 rounded-full"
@@ -524,10 +512,6 @@ export const RecurringInvoiceSlider = () => {
                 <Box
                   key={activity.id}
                   className="flex space-x-3 p-4 rounded-md flex-1 min-w-0"
-                  theme={{
-                    backgroundColor: colors.$1,
-                    hoverBackgroundColor: colors.$25,
-                  }}
                 >
                   <div className="flex items-center justify-center">
                     <div

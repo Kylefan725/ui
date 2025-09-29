@@ -67,6 +67,7 @@ import { CopyToClipboard } from '$app/components/icons/CopyToClipboard';
 import { ArrowRight } from '$app/components/icons/ArrowRight';
 import { History } from '$app/components/icons/History';
 import { SquareActivityChart } from '$app/components/icons/SquareActivityChart';
+import { useFullTheme } from '$app/common/colors';
 
 export const quoteSliderAtom = atom<Quote | null>(null);
 export const quoteSliderVisibilityAtom = atom(false);
@@ -315,6 +316,7 @@ export function QuoteSlider() {
                 borderColor: colors.$20,
               }}
               theme={{
+                ...useFullTheme(),
                 backgroundColor: colors.$1,
                 hoverBackgroundColor: colors.$4,
               }}
@@ -347,6 +349,7 @@ export function QuoteSlider() {
                   borderColor: colors.$20,
                 }}
                 theme={{
+                  ...useFullTheme(),
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$4,
                 }}
@@ -477,6 +480,7 @@ export function QuoteSlider() {
                   borderColor: colors.$20,
                 }}
                 theme={{
+                  ...useFullTheme(),
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$4,
                 }}
@@ -532,6 +536,7 @@ export function QuoteSlider() {
                         )
                       }
                       theme={{
+                        ...useFullTheme(),
                         backgroundColor: colors.$1,
                         hoverBackgroundColor: colors.$25,
                       }}
@@ -626,6 +631,7 @@ export function QuoteSlider() {
                   key={activity.id}
                   className="flex space-x-3 p-4 rounded-md flex-1 min-w-0"
                   theme={{
+                    ...useFullTheme(),
                     backgroundColor: colors.$1,
                     hoverBackgroundColor: colors.$25,
                   }}

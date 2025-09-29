@@ -57,7 +57,7 @@ import {
   TaskDetails,
 } from '../common/components/CreateTaskModal';
 import { $refetch } from '$app/common/hooks/useRefetch';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import {
   useAdmin,
   useHasPermission,
@@ -380,6 +380,7 @@ export default function Kanban() {
                     borderColor: colors.$20,
                   }}
                   theme={{
+                    ...useFullTheme(),
                     color: colors.$3,
                     backgroundColor: colors.$1,
                     hoverBackgroundColor: colors.$4,
@@ -408,6 +409,7 @@ export default function Kanban() {
                     borderColor: colors.$20,
                   }}
                   theme={{
+                    ...useFullTheme(),
                     color: colors.$3,
                     backgroundColor: colors.$1,
                     hoverBackgroundColor: colors.$4,
@@ -435,6 +437,7 @@ export default function Kanban() {
                     borderColor: colors.$20,
                   }}
                   theme={{
+                    ...useFullTheme(),
                     color: colors.$3,
                     backgroundColor: colors.$1,
                     hoverBackgroundColor: colors.$4,
@@ -514,6 +517,7 @@ export default function Kanban() {
                           ref={columnDraggableProvided.innerRef}
                           {...columnDraggableProvided.draggableProps}
                           theme={{
+                            ...useFullTheme(),
                             minWidth: 360,
                             color: colors.$3,
                             backgroundColor: colors.$1,
@@ -536,7 +540,7 @@ export default function Kanban() {
 
                             {hasPermission('create_task') && (
                               <Box
-                                className="cursor-pointer focus:outline-none focus:ring-0 p-1 border rounded-sm"
+                                className="cursor-pointer"
                                 onClick={() => {
                                   setTaskDetails({
                                     taskStatusId: column.id,
@@ -544,10 +548,9 @@ export default function Kanban() {
                                   });
                                   setIsTaskModalOpened(true);
                                 }}
-                                style={{
-                                  borderColor: colors.$21,
-                                }}
+                                style={{ borderColor: colors.$21 }}
                                 theme={{
+                                  ...useFullTheme(),
                                   backgroundColor: colors.$1,
                                   hoverBackgroundColor: colors.$4,
                                 }}
@@ -701,6 +704,7 @@ export default function Kanban() {
                                           {...dragProvided.draggableProps}
                                           {...dragProvided.dragHandleProps}
                                           theme={{
+                                            ...useFullTheme(),
                                             backgroundColor: colors.$7,
                                             color: colors.$3,
                                           }}
@@ -838,6 +842,7 @@ export default function Kanban() {
                   borderColor: colors.$21,
                 }}
                 theme={{
+                  ...useFullTheme(),
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$4,
                 }}

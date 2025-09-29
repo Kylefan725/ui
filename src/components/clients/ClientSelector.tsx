@@ -27,6 +27,8 @@ export interface ClientSelectorProps extends GenericSelectorProps<Client> {
   disableWithSpinner?: boolean;
   clearInputAfterSelection?: boolean;
   dropdownLabelFn?: (client: Client) => string | JSX.Element;
+  /** Optional query string to append to the clients endpoint, e.g. "is_internal=true" */
+  queryString?: string;
 }
 
 export function ClientSelector(props: ClientSelectorProps) {
@@ -50,7 +52,15 @@ export function ClientSelector(props: ClientSelectorProps) {
           label: props.inputLabel?.toString(),
           value: props.value || null,
         }}
-        endpoint={endpoint('/api/v1/clients')}
+        endpoint={endpoint(
+          `/api/v1/clients${
+            props.queryString
+              ? props.queryString.startsWith('?')
+                ? props.queryString
+                : `?${props.queryString}`
+              : ''
+          }`
+        )}
         readonly={props.readonly}
         onDismiss={props.onClearButtonClick}
         querySpecificEntry="/api/v1/clients/:id"

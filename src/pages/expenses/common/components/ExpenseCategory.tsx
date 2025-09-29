@@ -13,6 +13,8 @@ import {
   isColorLight,
   useAdjustColorDarkness,
 } from '$app/common/hooks/useAdjustColorDarkness';
+
+import { useFullTheme } from '$app/common/colors';
 import { useRef, useState } from 'react';
 import { useClickAway } from 'react-use';
 import { useColorScheme } from '$app/common/colors';
@@ -92,9 +94,7 @@ function ExpenseCategoriesDropdown(props: DropdownProps) {
                     setVisible(false);
                     save({ ...expense, category_id: expenseCategory.id });
                   }}
-                  theme={{
-                    hoverColor: colors.$7,
-                  }}
+                  theme={{ ...useFullTheme(), hoverColor: colors.$5 }}
                 >
                   <div>
                     {expenseCategory.id === expense.category_id ? (
@@ -126,9 +126,7 @@ function ExpenseCategoriesDropdown(props: DropdownProps) {
                   setIsModalOpen(true);
                   setVisible(false);
                 }}
-                theme={{
-                  hoverColor: colors.$7,
-                }}
+                theme={{ ...useFullTheme(), hoverColor: colors.$5 }}
               >
                 <div className="flex items-center gap-2">
                   <Plus color={colors.$17} size="1.2rem" />

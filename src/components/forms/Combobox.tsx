@@ -17,7 +17,7 @@ import { KeyboardEvent, MouseEvent, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 import { useClickAway, useDebounce } from 'react-use';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { styled } from 'styled-components';
 import { Spinner } from '../Spinner';
 import { useReactSettings } from '$app/common/hooks/useReactSettings';
@@ -425,6 +425,7 @@ export function Combobox<T = any>({
             {filteredOptions.map((option, index) => (
               <LiStyled
                 theme={{
+                  ...useFullTheme(),
                   backgroundColor: colors.$1,
                   hoverColor: colors.$20,
                 }}
@@ -461,6 +462,7 @@ export function Combobox<T = any>({
             >
               <ActionButtonStyled
                 theme={{
+                  ...useFullTheme(),
                   hoverColor: colors.$20,
                 }}
                 data-testid="combobox-action-button"
@@ -732,6 +734,7 @@ export function ComboboxStatic<T = any>({
               {nullable && query.length > 0 && !isDataLoading && (
                 <HeadlessOptionStyled
                   theme={{
+                    ...useFullTheme(),
                     hoverColor: colors.$20,
                   }}
                   key="combobox-not-found"
@@ -758,6 +761,7 @@ export function ComboboxStatic<T = any>({
                 filteredValues.map((entry) => (
                   <HeadlessOptionStyled
                     theme={{
+                      ...useFullTheme(),
                       hoverColor: colors.$20,
                     }}
                     key={entry.id}
@@ -799,6 +803,7 @@ export function ComboboxStatic<T = any>({
               >
                 <ActionButtonStyled
                   theme={{
+                    ...useFullTheme(),
                     hoverColor: colors.$20,
                   }}
                   data-testid="combobox-action-button"

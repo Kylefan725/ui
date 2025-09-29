@@ -1,0 +1,13 @@
+{
+  "internal_invoicing": "Internal Invoicing",
+  "enable_internal_invoicing": "Enable internal invoicing",
+  "enable_internal_invoicing_help": "Turn on internal invoice features and UI.",
+  "internal_invoice_require_signature": "Require signature for approval",
+  "internal_invoice_require_signature_help": "Department contact must upload a signed document to approve.",
+  "internal_invoice_number_pattern": "Internal invoice number pattern",
+  "include_internal_in_reports": "Include internal invoices in reports",
+  "include_internal_in_reports_help": "Include internal invoices in standard financial reports.",
+  "internal_invoice": "Internal Invoice",
+  "select_an_internal_client_and_contact_to_proceed": "Select an internal client and a contact to proceed.",
+  "at_least_one_contact_is_required_for_internal_invoices": "At least one contact is required for internal invoices."
+}

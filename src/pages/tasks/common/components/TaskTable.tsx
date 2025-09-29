@@ -407,15 +407,6 @@ export function TaskTable(props: Props) {
         <Tr>
           <Td colSpan={100} className="p-1" withoutPadding>
             <AddItemButton
-              className={classNames(
-                'w-full py-4 inline-flex justify-center items-center space-x-2 rounded-[0.1875rem]',
-                {
-                  'cursor-not-allowed':
-                    isTaskRunning(task) && task.created_at !== 0,
-                  'cursor-pointer':
-                    !isTaskRunning(task) || task.created_at === 0,
-                }
-              )}
               onClick={() => {
                 if (isTaskRunning(task) && task.created_at !== 0) {
                   return;
@@ -427,10 +418,15 @@ export function TaskTable(props: Props) {
                   createTableRow();
                 }
               }}
-              theme={{
-                backgroundColor: colors.$1,
-                hoverBackgroundColor: colors.$20,
-              }}
+              className={classNames(
+                'w-full py-4 inline-flex justify-center items-center space-x-2 rounded-[0.1875rem]',
+                {
+                  'cursor-not-allowed':
+                    isTaskRunning(task) && task.created_at !== 0,
+                  'cursor-pointer':
+                    !isTaskRunning(task) || task.created_at === 0,
+                }
+              )}
             >
               {isTaskRunning(task) && task.created_at !== 0 ? (
                 <span>{t('stop_task_to_add_task_entry')}</span>

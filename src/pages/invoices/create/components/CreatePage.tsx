@@ -27,6 +27,8 @@ import { InvoicePreview } from '../../common/components/InvoicePreview';
 import { CreateInvoiceContext } from '../Create';
 import { useOutletContext, useSearchParams } from 'react-router-dom';
 import { useColorScheme } from '$app/common/colors';
+import { Banner } from '$app/components/Banner';
+import { Badge } from '$app/components/Badge';
 
 export type ChangeHandler = <T extends keyof Invoice>(
   property: T,
@@ -81,6 +83,17 @@ export default function CreatePage() {
   return (
     <>
       <div className="grid grid-cols-12 gap-4">
+        {searchParams.get('internal') === 'true' && (
+          <div className="col-span-12 flex items-center justify-between">
+            <Banner variant="orange" id="internal-invoice-banner">
+              {t('internal_invoice')}:{' '}
+              {t('select_an_internal_client_and_contact_to_proceed')}
+            </Banner>
+            <Badge variant="purple" className="ml-2">
+              {t('internal')}
+            </Badge>
+          </div>
+        )}
         <Card
           className="col-span-12 xl:col-span-4 h-max shadow-sm"
           withContainer
@@ -95,7 +108,14 @@ export default function CreatePage() {
             readonly={searchParams.get('project') === 'true'}
             errorMessage={errors?.errors.client_id}
             disableWithSpinner={searchParams.get('action') === 'create'}
+            internalOnly={searchParams.get('internal') === 'true'}
           />
+          {searchParams.get('internal') === 'true' && (
+            <div className="text-sm mt-2" data-cy="internalClientHint">
+              {t('hint')}:{' '}
+              {t('at_least_one_contact_is_required_for_internal_invoices')}
+            </div>
+          )}
         </Card>
 
         <InvoiceDetails

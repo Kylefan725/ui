@@ -8,7 +8,7 @@
  * @license https://www.elastic.co/licensing/elastic-license
  */
 
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { styled } from 'styled-components';
 import CommonProps from '../../common/interfaces/common-props.interface';
 import classNames from 'classnames';
@@ -70,6 +70,7 @@ export function Checkbox(props: Props) {
             height: '1.1rem',
           }}
           theme={{
+            ...useFullTheme(),
             backgroundColor: colors.$1,
             checkedBorderColor: colors.$3,
             borderColor: colors.$5,

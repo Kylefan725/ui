@@ -48,7 +48,7 @@ import { TaskClock } from '../../kanban/components/TaskClock';
 import { useUserNumberPrecision } from '$app/common/hooks/useUserNumberPrecision';
 import { useCompanyTimeFormat } from '$app/common/hooks/useCompanyTimeFormat';
 import styled from 'styled-components';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { SquareActivityChart } from '$app/components/icons/SquareActivityChart';
 
 export const taskSliderAtom = atom<Task | null>(null);
@@ -229,6 +229,7 @@ export function TaskSlider() {
                   className="flex items-center justify-between p-4 w-full shadow-sm border rounded-md"
                   style={{ borderColor: colors.$20 }}
                   theme={{
+                    ...useFullTheme(),
                     backgroundColor: colors.$1,
                     hoverBackgroundColor: colors.$4,
                   }}
@@ -268,10 +269,7 @@ export function TaskSlider() {
               <Box
                 key={activity.id}
                 className="flex space-x-3 p-4 rounded-md flex-1 min-w-0"
-                theme={{
-                  backgroundColor: colors.$1,
-                  hoverBackgroundColor: colors.$25,
-                }}
+                style={{ borderColor: colors.$24 }}
               >
                 <div className="flex items-center justify-center">
                   <div

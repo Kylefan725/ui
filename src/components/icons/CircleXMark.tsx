@@ -50,12 +50,6 @@ export function CircleXMark({
       y="0px"
       style={{ width: size, height: size }}
       viewBox="0 0 18 18"
-      theme={{
-        color,
-        borderColor,
-        hoverColor,
-        hoverBorderColor,
-      }}
     >
       <path
         opacity="0.4"

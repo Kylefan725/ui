@@ -34,6 +34,7 @@ import { parse as papaParse, ParseResult } from 'papaparse';
 import { CloudUpload } from '../icons/CloudUpload';
 import styled from 'styled-components';
 import { ErrorMessage } from '../ErrorMessage';
+import { useFullTheme } from '$app/common/colors';
 
 interface Props {
   entity: string;
@@ -75,6 +76,7 @@ export function UploadImport(props: Props) {
   };
 
   const colors = useColorScheme();
+  const fullTheme = useFullTheme();
   const reactSettings = useReactSettings();
 
   const { numberOfTemplates, templates } = useEntityImportTemplates({
@@ -463,6 +465,7 @@ export function UploadImport(props: Props) {
               <Box
                 className="relative block w-full border-2 border-dashed rounded-lg p-12 text-center"
                 theme={{
+                  ...fullTheme,
                   borderColor: colors.$21,
                   hoverBorderColor: colors.$17,
                 }}

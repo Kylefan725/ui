@@ -30,7 +30,7 @@ import { route } from '$app/common/helpers/route';
 import { useNavigate } from 'react-router-dom';
 import { Spinner } from '$app/components/Spinner';
 import { styled } from 'styled-components';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { useHasPermission } from '$app/common/hooks/permissions/useHasPermission';
 import { useEntityAssigned } from '$app/common/hooks/useEntityAssigned';
 import collect from 'collect.js';
@@ -176,7 +176,7 @@ export function AddToInvoiceAction(props: Props) {
         <div className="flex flex-col space-y-1">
           {invoices.map((invoice) => (
             <Div
-              theme={{ hoverColor: colors.$5 }}
+              theme={{ ...useFullTheme(), hoverColor: colors.$5 }}
               key={invoice.id}
               onClick={() => handleAddToInvoice(invoice)}
               className="flex items-center justify-between cursor-pointer rounded py-1 px-2"

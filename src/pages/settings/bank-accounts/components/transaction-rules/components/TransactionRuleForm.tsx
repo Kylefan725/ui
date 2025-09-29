@@ -175,15 +175,11 @@ export function TransactionRuleForm(props: Props) {
           <Tr>
             <Td colSpan={100} className="p-1" withoutPadding>
               <AddRuleButton
-                className="w-full py-2 inline-flex justify-center items-center space-x-2 rounded-[0.1875rem] cursor-pointer"
                 onClick={() => {
                   setRuleIndex(-1);
                   setIsRuleModalOpen(true);
                 }}
-                theme={{
-                  backgroundColor: colors.$1,
-                  hoverBackgroundColor: colors.$20,
-                }}
+                className="cursor-pointer"
               >
                 <Plus color={colors.$3} size="1rem" />
 

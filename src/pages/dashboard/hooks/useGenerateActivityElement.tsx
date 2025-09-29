@@ -29,6 +29,7 @@ import dayjs from 'dayjs';
 import { ArrowRight } from '$app/components/icons/ArrowRight';
 import styled from 'styled-components';
 import { SquareActivityChart } from '$app/components/icons/SquareActivityChart';
+import { useFullTheme } from '$app/common/colors';
 
 const Box = styled.div`
   background-color: ${(props) => props.theme.backgroundColor};
@@ -189,34 +190,30 @@ export function useGenerateActivityElement() {
         </Link>
       ),
       adjustment: activity?.adjustment?.label,
-      notes: (
-          activity?.notes &&
-          [151, 152, 153].includes(activity.activity_type_id)
-        ) ? (
+      notes:
+        activity?.notes &&
+        [151, 152, 153].includes(activity.activity_type_id) ? (
+          <>{activity?.notes ?? ''}</>
+        ) : activityEntity &&
+          activity[activityEntity as keyof typeof activity] ? (
           <>
-            {activity?.notes ?? ''}
-          </>
-        ) : (
-          activityEntity && activity[activityEntity as keyof typeof activity]
-        ) ? (
-        <>
-          <br />
+            <br />
 
-          <Link
-            to={route(
-              `/${activityEntity}s/${
-                (
-                  activity[
-                    activityEntity as keyof typeof activity
-                  ] as ActivityRecordBase
-                ).hashed_id
-              }/edit`
-            )}
-          >
-            {activity?.notes}
-          </Link>
-        </>
-      ) : null,
+            <Link
+              to={route(
+                `/${activityEntity}s/${
+                  (
+                    activity[
+                      activityEntity as keyof typeof activity
+                    ] as ActivityRecordBase
+                  ).hashed_id
+                }/edit`
+              )}
+            >
+              {activity?.notes}
+            </Link>
+          </>
+        ) : null,
     };
 
     for (const [variable, value] of Object.entries(replacements)) {
@@ -252,8 +249,9 @@ export function useGenerateActivityElement() {
       key={activity.id}
       className="flex space-x-3 p-4 rounded-md flex-1 min-w-0 w-full"
       theme={{
+        ...useFullTheme(),
         backgroundColor: colors.$1,
-        hoverBackgroundColor: colors.$25,
+        hoverBackgroundColor: colors.$4,
       }}
     >
       <div className="flex items-center justify-center">

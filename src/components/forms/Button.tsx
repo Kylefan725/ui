@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 import CommonProps from '../../common/interfaces/common-props.interface';
 import { Spinner } from '../Spinner';
 import { styled } from 'styled-components';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 
 interface Props extends CommonProps {
   children?: ReactNode;
@@ -73,6 +73,7 @@ export function Button(props: Props) {
       <StyledLink
         to={props.to}
         theme={{
+          ...useFullTheme(),
           backgroundColor: props.type === 'primary' ? colors.$18 : colors.$1,
           color: props.type === 'primary' ? colors.$1 : colors.$3,
           borderColor: props.type === 'primary' ? 'transparent' : colors.$24,
@@ -98,6 +99,7 @@ export function Button(props: Props) {
       type={props.behavior}
       disabled={props.disabled}
       theme={{
+        ...useFullTheme(),
         backgroundColor: props.type === 'primary' ? colors.$18 : colors.$1,
         color: props.type === 'primary' ? colors.$1 : colors.$3,
         borderColor: props.type === 'primary' ? 'transparent' : colors.$24,

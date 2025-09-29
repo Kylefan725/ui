@@ -25,7 +25,7 @@ import { useCurrentCompanyDateFormats } from '$app/common/hooks/useCurrentCompan
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { Spinner } from '$app/components/Spinner';
 import { useCompanyTimeFormat } from '$app/common/hooks/useCompanyTimeFormat';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { History as HistoryIcon } from '$app/components/icons/History';
 import { ArrowRight } from 'react-feather';
 import { route } from '$app/common/helpers/route';
@@ -119,8 +119,9 @@ export default function History() {
                         )
                       }
                       theme={{
+                        ...useFullTheme(),
                         backgroundColor: colors.$1,
-                        hoverBackgroundColor: colors.$25,
+                        hoverBackgroundColor: colors.$4,
                       }}
                     >
                       <div

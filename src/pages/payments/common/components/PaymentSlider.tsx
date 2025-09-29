@@ -41,6 +41,7 @@ import { useColorScheme } from '$app/common/colors';
 import { useNavigate } from 'react-router-dom';
 import { SquareActivityChart } from '$app/components/icons/SquareActivityChart';
 import { useGenerateActivityElement } from '../hooks/useGenerateActivityElement';
+import { useFullTheme } from '$app/common/colors';
 
 export const paymentSliderAtom = atom<Payment | null>(null);
 export const paymentSliderVisibilityAtom = atom(false);
@@ -204,6 +205,7 @@ export function PaymentSlider() {
                   borderColor: colors.$20,
                 }}
                 theme={{
+                  ...useFullTheme(),
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$4,
                 }}
@@ -257,6 +259,7 @@ export function PaymentSlider() {
                   borderColor: colors.$20,
                 }}
                 theme={{
+                  ...useFullTheme(),
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$4,
                 }}
@@ -297,6 +300,7 @@ export function PaymentSlider() {
                 key={activity.id}
                 className="flex space-x-3 p-4 rounded-md flex-1 min-w-0"
                 theme={{
+                  ...useFullTheme(),
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$25,
                 }}

@@ -25,7 +25,7 @@ import { Spinner } from '$app/components/Spinner';
 import { QuoteContext } from '../../create/Create';
 import { Quote } from '$app/common/interfaces/quote';
 import { useCompanyTimeFormat } from '$app/common/hooks/useCompanyTimeFormat';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import styled from 'styled-components';
 import { ArrowRight } from '$app/components/icons/ArrowRight';
 import { History as HistoryIcon } from '$app/components/icons/History';
@@ -115,8 +115,9 @@ export default function History() {
                       )
                     }
                     theme={{
+                      ...useFullTheme(),
                       backgroundColor: colors.$1,
-                      hoverBackgroundColor: colors.$25,
+                      hoverBackgroundColor: colors.$4,
                     }}
                   >
                     <div

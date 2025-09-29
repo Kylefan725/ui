@@ -344,6 +344,10 @@ export interface Settings {
   ses_access_key: string;
   ses_region: string;
   ses_topic_arn: string;
+  enable_internal_invoicing: boolean;
+  internal_invoice_require_signature: boolean;
+  internal_invoice_number_pattern: string;
+  include_internal_in_reports: boolean;
 }
 
 export interface TaxData {

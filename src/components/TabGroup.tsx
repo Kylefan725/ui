@@ -16,7 +16,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import styled from 'styled-components';
 
 interface Props {
@@ -106,6 +106,7 @@ export function TabGroup(props: Props) {
                 type="button"
                 onClick={() => handleTabChange(index)}
                 theme={{
+                  ...useFullTheme(),
                   textColor: currentIndex === index ? colors.$3 : colors.$17,
                   hoverTextColor: colors.$3,
                 }}

@@ -31,6 +31,7 @@ import { DropdownElement } from '$app/components/dropdown/DropdownElement';
 import { ChevronDown } from '$app/components/icons/ChevronDown';
 import { InfoCard } from '$app/components/InfoCard';
 import { Modal } from '$app/components/Modal';
+import { useFullTheme } from '$app/common/colors';
 
 interface Props {
   client: Client;
@@ -233,15 +234,13 @@ export function Gateways(props: Props) {
                       className="inline-flex items-center text-xs"
                       style={{ height: '1.5rem' }}
                     >
-                      <div
-                        className="flex items-center border pr-2 pl-3 rounded-l-full h-full"
-                        style={{
-                          borderColor: colors.$5,
-                          backgroundColor: colors.$5,
-                        }}
+                      <Div
+                        className="flex flex-col h-28 border rounded-md shadow-sm p-3"
+                        style={{ borderColor: colors.$24 }}
+                        theme={{ ...useFullTheme(), hoverBgColor: colors.$4 }}
                       >
                         {t('default')}
-                      </div>
+                      </Div>
 
                       {isAdmin && (
                         <Dropdown
@@ -254,7 +253,10 @@ export function Gateways(props: Props) {
                                 paddingTop: '0.24rem',
                                 paddingBottom: '0.24rem',
                               }}
-                              theme={{ hoverBgColor: colors.$4 }}
+                              theme={{
+                                ...useFullTheme(),
+                                hoverBgColor: colors.$4,
+                              }}
                             >
                               <ChevronDown size="0.9rem" color={colors.$3} />
                             </Div>
@@ -277,12 +279,9 @@ export function Gateways(props: Props) {
                       style={{ height: '1.5rem' }}
                     >
                       <Div
-                        className="flex items-center border pr-2 pl-3 rounded-l-full h-full"
-                        onClick={() => handleSetDefault(token.id)}
-                        style={{
-                          borderColor: colors.$5,
-                        }}
-                        theme={{ hoverBgColor: colors.$5 }}
+                        className="flex flex-col h-28 border rounded-md shadow-sm p-3"
+                        style={{ borderColor: colors.$24 }}
+                        theme={{ ...useFullTheme(), hoverBgColor: colors.$4 }}
                       >
                         {t('save_as_default')}
                       </Div>
@@ -298,7 +297,10 @@ export function Gateways(props: Props) {
                                 paddingTop: '0.26rem',
                                 paddingBottom: '0.26rem',
                               }}
-                              theme={{ hoverBgColor: colors.$4 }}
+                              theme={{
+                                ...useFullTheme(),
+                                hoverBgColor: colors.$4,
+                              }}
                             >
                               <ChevronDown size="0.9rem" color={colors.$3} />
                             </Div>

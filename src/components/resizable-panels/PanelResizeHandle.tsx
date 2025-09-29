@@ -8,7 +8,7 @@
  * @license https://www.elastic.co/licensing/elastic-license
  */
 
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { PanelResizeHandle as PanelResizeHandleBase } from 'react-resizable-panels';
 import styled from 'styled-components';
 
@@ -31,7 +31,11 @@ export function PanelResizeHandle(props: Props) {
   return renderBasePanelResizeHandler ? (
     <PanelResizeHandleBaseStyled
       className="flex items-center"
-      theme={{ hoverColor: '#3366CC', backgroundColor: colors.$21 }}
+      theme={{
+        ...useFullTheme(),
+        hoverColor: '#3366CC',
+        backgroundColor: colors.$21,
+      }}
       style={{ width: '2.5px' }}
     />
   ) : (

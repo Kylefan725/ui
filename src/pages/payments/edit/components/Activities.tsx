@@ -23,7 +23,7 @@ import { useCompanyTimeFormat } from '$app/common/hooks/useCompanyTimeFormat';
 import { PaymentActivity } from '$app/common/interfaces/payment-activity';
 import { usePaymentQuery } from '$app/common/queries/payments';
 import { SquareActivityChart } from '$app/components/icons/SquareActivityChart';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import styled from 'styled-components';
 import classNames from 'classnames';
 
@@ -93,8 +93,9 @@ export default function Activities() {
                 key={activity.id}
                 className="flex space-x-3 p-4 rounded-md flex-1 min-w-0"
                 theme={{
+                  ...useFullTheme(),
                   backgroundColor: colors.$1,
-                  hoverBackgroundColor: colors.$25,
+                  hoverBackgroundColor: colors.$4,
                 }}
               >
                 <div className="flex items-center justify-center">

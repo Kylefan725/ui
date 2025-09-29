@@ -51,6 +51,9 @@ const EmailHistory = lazy(
 const CreatePage = lazy(
   () => import('$app/pages/invoices/create/components/CreatePage')
 );
+const InternalInvoiceForm = lazy(
+  () => import('$app/pages/invoices/create/InternalInvoiceForm')
+);
 
 export const invoiceRoutes = (
   <Route path="/invoices">
@@ -96,6 +99,7 @@ export const invoiceRoutes = (
       }
     >
       <Route path="" element={<CreatePage />} />
+      <Route path="internal" element={<InternalInvoiceForm />} />
       <Route path="documents" element={<Documents />} />
       <Route path="settings" element={<Settings />} />
     </Route>

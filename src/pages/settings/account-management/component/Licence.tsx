@@ -97,10 +97,6 @@ export function License() {
         <Box
           className="flex justify-between items-center p-4 border shadow-sm w-full rounded-md cursor-pointer"
           onClick={() => window.open(link, '_blank')}
-          theme={{
-            backgroundColor: colors.$1,
-            hoverBackgroundColor: colors.$4,
-          }}
           style={{ borderColor: colors.$24 }}
         >
           <div className="flex items-center space-x-2">
@@ -119,10 +115,6 @@ export function License() {
         <Box
           className="flex space-x-2 items-center p-4 border shadow-sm w-full rounded-md cursor-pointer"
           onClick={() => setIsModalVisible(true)}
-          theme={{
-            backgroundColor: colors.$1,
-            hoverBackgroundColor: colors.$4,
-          }}
           style={{ borderColor: colors.$24 }}
         >
           <div>

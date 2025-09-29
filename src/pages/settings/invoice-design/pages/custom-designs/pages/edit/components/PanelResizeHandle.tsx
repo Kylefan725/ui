@@ -8,7 +8,7 @@
  * @license https://www.elastic.co/licensing/elastic-license
  */
 
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { PanelResizeHandle as PanelResizeHandleBase } from 'react-resizable-panels';
 import { useMediaQuery } from 'react-responsive';
 import styled from 'styled-components';
@@ -26,9 +26,13 @@ export function PanelResizeHandle() {
 
   return isLargeScreen ? (
     <PanelResizeHandleBaseStyled
-      className="flex items-center"
-      theme={{ hoverColor: '#3366CC', backgroundColor: colors.$5 }}
-      style={{ width: '2.5px' }}
+      theme={{
+        ...useFullTheme(),
+        hoverColor: '#3366CC',
+        backgroundColor: colors.$5,
+      }}
+      className="cursor-pointer"
+      style={{ width: '0.125rem' }}
     />
   ) : (
     <></>

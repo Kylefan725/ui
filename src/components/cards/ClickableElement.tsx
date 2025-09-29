@@ -11,27 +11,27 @@
 import { Link } from 'react-router-dom';
 import CommonProps from '../../common/interfaces/common-props.interface';
 import { styled } from 'styled-components';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 
 const ButtonStyled = styled.button`
   color: ${(props) => props.theme.color};
   &:hover {
     background-color: ${(props) => props.theme.hoverColor};
-  }: 
+  }
 `;
 
 const AStyled = styled.a`
   color: ${(props) => props.theme.color};
   &:hover {
     background-color: ${(props) => props.theme.hoverColor};
-  }: 
+  }
 `;
 
 const LinkStyled = styled(Link)`
   color: ${(props) => props.theme.color};
   &:hover {
     background-color: ${(props) => props.theme.hoverColor};
-  }: 
+  }
 `;
 
 interface Props extends CommonProps {
@@ -48,7 +48,7 @@ export function ClickableElement(props: Props) {
   if (props.to) {
     return (
       <LinkStyled
-        theme={{ hoverColor: colors.$4, color: colors.$3 }}
+        theme={{ ...useFullTheme(), hoverColor: colors.$4, color: colors.$3 }}
         to={props.to}
         style={{ pointerEvents: !props.disableNavigation ? 'all' : 'none' }}
         className={classes}
@@ -61,7 +61,7 @@ export function ClickableElement(props: Props) {
   if (props.href) {
     return (
       <AStyled
-        theme={{ hoverColor: colors.$4, color: colors.$3 }}
+        theme={{ ...useFullTheme(), hoverColor: colors.$4, color: colors.$3 }}
         target="_blank"
         href={props.href}
         className={classes}
@@ -74,7 +74,7 @@ export function ClickableElement(props: Props) {
 
   return (
     <ButtonStyled
-      theme={{ hoverColor: colors.$4, color: colors.$3 }}
+      theme={{ ...useFullTheme(), hoverColor: colors.$4, color: colors.$3 }}
       type="button"
       onClick={props.onClick}
       onChange={props.onChange}

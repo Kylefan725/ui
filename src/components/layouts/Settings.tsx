@@ -25,7 +25,7 @@ import { FaObjectGroup } from 'react-icons/fa';
 import { useActiveSettingsDetails } from '$app/common/hooks/useActiveSettingsDetails';
 import { useSwitchToCompanySettings } from '$app/common/hooks/useSwitchToCompanySettings';
 import { useCurrentSettingsLevel } from '$app/common/hooks/useCurrentSettingsLevel';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { styled } from 'styled-components';
 import { Sparkle } from '../icons/Sparkle';
 import { XMark } from '../icons/XMark';
@@ -161,6 +161,7 @@ export function Settings(props: Props) {
                     )}
                     aria-current={item.current ? 'page' : undefined}
                     theme={{
+                      ...useFullTheme(),
                       backgroundColor: item.current ? colors.$20 : '',
                       color: item.current ? colors.$3 : '',
                       hoverColor: colors.$20,
@@ -218,6 +219,7 @@ export function Settings(props: Props) {
                     )}
                     aria-current={item.current ? 'page' : undefined}
                     theme={{
+                      ...useFullTheme(),
                       backgroundColor: item.current ? colors.$20 : '',
                       color: item.current ? colors.$3 : '',
                       hoverColor: colors.$20,

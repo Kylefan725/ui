@@ -68,6 +68,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from '$app/components/icons/ArrowRight';
 import { History } from '$app/components/icons/History';
 import { SquareActivityChart } from '$app/components/icons/SquareActivityChart';
+import { useFullTheme } from '$app/common/colors';
 
 export const invoiceSliderAtom = atom<Invoice | null>(null);
 export const invoiceSliderVisibilityAtom = atom(false);
@@ -379,6 +380,7 @@ export function InvoiceSlider() {
                 borderColor: colors.$20,
               }}
               theme={{
+                ...useFullTheme(),
                 backgroundColor: colors.$1,
                 hoverBackgroundColor: colors.$4,
               }}
@@ -411,6 +413,7 @@ export function InvoiceSlider() {
                   borderColor: colors.$20,
                 }}
                 theme={{
+                  ...useFullTheme(),
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$4,
                 }}
@@ -553,6 +556,7 @@ export function InvoiceSlider() {
                           borderColor: colors.$20,
                         }}
                         theme={{
+                          ...useFullTheme(),
                           backgroundColor: colors.$1,
                           hoverBackgroundColor: colors.$4,
                         }}
@@ -640,6 +644,7 @@ export function InvoiceSlider() {
                         )
                       }
                       theme={{
+                        ...useFullTheme(),
                         backgroundColor: colors.$1,
                         hoverBackgroundColor: colors.$25,
                       }}
@@ -734,6 +739,7 @@ export function InvoiceSlider() {
                   key={activity.id}
                   className="flex space-x-3 p-4 rounded-md flex-1 min-w-0"
                   theme={{
+                    ...useFullTheme(),
                     backgroundColor: colors.$1,
                     hoverBackgroundColor: colors.$25,
                   }}

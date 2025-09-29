@@ -284,10 +284,6 @@ export default function Settings() {
         <div className="flex flex-col space-y-4 px-4 sm:px-6">
           <Box
             className="flex justify-between items-center p-4 border shadow-sm w-full rounded-md cursor-pointer"
-            theme={{
-              backgroundColor: colors.$1,
-              hoverBackgroundColor: colors.$4,
-            }}
             onClick={() =>
               window.open(
                 'https://invoiceninja.github.io/en/custom-fields/',
@@ -311,10 +307,6 @@ export default function Settings() {
 
           <Box
             className="flex items-center p-4 border shadow-sm w-full rounded-md cursor-pointer space-x-2"
-            theme={{
-              backgroundColor: colors.$1,
-              hoverBackgroundColor: colors.$4,
-            }}
             onClick={() => setIsImportModalVisible(true)}
             style={{ borderColor: colors.$24 }}
           >
@@ -329,10 +321,6 @@ export default function Settings() {
 
           <Box
             className="flex items-center p-4 border shadow-sm w-full rounded-md cursor-pointer space-x-2"
-            theme={{
-              backgroundColor: colors.$1,
-              hoverBackgroundColor: colors.$4,
-            }}
             onClick={handleExport}
             style={{ borderColor: colors.$24 }}
           >

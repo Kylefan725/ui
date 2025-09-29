@@ -85,11 +85,7 @@ export default function Activities() {
           {activities?.map((activity) => (
             <ActivityBox
               key={activity.id}
-              className="flex space-x-3 p-4 rounded-md flex-1 min-w-0 w-full"
-              theme={{
-                backgroundColor: colors.$1,
-                hoverBackgroundColor: colors.$25,
-              }}
+              className="flex space-x-3 p-4 rounded-md flex-1 min-w-0"
             >
               <div className="flex items-center justify-center">
                 <div

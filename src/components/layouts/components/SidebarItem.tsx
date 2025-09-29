@@ -10,7 +10,7 @@
 
 import { NavigationItem } from './DesktopSidebar';
 import { styled } from 'styled-components';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 import { useInjectUserChanges } from '$app/common/hooks/useInjectUserChanges';
 import { useThemeColorScheme } from '$app/pages/settings/user/components/StatusColorTheme';
 import classNames from 'classnames';
@@ -53,6 +53,7 @@ export function SidebarItem(props: Props) {
   return (
     <Div
       theme={{
+        ...useFullTheme(),
         color: item.current
           ? themeColors.$1 || colors.$8
           : themeColors.$3 || 'transparent',
@@ -90,7 +91,8 @@ export function SidebarItem(props: Props) {
       {item.rightButton && !isMiniSidebar && item.rightButton.visible && (
         <LinkStyled
           theme={{
-            hoverColor: colors.$6,
+            ...useFullTheme(),
+            hoverColor: colors.$25,
           }}
           to={item.rightButton.to}
           className="rounded-sm p-[0.1rem]"

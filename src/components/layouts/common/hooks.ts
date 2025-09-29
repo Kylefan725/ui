@@ -95,6 +95,12 @@ export function useSettingsRoutes() {
       enabled: isAdmin || isOwner || false,
     },
     {
+      name: t('internal_invoicing'),
+      href: '/settings/internal_invoicing',
+      current: location.pathname.startsWith('/settings/internal_invoicing'),
+      enabled: isAdmin || isOwner || false,
+    },
+    {
       name: t('account_management'),
       href: '/settings/account_management',
       current: location.pathname.startsWith('/settings/account_management'),

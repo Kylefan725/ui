@@ -11,7 +11,7 @@
 import classNames from 'classnames';
 import CommonProps from '$app/common/interfaces/common-props.interface';
 import styled from 'styled-components';
-import { useColorScheme } from '$app/common/colors';
+import { useColorScheme, useFullTheme } from '$app/common/colors';
 
 interface Props extends CommonProps {
   className?: string;
@@ -32,7 +32,7 @@ export function NonClickableElement(props: Props) {
   return (
     <DivStyled
       style={{ ...style }}
-      theme={{ hoverColor: colors.$2, color: colors.$3 }}
+      theme={{ ...useFullTheme(), hoverColor: colors.$2, color: colors.$3 }}
       className={classNames(
         `w-full text-left block hover:bg-gray-50 text-sm ${className}`,
         {
