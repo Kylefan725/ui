@@ -58,70 +58,143 @@ export function InvoiceStatus(props: Props) {
   };
 
   if (isDeleted) {
-    return <Badge variant="red">{t('deleted')}</Badge>;
+    return (
+      <div className="flex items-center gap-2">
+        {props.entity.is_internal && (
+          <Badge variant="purple">{t('internal')}</Badge>
+        )}
+        <Badge variant="red">{t('deleted')}</Badge>
+      </div>
+    );
   }
 
   if (props.entity.archived_at) {
-    return <Badge variant="orange">{t('archived')}</Badge>;
+    return (
+      <div className="flex items-center gap-2">
+        {props.entity.is_internal && (
+          <Badge variant="purple">{t('internal')}</Badge>
+        )}
+        <Badge variant="orange">{t('archived')}</Badge>
+      </div>
+    );
   }
 
   if (isPastDue() && !isCancelledOrReversed) {
     return (
-      <Badge variant="red" style={{ backgroundColor: statusThemeColors.$5 }}>
-        {t('past_due')}
-      </Badge>
+      <div className="flex items-center gap-2">
+        {props.entity.is_internal && (
+          <Badge variant="purple">{t('internal')}</Badge>
+        )}
+        <Badge variant="red" style={{ backgroundColor: statusThemeColors.$5 }}>
+          {t('past_due')}
+        </Badge>
+      </div>
     );
   }
 
   if (isViewed && isUnpaid && !isPartial && !isCancelledOrReversed) {
     return (
-      <Badge variant="yellow" style={{ backgroundColor: statusThemeColors.$4 }}>
-        {t('viewed')}
-      </Badge>
+      <div className="flex items-center gap-2">
+        {props.entity.is_internal && (
+          <Badge variant="purple">{t('internal')}</Badge>
+        )}
+        <Badge
+          variant="yellow"
+          style={{ backgroundColor: statusThemeColors.$4 }}
+        >
+          {t('viewed')}
+        </Badge>
+      </div>
     );
   }
 
   if (status_id === InvoiceStatusEnum.Draft) {
-    return <Badge variant="generic">{t('draft')}</Badge>;
+    return (
+      <div className="flex items-center gap-2">
+        {props.entity.is_internal && (
+          <Badge variant="purple">{t('internal')}</Badge>
+        )}
+        <Badge variant="generic">{t('draft')}</Badge>
+      </div>
+    );
   }
 
   if (status_id === InvoiceStatusEnum.Sent) {
     return (
-      <Badge
-        variant="light-blue"
-        style={{ backgroundColor: statusThemeColors.$1 }}
-      >
-        {t('sent')}
-      </Badge>
+      <div className="flex items-center gap-2">
+        {props.entity.is_internal && (
+          <Badge variant="purple">{t('internal')}</Badge>
+        )}
+        <Badge
+          variant="light-blue"
+          style={{ backgroundColor: statusThemeColors.$1 }}
+        >
+          {t('sent')}
+        </Badge>
+      </div>
     );
   }
 
   if (status_id === InvoiceStatusEnum.Partial) {
     return (
-      <Badge
-        variant="dark-blue"
-        style={{ backgroundColor: statusThemeColors.$2 }}
-      >
-        {t('partial')}
-      </Badge>
+      <div className="flex items-center gap-2">
+        {props.entity.is_internal && (
+          <Badge variant="purple">{t('internal')}</Badge>
+        )}
+        <Badge
+          variant="dark-blue"
+          style={{ backgroundColor: statusThemeColors.$2 }}
+        >
+          {t('partial')}
+        </Badge>
+      </div>
     );
   }
 
   if (status_id === InvoiceStatusEnum.Paid) {
     return (
-      <Badge variant="green" style={{ backgroundColor: statusThemeColors.$3 }}>
-        {t('paid')}
-      </Badge>
+      <div className="flex items-center gap-2">
+        {props.entity.is_internal && (
+          <Badge variant="purple">{t('internal')}</Badge>
+        )}
+        <Badge
+          variant="green"
+          style={{ backgroundColor: statusThemeColors.$3 }}
+        >
+          {t('paid')}
+        </Badge>
+      </div>
     );
   }
 
   if (status_id === InvoiceStatusEnum.Cancelled) {
-    return <Badge variant="black">{t('cancelled')}</Badge>;
+    return (
+      <div className="flex items-center gap-2">
+        {props.entity.is_internal && (
+          <Badge variant="purple">{t('internal')}</Badge>
+        )}
+        <Badge variant="black">{t('cancelled')}</Badge>
+      </div>
+    );
   }
 
   if (status_id === InvoiceStatusEnum.Reversed) {
-    return <Badge variant="purple">{t('reversed')}</Badge>;
+    return (
+      <div className="flex items-center gap-2">
+        {props.entity.is_internal && (
+          <Badge variant="purple">{t('internal')}</Badge>
+        )}
+        <Badge variant="purple">{t('reversed')}</Badge>
+      </div>
+    );
   }
 
-  return <Badge variant="purple">{t('reversed')}</Badge>;
+  return (
+    <div className="flex items-center gap-2">
+      {props.entity.is_internal && (
+        <Badge variant="purple">{t('internal')}</Badge>
+      )}
+      <Badge variant="purple">{t('reversed')}</Badge>
+    </div>
+  );
 }

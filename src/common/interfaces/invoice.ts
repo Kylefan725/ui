@@ -88,6 +88,9 @@ export interface Invoice {
   backup?: Backup;
   location_id: string;
   schedule?: ScheduleItem[]
+  // Internal invoice fields
+  is_internal?: boolean;
+  requires_approval?: boolean;
 }
 
 export interface Backup {
