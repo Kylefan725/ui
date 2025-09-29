@@ -101,8 +101,13 @@ export const useCustomBulkActions = () => {
 
   const showMarkPaidOption = (invoices: Invoice[]) => {
     return !invoices.some(
-      ({ status_id, is_deleted }) =>
-        parseInt(status_id) > parseInt(InvoiceStatus.Partial) || is_deleted
+      ({ status_id, is_deleted, is_internal, requires_approval }) => {
+        const disallowedStatus =
+          parseInt(status_id) > parseInt(InvoiceStatus.Partial);
+        const internalAwaitingApproval =
+          Boolean(is_internal) && Boolean(requires_approval);
+        return disallowedStatus || is_deleted || internalAwaitingApproval;
+      }
     );
   };
 

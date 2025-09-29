@@ -291,7 +291,10 @@ export function useActions(params?: Params) {
       ),
     (invoice: Invoice) =>
       parseInt(invoice.status_id) < parseInt(InvoiceStatus.Paid) &&
-      !invoice.is_deleted && (
+      !invoice.is_deleted &&
+      // If internal, only show Mark Paid when approval is no longer required
+      (!invoice.is_internal ||
+        (invoice.is_internal && !invoice.requires_approval)) && (
         <EntityActionElement
           {...(!dropdown && {
             key: 'mark_paid',
