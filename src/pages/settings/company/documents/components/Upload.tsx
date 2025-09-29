@@ -12,7 +12,6 @@ import { Card, Element } from '$app/components/cards';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Image } from 'react-feather';
 import { useTranslation } from 'react-i18next';
 import { request } from '$app/common/helpers/request';
 import { enterprisePlan } from '$app/common/guards/guards/enterprise-plan';
@@ -26,7 +25,6 @@ import { useColorScheme } from '$app/common/colors';
 import { ValidationBag } from '$app/common/interfaces/validation-bag';
 import { AxiosError } from 'axios';
 import { route } from '$app/common/helpers/route';
-import { CloudUpload } from '$app/components/icons/CloudUpload';
 import styled from 'styled-components';
 import { ErrorMessage } from '$app/components/ErrorMessage';
 

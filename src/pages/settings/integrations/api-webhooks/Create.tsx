@@ -33,7 +33,6 @@ import { useEvents } from './common/hooks/useEvents';
 import { useColorScheme } from '$app/common/colors';
 import styled from 'styled-components';
 import { Plus } from '$app/components/icons/Plus';
-import classNames from 'classnames';
 import { CircleXMark } from '$app/components/icons/CircleXMark';
 
 const Box = styled.div`
