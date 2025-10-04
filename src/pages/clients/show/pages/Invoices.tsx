@@ -27,7 +27,7 @@ export default function Invoices() {
   const { id } = useParams();
 
   const hasPermission = useHasPermission();
-  const { data: client } = useClientQuery({ id });
+  const { data: client } = useClientQuery({ id, enabled: !!id });
 
   const actions = useActions();
   const columns = useInvoiceColumns();

@@ -1,4 +1,4 @@
-import { isInternalInvoiceEditingLocked } from '../../../src/pages/invoices/edit/utils/isInternalInvoiceEditingLocked';
+import { isInternalInvoiceEditingLocked } from '../../../../src/pages/invoices/edit/utils/isInternalInvoiceEditingLocked';
 
 describe('isInternalInvoiceEditingLocked', () => {
   it('returns false when invoice is not internal', () => {

@@ -14,6 +14,7 @@ import { useTaskColumns } from '../common/hooks/useTaskColumns';
 import { InvoiceItemType } from '$app/common/interfaces/invoice-item';
 import InvoiceTab from '../edit/components/InvoiceTab';
 import { Banner } from '$app/components/Banner';
+import { isInternalInvoiceEditingLocked } from '../edit/utils/isInternalInvoiceEditingLocked';
 
 export default function InternalInvoiceForm() {
   const [t] = useTranslation();
@@ -138,6 +139,7 @@ export default function InternalInvoiceForm() {
                       }
                       handleCreateLineItem={handleCreateLineItem}
                       handleDeleteLineItem={handleDeleteLineItem}
+                      isEditLocked={isInternalInvoiceEditingLocked({ invoice, client })}
                     />
                   ) : (
                     <Spinner />
