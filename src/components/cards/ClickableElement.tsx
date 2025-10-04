@@ -42,13 +42,14 @@ interface Props extends CommonProps {
 
 export function ClickableElement(props: Props) {
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const classes = `block w-full text-left px-4 sm:px-6 block py-4 space-x-3 text-sm ${props.className}`;
 
   if (props.to) {
     return (
       <LinkStyled
-        theme={{ ...useFullTheme(), hoverColor: colors.$4, color: colors.$3 }}
+        theme={{ ...theme, hoverColor: colors.$4, color: colors.$3 }}
         to={props.to}
         style={{ pointerEvents: !props.disableNavigation ? 'all' : 'none' }}
         className={classes}
@@ -61,7 +62,7 @@ export function ClickableElement(props: Props) {
   if (props.href) {
     return (
       <AStyled
-        theme={{ ...useFullTheme(), hoverColor: colors.$4, color: colors.$3 }}
+        theme={{ ...theme, hoverColor: colors.$4, color: colors.$3 }}
         target="_blank"
         href={props.href}
         className={classes}
@@ -74,7 +75,7 @@ export function ClickableElement(props: Props) {
 
   return (
     <ButtonStyled
-      theme={{ ...useFullTheme(), hoverColor: colors.$4, color: colors.$3 }}
+      theme={{ ...theme, hoverColor: colors.$4, color: colors.$3 }}
       type="button"
       onClick={props.onClick}
       onChange={props.onChange}

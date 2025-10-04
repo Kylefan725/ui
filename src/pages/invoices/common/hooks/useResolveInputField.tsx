@@ -343,7 +343,7 @@ export function useResolveInputField(props: Props) {
     );
   };
 
-  return (key: string, index: number) => {
+  return (key: string, index: number, isDisabled?: boolean) => {
     const property = resolveProperty(key);
 
     if (property === 'product_key') {
@@ -362,6 +362,7 @@ export function useResolveInputField(props: Props) {
           onInputValueChange={(value) => onChange('product_key', value, index)}
           onClearButtonClick={() => handleProductChange(index, '', null)}
           displayStockQuantity={location.pathname.startsWith('/invoices')}
+          readonly={isDisabled}
         />
       );
     }
@@ -378,6 +379,7 @@ export function useResolveInputField(props: Props) {
           }
           style={{ marginTop: '4px' }}
           textareaRows={preferences.auto_expand_product_table_notes ? 1 : 3}
+          disabled={isDisabled}
         />
       );
     }
@@ -405,6 +407,7 @@ export function useResolveInputField(props: Props) {
                 index
               );
             }}
+            disabled={isDisabled}
           />
         )
       );
@@ -444,6 +447,7 @@ export function useResolveInputField(props: Props) {
           onValueChange={(value) => onChange(field, value, index)}
           fieldOnly
           selectMenuPosition="fixed"
+          disabled={isDisabled}
         />
       ) : (
         <InputField
@@ -452,6 +456,7 @@ export function useResolveInputField(props: Props) {
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             onChange(property, event.target.value, index)
           }
+          disabled={isDisabled}
         />
       );
     }
@@ -470,6 +475,7 @@ export function useResolveInputField(props: Props) {
           onValueChange={(value) => onChange(field, value, index)}
           fieldOnly
           selectMenuPosition="fixed"
+          disabled={isDisabled}
         />
       ) : (
         <InputField
@@ -478,6 +484,7 @@ export function useResolveInputField(props: Props) {
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             onChange(property, event.target.value, index)
           }
+          disabled={isDisabled}
         />
       );
     }
@@ -489,6 +496,7 @@ export function useResolveInputField(props: Props) {
         onChange={(event: ChangeEvent<HTMLInputElement>) =>
           onChange(property, event.target.value, index)
         }
+        disabled={isDisabled}
       />
     );
   };

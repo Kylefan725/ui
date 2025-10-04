@@ -25,6 +25,7 @@ interface Props {
 
 export function PanelResizeHandle(props: Props) {
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const { renderBasePanelResizeHandler } = props;
 
@@ -32,7 +33,7 @@ export function PanelResizeHandle(props: Props) {
     <PanelResizeHandleBaseStyled
       className="flex items-center"
       theme={{
-        ...useFullTheme(),
+        ...theme,
         hoverColor: '#3366CC',
         backgroundColor: colors.$21,
       }}

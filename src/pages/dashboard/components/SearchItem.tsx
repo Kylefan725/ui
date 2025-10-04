@@ -41,6 +41,7 @@ export function SearchItem({
   setIsModalOpen,
 }: Props) {
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const navigate = useNavigate();
   const preventNavigation = usePreventNavigation();
@@ -49,7 +50,7 @@ export function SearchItem({
     <Div
       key={entry.id}
       theme={{
-        ...useFullTheme(),
+        ...theme,
         backgroundColor: colors.$1,
         color: colors.$3,
       }}

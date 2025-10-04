@@ -53,6 +53,7 @@ export function Th$(props: Props) {
   props = { ...defaultProps, ...props };
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const {
     thRef,
@@ -183,7 +184,7 @@ export function Th$(props: Props) {
         <StyledSpan
           className="column-resizer block absolute inset-y-0 right-0 m-0 w-1 h-full p-0 cursor-col-resize border border-transparent hover:transition duration-50"
           theme={{
-            ...useFullTheme(),
+            ...theme,
             backgroundColor: isResizing ? colors.$3 : 'transparent',
             hoverBackgroundColor: colors.$3,
           }}

@@ -25,87 +25,91 @@ import { Dispatch, SetStateAction } from 'react';
 import { useRefreshCompanyUsers } from '$app/common/hooks/useRefreshCompanyUsers';
 
 interface Params {
-  isDefaultTerms: boolean;
-  isDefaultFooter: boolean;
-  setErrors: Dispatch<SetStateAction<ValidationBag | undefined>>;
-  isFormBusy: boolean;
-  setIsFormBusy: Dispatch<SetStateAction<boolean>>;
+    isDefaultTerms: boolean;
+    isDefaultFooter: boolean;
+    setErrors: Dispatch<SetStateAction<ValidationBag | undefined>>;
+    isFormBusy: boolean;
+    setIsFormBusy: Dispatch<SetStateAction<boolean>>;
 }
 export function useHandleCreate(params: Params) {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
 
-  const {
-    setErrors,
-    isDefaultTerms,
-    isDefaultFooter,
-    setIsFormBusy,
-    isFormBusy,
-  } = params;
+    const {
+        setErrors,
+        isDefaultTerms,
+        isDefaultFooter,
+        setIsFormBusy,
+        isFormBusy,
+    } = params;
 
-  const refreshCompanyUsers = useRefreshCompanyUsers();
-  const saveCompany = useHandleCompanySave();
-  const setIsDeleteActionTriggered = useSetAtom(isDeleteActionTriggeredAtom);
+    const refreshCompanyUsers = useRefreshCompanyUsers();
+    const saveCompany = useHandleCompanySave();
+    const setIsDeleteActionTriggered = useSetAtom(isDeleteActionTriggeredAtom);
 
-  return async (invoice: Invoice) => {
-    if (isFormBusy) {
-      return;
-    }
-
-    toast.processing();
-    setIsFormBusy(true);
-    setErrors(undefined);
-
-    await saveCompany({ excludeToasters: true });
-
-    let apiEndpoint = '/api/v1/invoices?';
-
-    if (isDefaultTerms) {
-      apiEndpoint += 'save_default_terms=true';
-      if (isDefaultFooter) {
-        apiEndpoint += '&save_default_footer=true';
-      }
-    } else if (isDefaultFooter) {
-      apiEndpoint += 'save_default_footer=true';
-    }
-
-    request('POST', endpoint(apiEndpoint), invoice)
-      .then(async (response: GenericSingleResourceResponse<Invoice>) => {
-        if (isDefaultTerms || isDefaultFooter) {
-          await refreshCompanyUsers();
+    return async (invoice: Invoice) => {
+        if (isFormBusy) {
+            return;
         }
 
-        toast.success('created_invoice');
+        toast.processing();
+        setIsFormBusy(true);
+        setErrors(undefined);
 
-        $refetch(['products', 'tasks']);
+        await saveCompany({ excludeToasters: true });
 
-        if (searchParams.get('action') === 'invoice_expense') {
-          $refetch(['expenses']);
+        let apiEndpoint = '/api/v1/invoices?';
+
+        if (isDefaultTerms) {
+            apiEndpoint += 'save_default_terms=true';
+            if (isDefaultFooter) {
+                apiEndpoint += '&save_default_footer=true';
+            }
+        } else if (isDefaultFooter) {
+            apiEndpoint += 'save_default_footer=true';
         }
 
-        navigate(
-          route('/invoices/:id/edit?table=:table', {
-            id: response.data.data.id,
-            table: searchParams.get('table') ?? 'products',
-          })
-        );
-      })
-      .catch((error: AxiosError<ValidationBag>) => {
-        if (error.response?.status === 422) {
-          const errorMessages = error.response.data;
+        request('POST', endpoint(apiEndpoint), invoice)
+            .then(async (response: GenericSingleResourceResponse<Invoice>) => {
+                if (isDefaultTerms || isDefaultFooter) {
+                    await refreshCompanyUsers();
+                }
 
-          if (errorMessages.errors.amount) {
-            toast.error(errorMessages.errors.amount[0]);
-          } else {
-            toast.dismiss();
-          }
+                toast.success('created_invoice');
 
-          setErrors(errorMessages);
-        }
-      })
-      .finally(() => {
-        setIsDeleteActionTriggered(undefined);
-        setIsFormBusy(false);
-      });
-  };
+                $refetch(['products', 'tasks']);
+
+                if (searchParams.get('action') === 'invoice_expense') {
+                    $refetch(['expenses']);
+                }
+
+                const targetTable = invoice.is_internal
+                    ? 'invoice'
+                    : searchParams.get('table') ?? 'products';
+
+                navigate(
+                    route('/invoices/:id/edit?table=:table', {
+                        id: response.data.data.id,
+                        table: targetTable,
+                    })
+                );
+            })
+            .catch((error: AxiosError<ValidationBag>) => {
+                if (error.response?.status === 422) {
+                    const errorMessages = error.response.data;
+
+                    if (errorMessages.errors.amount) {
+                        toast.error(errorMessages.errors.amount[0]);
+                    } else {
+                        toast.dismiss();
+                    }
+
+                    setErrors(errorMessages);
+                }
+            })
+            .finally(() => {
+                setIsDeleteActionTriggered(undefined);
+                setIsFormBusy(false);
+            });
+    };
 }

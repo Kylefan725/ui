@@ -32,9 +32,9 @@ export function TrashXMark({ size = '1.2rem', color = '#FFF' }: Props) {
         d="m13.474,7.25l-.374,7.105c-.056,1.062-.934,1.895-1.997,1.895h-4.205c-1.064,0-1.941-.833-1.997-1.895l-.374-7.105"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       ></path>
       <line
         x1="2.75"
@@ -43,18 +43,18 @@ export function TrashXMark({ size = '1.2rem', color = '#FFF' }: Props) {
         y2="4.75"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
         data-color="color-2"
       ></line>
       <path
         d="m6.75,4.75v-2c0-.552.448-1,1-1h2.5c.552,0,1,.448,1,1v2"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
         data-color="color-2"
       ></path>
       <line
@@ -64,9 +64,9 @@ export function TrashXMark({ size = '1.2rem', color = '#FFF' }: Props) {
         y2="12.268"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
         data-color="color-2"
       ></line>
       <line
@@ -76,9 +76,9 @@ export function TrashXMark({ size = '1.2rem', color = '#FFF' }: Props) {
         y2="12.268"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
         data-color="color-2"
       ></line>
     </svg>

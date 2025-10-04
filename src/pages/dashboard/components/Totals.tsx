@@ -134,6 +134,7 @@ export function Totals() {
   const formatMoney = useFormatMoney();
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
   const company = useCurrentCompany();
   const currentUser = useCurrentUser();
 
@@ -302,7 +303,7 @@ export function Totals() {
                   update('preferences.dashboard_charts.default_view', 'day')
                 }
                 theme={{
-                  ...useFullTheme(),
+                  ...theme,
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$4,
                 }}
@@ -320,7 +321,7 @@ export function Totals() {
                   update('preferences.dashboard_charts.default_view', 'week')
                 }
                 theme={{
-                  ...useFullTheme(),
+                  ...theme,
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$4,
                 }}
@@ -338,7 +339,7 @@ export function Totals() {
                   update('preferences.dashboard_charts.default_view', 'month')
                 }
                 theme={{
-                  ...useFullTheme(),
+                  ...theme,
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$4,
                 }}

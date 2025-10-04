@@ -86,6 +86,7 @@ export function AboutModal(props: Props) {
   const dispatch = useDispatch();
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const onWrongPasswordEnter = useOnWrongPasswordEnter();
 
@@ -353,7 +354,7 @@ export function AboutModal(props: Props) {
               <Div
                 className="flex justify-between items-center cursor-pointer py-1 px-3"
                 theme={{
-                  ...useFullTheme(),
+                  ...theme,
                   hoverColor: colors.$5,
                 }}
                 onClick={() =>
@@ -387,7 +388,7 @@ export function AboutModal(props: Props) {
             <Div
               className="flex justify-between items-center cursor-pointer py-1 px-3"
               theme={{
-                ...useFullTheme(),
+                ...theme,
                 hoverColor: colors.$5,
               }}
               onClick={() =>
@@ -417,7 +418,7 @@ export function AboutModal(props: Props) {
             <Div
               className="flex justify-between items-center cursor-pointer py-1 px-3"
               theme={{
-                ...useFullTheme(),
+                ...theme,
                 hoverColor: colors.$5,
               }}
               onClick={() =>

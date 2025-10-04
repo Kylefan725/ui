@@ -119,12 +119,26 @@ export function useActions(params?: Params) {
       ),
     (client) =>
       !client.is_deleted &&
-      hasPermission('create_invoice') && (
+      hasPermission('create_invoice') &&
+      !client.is_internal && (
         <DropdownElement
           to={route('/invoices/create?client=:id', { id: client.id })}
           icon={<Icon element={BiPlusCircle} />}
         >
           {t('new_invoice')}
+        </DropdownElement>
+      ),
+    (client) =>
+      !client.is_deleted &&
+      hasPermission('create_invoice') &&
+      client.is_internal && (
+        <DropdownElement
+          to={route('/invoices/create?internal=true&client=:id', {
+            id: client.id,
+          })}
+          icon={<Icon element={BiPlusCircle} />}
+        >
+          {t('new_internal_invoice')}
         </DropdownElement>
       ),
     (client) =>

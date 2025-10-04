@@ -37,6 +37,7 @@ const ActivityBox = styled.div`
 export default function Activities() {
   const [t] = useTranslation();
   const colors = useColorScheme();
+  const theme = useFullTheme();
   const { id } = useParams();
   const activityElement = useGenerateActivityElement();
   const { timeFormat } = useCompanyTimeFormat();
@@ -86,7 +87,7 @@ export default function Activities() {
               key={activity.id}
               className="flex space-x-3 p-4 rounded-md flex-1 min-w-0 w-full"
               theme={{
-                ...useFullTheme(),
+                ...theme,
                 backgroundColor: colors.$1,
                 hoverBackgroundColor: colors.$4,
               }}

@@ -57,6 +57,7 @@ export function Settings(props: Props) {
 
   const location = useLocation();
   const colors = useColorScheme();
+  const theme = useFullTheme();
   const { basic, advanced } = useSettingsRoutes();
   const activeSettings = useActiveSettingsDetails();
   const settingPathNameKey = location.pathname.split('/')[2];
@@ -161,7 +162,7 @@ export function Settings(props: Props) {
                     )}
                     aria-current={item.current ? 'page' : undefined}
                     theme={{
-                      ...useFullTheme(),
+                      ...theme,
                       backgroundColor: item.current ? colors.$20 : '',
                       color: item.current ? colors.$3 : '',
                       hoverColor: colors.$20,
@@ -219,7 +220,7 @@ export function Settings(props: Props) {
                     )}
                     aria-current={item.current ? 'page' : undefined}
                     theme={{
-                      ...useFullTheme(),
+                      ...theme,
                       backgroundColor: item.current ? colors.$20 : '',
                       color: item.current ? colors.$3 : '',
                       hoverColor: colors.$20,

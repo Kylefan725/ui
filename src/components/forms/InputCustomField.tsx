@@ -20,6 +20,7 @@ export interface Props {
   value: string;
   onValueChange: (value: string | number | boolean) => unknown;
   selectMenuPosition?: 'fixed';
+  disabled?: boolean;
 }
 
 export function InputCustomField(props: Props) {
@@ -43,6 +44,7 @@ export function InputCustomField(props: Props) {
           id={props.field}
           onValueChange={props.onValueChange}
           value={props.defaultValue || ''}
+          disabled={props.disabled}
         />
       )}
 
@@ -53,6 +55,7 @@ export function InputCustomField(props: Props) {
           id={props.field}
           onValueChange={props.onValueChange}
           value={props.defaultValue || ''}
+          disabled={props.disabled}
         />
       )}
 
@@ -70,6 +73,7 @@ export function InputCustomField(props: Props) {
                 props.defaultValue === 'yes'
               : props.defaultValue
           }
+          disabled={props.disabled}
         />
       )}
 
@@ -80,6 +84,7 @@ export function InputCustomField(props: Props) {
           id={props.field}
           onValueChange={props.onValueChange}
           value={props.defaultValue || ''}
+          disabled={props.disabled}
         />
       )}
 
@@ -90,6 +95,7 @@ export function InputCustomField(props: Props) {
           customSelector
           withBlank
           menuPosition={props.selectMenuPosition}
+          disabled={props.disabled}
         >
           {type.split(',').map((option, index) => (
             <option key={index} value={option}>

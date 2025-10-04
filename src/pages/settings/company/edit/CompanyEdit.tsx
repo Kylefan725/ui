@@ -52,6 +52,7 @@ export function CompanyEdit(props: Props) {
   const dispatch = useDispatch();
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
   const company = useCurrentCompany();
   const companyChanges = useInjectCompanyChanges();
 
@@ -210,7 +211,7 @@ export function CompanyEdit(props: Props) {
           <div className="flex flex-col items-center">
             <Div
               className="flex w-full justify-center h-28 cursor-pointer"
-              theme={{ ...useFullTheme(), hoverColor: colors.$5 }}
+              theme={{ ...theme, hoverColor: colors.$5 }}
               onClick={() => handleConnectPaymentGateway('stripe_connect')}
             >
               <GatewayTypeIcon name="stripe" style={{ width: '64%' }} />
@@ -218,7 +219,7 @@ export function CompanyEdit(props: Props) {
 
             <Div
               className="flex w-full justify-center h-28 cursor-pointer"
-              theme={{ ...useFullTheme(), hoverColor: colors.$5 }}
+              theme={{ ...theme, hoverColor: colors.$5 }}
               onClick={() => handleConnectPaymentGateway('paypal_ppcp')}
             >
               <GatewayTypeIcon

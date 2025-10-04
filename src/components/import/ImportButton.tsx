@@ -31,13 +31,14 @@ export function ImportButton(props: Props) {
   const [t] = useTranslation();
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   return (
     <ReactRouterLink to={props.route}>
       <Button
         className="flex items-center space-x-2.5 border rounded-md px-3 2xl:px-4 py-2 shadow-sm"
         theme={{
-          ...useFullTheme(),
+          ...theme,
           hoverColor: colors.$20,
           borderColor: colors.$24,
           backgroundColor: colors.$1,

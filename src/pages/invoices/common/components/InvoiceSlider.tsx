@@ -200,6 +200,7 @@ export function InvoiceSlider() {
   const [t] = useTranslation();
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
   const reactSettings = useReactSettings();
 
   const getSetting = useGetSetting();
@@ -380,7 +381,7 @@ export function InvoiceSlider() {
                 borderColor: colors.$20,
               }}
               theme={{
-                ...useFullTheme(),
+                ...theme,
                 backgroundColor: colors.$1,
                 hoverBackgroundColor: colors.$4,
               }}
@@ -413,7 +414,7 @@ export function InvoiceSlider() {
                   borderColor: colors.$20,
                 }}
                 theme={{
-                  ...useFullTheme(),
+                  ...theme,
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$4,
                 }}
@@ -556,7 +557,7 @@ export function InvoiceSlider() {
                           borderColor: colors.$20,
                         }}
                         theme={{
-                          ...useFullTheme(),
+                          ...theme,
                           backgroundColor: colors.$1,
                           hoverBackgroundColor: colors.$4,
                         }}
@@ -644,7 +645,7 @@ export function InvoiceSlider() {
                         )
                       }
                       theme={{
-                        ...useFullTheme(),
+                        ...theme,
                         backgroundColor: colors.$1,
                         hoverBackgroundColor: colors.$25,
                       }}
@@ -739,7 +740,7 @@ export function InvoiceSlider() {
                   key={activity.id}
                   className="flex space-x-3 p-4 rounded-md flex-1 min-w-0"
                   theme={{
-                    ...useFullTheme(),
+                    ...theme,
                     backgroundColor: colors.$1,
                     hoverBackgroundColor: colors.$25,
                   }}

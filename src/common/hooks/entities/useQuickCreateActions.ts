@@ -80,6 +80,15 @@ export function useQuickCreateActions() {
         hasPermission('create_invoice') && enabled(ModuleBitmask.Invoices),
     },
     {
+      key: 'internal_invoice',
+      url: '/invoices/create/internal',
+      section: 'income',
+      visible:
+        hasPermission('create_invoice') &&
+        enabled(ModuleBitmask.Invoices) &&
+        Boolean(currentCompany?.settings?.enable_internal_invoicing),
+    },
+    {
       key: 'recurring_invoice',
       url: '/recurring_invoices/create',
       section: 'income',

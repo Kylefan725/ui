@@ -55,6 +55,7 @@ export function Button(props: Props) {
   props = { ...defaultProps, ...props };
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
   const accentColor = useAccentColor();
 
   const css: React.CSSProperties = {
@@ -73,7 +74,7 @@ export function Button(props: Props) {
       <StyledLink
         to={props.to}
         theme={{
-          ...useFullTheme(),
+          ...theme,
           backgroundColor: props.type === 'primary' ? colors.$18 : colors.$1,
           color: props.type === 'primary' ? colors.$1 : colors.$3,
           borderColor: props.type === 'primary' ? 'transparent' : colors.$24,
@@ -99,7 +100,7 @@ export function Button(props: Props) {
       type={props.behavior}
       disabled={props.disabled}
       theme={{
-        ...useFullTheme(),
+        ...theme,
         backgroundColor: props.type === 'primary' ? colors.$18 : colors.$1,
         color: props.type === 'primary' ? colors.$1 : colors.$3,
         borderColor: props.type === 'primary' ? 'transparent' : colors.$24,

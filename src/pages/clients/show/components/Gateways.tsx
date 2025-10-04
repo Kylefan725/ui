@@ -50,6 +50,7 @@ export function Gateways(props: Props) {
 
   const { isAdmin } = useAdmin();
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const { data: companyGatewaysResponse } = useCompanyGatewaysQuery();
 
@@ -237,7 +238,7 @@ export function Gateways(props: Props) {
                       <Div
                         className="flex flex-col h-28 border rounded-md shadow-sm p-3"
                         style={{ borderColor: colors.$24 }}
-                        theme={{ ...useFullTheme(), hoverBgColor: colors.$4 }}
+                        theme={{ ...theme, hoverBgColor: colors.$4 }}
                       >
                         {t('default')}
                       </Div>
@@ -254,7 +255,7 @@ export function Gateways(props: Props) {
                                 paddingBottom: '0.24rem',
                               }}
                               theme={{
-                                ...useFullTheme(),
+                                ...theme,
                                 hoverBgColor: colors.$4,
                               }}
                             >
@@ -281,7 +282,7 @@ export function Gateways(props: Props) {
                       <Div
                         className="flex flex-col h-28 border rounded-md shadow-sm p-3"
                         style={{ borderColor: colors.$24 }}
-                        theme={{ ...useFullTheme(), hoverBgColor: colors.$4 }}
+                        theme={{ ...theme, hoverBgColor: colors.$4 }}
                       >
                         {t('save_as_default')}
                       </Div>
@@ -298,7 +299,7 @@ export function Gateways(props: Props) {
                                 paddingBottom: '0.26rem',
                               }}
                               theme={{
-                                ...useFullTheme(),
+                                ...theme,
                                 hoverBgColor: colors.$4,
                               }}
                             >

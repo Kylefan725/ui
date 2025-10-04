@@ -59,6 +59,7 @@ const Box = styled.div`
 export function PaymentSlider() {
   const [t] = useTranslation();
   const colors = useColorScheme();
+  const theme = useFullTheme();
   const navigate = useNavigate();
 
   const actions = useActions({
@@ -205,7 +206,7 @@ export function PaymentSlider() {
                   borderColor: colors.$20,
                 }}
                 theme={{
-                  ...useFullTheme(),
+                  ...theme,
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$4,
                 }}
@@ -259,7 +260,7 @@ export function PaymentSlider() {
                   borderColor: colors.$20,
                 }}
                 theme={{
-                  ...useFullTheme(),
+                  ...theme,
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$4,
                 }}
@@ -300,7 +301,7 @@ export function PaymentSlider() {
                 key={activity.id}
                 className="flex space-x-3 p-4 rounded-md flex-1 min-w-0"
                 theme={{
-                  ...useFullTheme(),
+                  ...theme,
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$25,
                 }}

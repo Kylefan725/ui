@@ -62,7 +62,7 @@ export function CustomField(props: Props) {
       ? props.value.split('|')
       : [props.value, ''];
     setLabel(fieldLabel || '');
-  }, []);
+  }, [props.value]);
 
   if (props.fieldOnly) {
     return <InputCustomField {...props} />;
@@ -70,7 +70,7 @@ export function CustomField(props: Props) {
 
   return (
     <Element leftSide={label} noExternalPadding={props.noExternalPadding}>
-      <InputCustomField {...props} />
+      <InputCustomField {...props} disabled={props.disabled} />
     </Element>
   );
 }

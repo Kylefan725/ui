@@ -35,6 +35,7 @@ const StyledSwitch = styled(Switch)`
 
 export default function Toggle(props: Props) {
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const [checked, setChecked] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
@@ -48,7 +49,7 @@ export default function Toggle(props: Props) {
     <Switch.Group as="div" className="flex items-center">
       <StyledSwitch
         theme={{
-          ...useFullTheme(),
+          ...theme,
           ringColor: colors.$5,
           borderColor: colors.$5,
           backgroundColor: checked ? colors.$3 : colors.$5,

@@ -21,11 +21,13 @@ import { useSetAtom } from 'jotai';
 import { confirmActionModalAtom } from '$app/pages/recurring-invoices/common/components/ConfirmActionModal';
 import { useState } from 'react';
 import { DeleteInvoicesConfirmationModal } from '$app/pages/invoices/common/components/DeleteInvoicesConfirmationModal';
+import { useClientQuery } from '$app/common/queries/clients';
 
 export default function Invoices() {
   const { id } = useParams();
 
   const hasPermission = useHasPermission();
+  const { data: client } = useClientQuery({ id });
 
   const actions = useActions();
   const columns = useInvoiceColumns();
@@ -34,6 +36,10 @@ export default function Invoices() {
 
   const setIsConfirmActionModalOpen = useSetAtom(confirmActionModalAtom);
   const [selectedInvoiceIds, setSelectedInvoiceIds] = useState<string[]>([]);
+
+  const createInvoiceLink = client?.is_internal
+    ? route('/invoices/create?internal=true&client=:id', { id })
+    : route('/invoices/create?client=:id', { id });
 
   return (
     <>
@@ -49,7 +55,7 @@ export default function Invoices() {
         customBulkActions={customBulkActions}
         withResourcefulActions
         bulkRoute="/api/v1/invoices/bulk"
-        linkToCreate={route('/invoices/create?client=:id', { id })}
+        linkToCreate={createInvoiceLink}
         linkToEdit="/invoices/:id/edit"
         excludeColumns={['client_id']}
         linkToCreateGuards={[permission('create_invoice')]}

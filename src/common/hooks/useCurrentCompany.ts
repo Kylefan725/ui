@@ -15,22 +15,22 @@ import { useCompanyChanges } from './useCompanyChanges';
 import { isEqual } from 'lodash';
 
 export function useCurrentCompany(): Company {
-  const companyUserState = useSelector(
-    (state: RootState) => state.companyUsers
-  );
+    const companyUserState = useSelector(
+        (state: RootState) => state.companyUsers
+    );
 
-  return companyUserState.api[companyUserState.currentIndex]?.company;
+    return companyUserState?.api?.[companyUserState?.currentIndex]?.company;
 }
 
 export function useShouldUpdateCompany() {
-  const company = useCurrentCompany();
-  const changes = useCompanyChanges();
+    const company = useCurrentCompany();
+    const changes = useCompanyChanges();
 
-  return () => {
-    if (typeof changes === 'undefined') {
-      return false;
-    }
+    return () => {
+        if (typeof changes === 'undefined') {
+            return false;
+        }
 
-    return !isEqual(company, changes);
-  };
+        return !isEqual(company, changes);
+    };
 }

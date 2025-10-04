@@ -32,9 +32,9 @@ export function CircleLock({ color = '#000', size = '18px' }: Props) {
         r="7.25"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       ></circle>
       <circle
         cx="9"
@@ -42,9 +42,9 @@ export function CircleLock({ color = '#000', size = '18px' }: Props) {
         r="2"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
         data-color="color-2"
       ></circle>
       <line
@@ -54,9 +54,9 @@ export function CircleLock({ color = '#000', size = '18px' }: Props) {
         y2="12.5"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
         data-color="color-2"
       ></line>
     </svg>

@@ -48,6 +48,7 @@ const StyledButton = styled.button`
 
 export function TabGroup(props: Props) {
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const {
     withoutVerticalMargin,
@@ -106,7 +107,7 @@ export function TabGroup(props: Props) {
                 type="button"
                 onClick={() => handleTabChange(index)}
                 theme={{
-                  ...useFullTheme(),
+                  ...theme,
                   textColor: currentIndex === index ? colors.$3 : colors.$17,
                   hoverTextColor: colors.$3,
                 }}

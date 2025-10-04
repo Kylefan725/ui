@@ -36,6 +36,7 @@ export default function Settings() {
 
   const { id } = useParams();
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const { data: clientGroupSettings } = useQuery({
     queryKey: ['/api/v1/clients/show_settings', id],
@@ -81,7 +82,7 @@ export default function Settings() {
                   key={key}
                   className="flex w-full items-center space-x-2 px-2 py-1.5 rounded-sm"
                   theme={{
-                    ...useFullTheme(),
+                    ...theme,
                     hoverColor: colors.$4,
                     color: colors.$1,
                   }}
@@ -131,7 +132,7 @@ export default function Settings() {
                   key={key}
                   className="flex w-full items-center space-x-2 px-2 py-1.5 rounded-sm"
                   theme={{
-                    ...useFullTheme(),
+                    ...theme,
                     hoverColor: colors.$4,
                     color: colors.$1,
                   }}

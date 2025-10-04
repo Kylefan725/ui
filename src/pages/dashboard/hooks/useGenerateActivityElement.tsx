@@ -43,6 +43,7 @@ export function useGenerateActivityElement() {
   const [t] = useTranslation();
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const { timeFormat } = useCompanyTimeFormat();
   const { dateFormat } = useCurrentCompanyDateFormats();
@@ -249,7 +250,7 @@ export function useGenerateActivityElement() {
       key={activity.id}
       className="flex space-x-3 p-4 rounded-md flex-1 min-w-0 w-full"
       theme={{
-        ...useFullTheme(),
+        ...theme,
         backgroundColor: colors.$1,
         hoverBackgroundColor: colors.$4,
       }}

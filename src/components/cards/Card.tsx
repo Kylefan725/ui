@@ -72,6 +72,142 @@ export function Card(props: Props) {
 
   const colors = useColorScheme();
 
+  const isForm = Boolean(props.onFormSubmit);
+  const saveButtonBehavior = isForm ? 'submit' : 'button';
+
+  const formClassName = classNames({ 'h-full': height === 'full' });
+
+  const content = (
+    <>
+      {props.title && (
+        <div
+          className={classNames(
+            {
+              'bg-white sticky top-0': props.withScrollableBody,
+              'px-4 sm:px-6 py-3':
+                padding == 'small' && !props.withoutHeaderPadding,
+              'px-4 sm:px-6 py-5':
+                padding == 'regular' && !props.withoutHeaderPadding,
+              'border-b': !props.withoutHeaderBorder,
+            },
+            props.headerClassName
+          )}
+          onClick={() =>
+            typeof props.collapsed !== 'undefined' &&
+            setIsCollpased(!isCollapsed)
+          }
+          style={{ borderColor: colors.$4, ...props.headerStyle }}
+        >
+          <div
+            className={classNames('flex items-center justify-between', {
+              'cursor-pointer select-none':
+                typeof props.collapsed !== 'undefined',
+            })}
+          >
+            <div>
+              <h3
+                className={classNames('leading-6 font-medium', {
+                  'text-lg': padding == 'regular',
+                  'text-md': padding == 'small',
+                })}
+              >
+                {props.title}
+              </h3>
+
+              {props.description && (
+                <p className="mt-1 max-w-2xl text-sm">{props.description}</p>
+              )}
+            </div>
+
+            {props.topRight}
+
+            {typeof props.collapsed !== 'undefined' && isCollapsed && (
+              <ChevronDown />
+            )}
+
+            {typeof props.collapsed !== 'undefined' && !isCollapsed && (
+              <ChevronUp />
+            )}
+          </div>
+        </div>
+      )}
+
+      <div
+        className={classNames(props.childrenClassName, {
+          hidden: isCollapsed,
+          'py-0': props.withoutBodyPadding,
+          'py-4': padding === 'regular' && !props.withoutBodyPadding,
+          'py-2': padding === 'small' && !props.withoutBodyPadding,
+          'h-full': height === 'full',
+        })}
+      >
+        {props.isLoading && <Element leftSide={<Spinner />} />}
+
+        {props.withContainer ? (
+          <CardContainer>{props.children}</CardContainer>
+        ) : (
+          props.children
+        )}
+      </div>
+
+      {(props.withSaveButton || props.additionalAction) && (
+        <div
+          className="border-t px-4 py-5 sm:p-0"
+          style={{ borderColor: colors.$20 }}
+        >
+          <dl className="sm:divide-y sm:divide-gray-200">
+            <div className="sm:py-5 sm:px-6 flex justify-end space-x-4">
+              {props.additionalAction}
+
+              {props.withSaveButton && !props.additionalSaveOptions && (
+                <Button
+                  behavior={saveButtonBehavior}
+                  onClick={props.onSaveClick}
+                  disabled={props.disableSubmitButton}
+                  disableWithoutIcon={props.disableWithoutIcon}
+                >
+                  {props.saveButtonLabel ?? t('save')}
+                </Button>
+              )}
+
+              {props.withSaveButton && props.additionalSaveOptions && (
+                <div className="flex">
+                  <Button
+                    behavior={saveButtonBehavior}
+                    className="rounded-br-none rounded-tr-none px-3"
+                    onClick={props.onSaveClick}
+                    disabled={props.disableSubmitButton}
+                    disableWithoutIcon={props.disableWithoutIcon}
+                  >
+                    {props.saveButtonLabel ?? t('save')}
+                  </Button>
+
+                  <Dropdown
+                    className="rounded-bl-none rounded-tl-none h-full px-1 border-l-1 border-y-0 border-r-0"
+                    disabled={props.disableSubmitButton}
+                    cardActions
+                    labelButtonBorderColor={colors.$1}
+                  >
+                    {props.additionalSaveOptions.map((action, i) => (
+                      <DropdownElement
+                        key={i}
+                        icon={action.icon}
+                        disabled={props.disableSubmitButton}
+                        onClick={action.onClick}
+                      >
+                        {action.text}
+                      </DropdownElement>
+                    ))}
+                  </Dropdown>
+                </div>
+              )}
+            </div>
+          </dl>
+        </div>
+      )}
+    </>
+  );
+
   return (
     <div
       ref={props.innerRef}
@@ -89,135 +225,13 @@ export function Card(props: Props) {
         ...props.style,
       }}
     >
-      <form
-        onSubmit={props.onFormSubmit}
-        className={classNames({ 'h-full': height === 'full' })}
-      >
-        {props.title && (
-          <div
-            className={classNames(
-              {
-                'bg-white sticky top-0': props.withScrollableBody,
-                'px-4 sm:px-6 py-3':
-                  padding == 'small' && !props.withoutHeaderPadding,
-                'px-4 sm:px-6 py-5':
-                  padding == 'regular' && !props.withoutHeaderPadding,
-                'border-b': !props.withoutHeaderBorder,
-              },
-              props.headerClassName
-            )}
-            onClick={() =>
-              typeof props.collapsed !== 'undefined' &&
-              setIsCollpased(!isCollapsed)
-            }
-            style={{ borderColor: colors.$4, ...props.headerStyle }}
-          >
-            <div
-              className={classNames('flex items-center justify-between', {
-                'cursor-pointer select-none':
-                  typeof props.collapsed !== 'undefined',
-              })}
-            >
-              <div>
-                <h3
-                  className={classNames('leading-6 font-medium', {
-                    'text-lg': padding == 'regular',
-                    'text-md': padding == 'small',
-                  })}
-                >
-                  {props.title}
-                </h3>
-
-                {props.description && (
-                  <p className="mt-1 max-w-2xl text-sm">{props.description}</p>
-                )}
-              </div>
-
-              {props.topRight}
-
-              {typeof props.collapsed !== 'undefined' && isCollapsed && (
-                <ChevronDown />
-              )}
-
-              {typeof props.collapsed !== 'undefined' && !isCollapsed && (
-                <ChevronUp />
-              )}
-            </div>
-          </div>
-        )}
-
-        <div
-          className={classNames(props.childrenClassName, {
-            hidden: isCollapsed,
-            'py-0': props.withoutBodyPadding,
-            'py-4': padding === 'regular' && !props.withoutBodyPadding,
-            'py-2': padding === 'small' && !props.withoutBodyPadding,
-            'h-full': height === 'full',
-          })}
-        >
-          {props.isLoading && <Element leftSide={<Spinner />} />}
-
-          {props.withContainer ? (
-            <CardContainer>{props.children}</CardContainer>
-          ) : (
-            props.children
-          )}
-        </div>
-
-        {(props.withSaveButton || props.additionalAction) && (
-          <div
-            className="border-t px-4 py-5 sm:p-0"
-            style={{ borderColor: colors.$20 }}
-          >
-            <dl className="sm:divide-y sm:divide-gray-200">
-              <div className="sm:py-5 sm:px-6 flex justify-end space-x-4">
-                {props.additionalAction}
-
-                {props.withSaveButton && !props.additionalSaveOptions && (
-                  <Button
-                    onClick={props.onSaveClick}
-                    disabled={props.disableSubmitButton}
-                    disableWithoutIcon={props.disableWithoutIcon}
-                  >
-                    {props.saveButtonLabel ?? t('save')}
-                  </Button>
-                )}
-
-                {props.withSaveButton && props.additionalSaveOptions && (
-                  <div className="flex">
-                    <Button
-                      className="rounded-br-none rounded-tr-none px-3"
-                      onClick={props.onSaveClick}
-                      disabled={props.disableSubmitButton}
-                      disableWithoutIcon={props.disableWithoutIcon}
-                    >
-                      {props.saveButtonLabel ?? t('save')}
-                    </Button>
-
-                    <Dropdown
-                      className="rounded-bl-none rounded-tl-none h-full px-1 border-l-1 border-y-0 border-r-0"
-                      disabled={props.disableSubmitButton}
-                      cardActions
-                      labelButtonBorderColor={colors.$1}
-                    >
-                      {props.additionalSaveOptions.map((action, i) => (
-                        <DropdownElement
-                          key={i}
-                          icon={action.icon}
-                          disabled={props.disableSubmitButton}
-                          onClick={action.onClick}
-                        >
-                          {action.text}
-                        </DropdownElement>
-                      ))}
-                    </Dropdown>
-                  </div>
-                )}
-              </div>
-            </dl>
-          </div>
-        )}
-      </form>
+      {isForm ? (
+        <form className={formClassName} onSubmit={props.onFormSubmit}>
+          {content}
+        </form>
+      ) : (
+        <div className={formClassName}>{content}</div>
+      )}
     </div>
   );
 }

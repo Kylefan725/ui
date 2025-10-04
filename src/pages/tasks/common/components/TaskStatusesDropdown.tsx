@@ -39,6 +39,7 @@ interface Props {
 export function TaskStatusesDropdown(props: Props) {
   const [t] = useTranslation();
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const { isAdmin, isOwner } = useAdmin();
 
@@ -78,7 +79,7 @@ export function TaskStatusesDropdown(props: Props) {
                   onClick={() =>
                     handleUpdateTask({ ...task, status_id: taskStatus.id })
                   }
-                  theme={{ ...useFullTheme(), hoverColor: colors.$25 }}
+                  theme={{ ...theme, hoverColor: colors.$25 }}
                 >
                   <div>
                     {taskStatus.id === task.status_id ? (
@@ -110,7 +111,7 @@ export function TaskStatusesDropdown(props: Props) {
                   setIsModalOpen(true);
                   setVisible(false);
                 }}
-                theme={{ ...useFullTheme(), hoverColor: colors.$25 }}
+                theme={{ ...theme, hoverColor: colors.$25 }}
               >
                 <div className="flex items-center gap-2">
                   <Plus color={colors.$17} size="1.2rem" />

@@ -43,6 +43,7 @@ const StyledLink = styled(Link)`
 
 export function DropdownElement(props: Props) {
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const { prevent: preventLeavingPage } = useAtomValue(preventLeavingPageAtom);
 
@@ -57,7 +58,7 @@ export function DropdownElement(props: Props) {
       <div className="p-1">
         <StyledLink
           theme={{
-            ...useFullTheme(),
+            ...theme,
             color: colors.$3,
             hoverColor: colors.$20,
           }}
@@ -93,7 +94,7 @@ export function DropdownElement(props: Props) {
   return (
     <div className="p-1">
       <Button
-        theme={{ ...useFullTheme(), color: colors.$3, hoverColor: colors.$20 }}
+        theme={{ ...theme, color: colors.$3, hoverColor: colors.$20 }}
         type="button"
         onClick={(event) =>
           preventNavigation({

@@ -55,6 +55,7 @@ export default function History() {
   const disableNavigation = useDisableNavigation();
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
   const { timeFormat } = useCompanyTimeFormat();
   const { dateFormat } = useCurrentCompanyDateFormats();
 
@@ -116,7 +117,7 @@ export default function History() {
                       )
                     }
                     theme={{
-                      ...useFullTheme(),
+                      ...theme,
                       backgroundColor: colors.$1,
                       hoverBackgroundColor: colors.$4,
                     }}

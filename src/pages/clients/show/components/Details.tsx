@@ -74,6 +74,24 @@ export function Details(props: Props) {
               </div>
             </div>
 
+            {client.is_internal && (
+              <div className="flex flex-col space-y-1">
+                <span
+                  className="text-sm font-medium"
+                  style={{ color: colors.$22 }}
+                >
+                  {t('type')}
+                </span>
+
+                <span
+                  className="text-sm font-medium"
+                  style={{ color: colors.$3 }}
+                >
+                  {t('internal')}
+                </span>
+              </div>
+            )}
+
             <div className="flex flex-col space-y-1">
               <span
                 className="text-sm font-medium"

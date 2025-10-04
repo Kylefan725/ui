@@ -83,6 +83,7 @@ export function SendEmailModal(props: Props) {
   const bulk = useBulkAction({ onSuccess: () => setVisible(false) });
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
   const availableTypes = useAvailableTypes();
 
   return (
@@ -100,7 +101,7 @@ export function SendEmailModal(props: Props) {
               bulk(quoteIds, 'email', { email_type: type.value });
               props.setSelected([]);
             }}
-            theme={{ ...useFullTheme(), hoverColor: colors.$5 }}
+            theme={{ ...theme, hoverColor: colors.$5 }}
           >
             {t(type.label)}
           </Div>

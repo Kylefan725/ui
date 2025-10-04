@@ -37,6 +37,7 @@ export function QuickCreatePopover() {
   const preventNavigation = usePreventNavigation();
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
   const actions = useQuickCreateActions();
   const sections = useQuickCreateSections();
 
@@ -55,7 +56,7 @@ export function QuickCreatePopover() {
             className="flex items-center justify-center h-10 w-10 rounded-lg border shadow-sm focus:outline-none"
             style={{ height: '2.3rem', borderColor: colors.$5 }}
             theme={{
-              ...useFullTheme(),
+              ...theme,
               hoverBackgroundColor: colors.$4,
               backgroundColor: colors.$1,
             }}
@@ -125,7 +126,7 @@ export function QuickCreatePopover() {
                                 action.visible && (
                                   <Div
                                     theme={{
-                                      ...useFullTheme(),
+                                      ...theme,
                                       hoverColor: colors.$4,
                                       textColor: colors.$3,
                                       hoverTextColor: colors.$3,

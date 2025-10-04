@@ -18,7 +18,7 @@ import { initReactI18next } from 'react-i18next';
 import * as Sentry from '@sentry/react';
 import { ScrollToTop } from '$app/components/ScrollToTop';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { createRoot } from 'react-dom/client';
+import { Root, createRoot } from 'react-dom/client';
 
 import './resources/css/app.css';
 import en from './resources/lang/en/en.json';
@@ -88,9 +88,21 @@ loader.config({ monaco });
 
 loader.init().then(/* ... */);
 
-const container = document.getElementById('root') as HTMLElement;
+type RootContainerElement = HTMLElement & { _reactRoot?: Root };
 
-createRoot(container).render(
+const container = document.getElementById('root');
+
+if (!container) {
+  throw new Error('Root container element not found');
+}
+
+const rootContainer = container as RootContainerElement;
+
+if (!rootContainer._reactRoot) {
+  rootContainer._reactRoot = createRoot(rootContainer);
+}
+
+rootContainer._reactRoot.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>

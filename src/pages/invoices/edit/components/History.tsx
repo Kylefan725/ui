@@ -47,6 +47,7 @@ export default function History() {
   const [t] = useTranslation();
   const navigate = useNavigate();
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const context: Context = useOutletContext();
   const { invoice } = context;
@@ -119,7 +120,7 @@ export default function History() {
                         )
                       }
                       theme={{
-                        ...useFullTheme(),
+                        ...theme,
                         backgroundColor: colors.$1,
                         hoverBackgroundColor: colors.$4,
                       }}

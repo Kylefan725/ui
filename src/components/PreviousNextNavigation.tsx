@@ -100,6 +100,7 @@ export function PreviousNextNavigation({ entity, entityEndpointName }: Props) {
   const preventNavigation = usePreventNavigation();
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
   const queryClient = useQueryClient();
 
   const { isEditPage } = useEntityPageIdentifier({
@@ -210,7 +211,7 @@ export function PreviousNextNavigation({ entity, entityEndpointName }: Props) {
             });
           }}
           theme={{
-            ...useFullTheme(),
+            ...theme,
             hoverColor: colors.$25,
             backgroundColor: colors.$1,
             borderColor: colors.$24,
@@ -241,7 +242,7 @@ export function PreviousNextNavigation({ entity, entityEndpointName }: Props) {
             });
           }}
           theme={{
-            ...useFullTheme(),
+            ...theme,
             hoverColor: colors.$25,
             backgroundColor: colors.$1,
             borderColor: colors.$24,

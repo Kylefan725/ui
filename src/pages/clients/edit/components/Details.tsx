@@ -177,6 +177,15 @@ export function Details(props: Props) {
         />
       </Element>
 
+      <Element leftSide={t('internal_client')}>
+        <Toggle
+          checked={Boolean(props.client?.is_internal)}
+          onValueChange={(value) =>
+            handleCustomFieldChange('is_internal', value)
+          }
+        />
+      </Element>
+
       <Element leftSide={t('classification')}>
         <SelectField
           value={props.client?.classification ?? ''}

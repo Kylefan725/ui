@@ -58,6 +58,7 @@ export function EditSlider() {
   const [task, setTask] = useAtom(currentTaskAtom);
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
   const { dateFormat } = useCurrentCompanyDateFormats();
 
   const company = useCurrentCompany();
@@ -280,7 +281,7 @@ export function EditSlider() {
                 className="flex items-center justify-between p-4 w-full shadow-sm border rounded-md cursor-pointer focus:outline-none focus:ring-0"
                 style={{ borderColor: colors.$20 }}
                 theme={{
-                  ...useFullTheme(),
+                  ...theme,
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$4,
                 }}

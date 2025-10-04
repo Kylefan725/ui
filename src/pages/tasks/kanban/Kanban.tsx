@@ -111,6 +111,7 @@ export default function Kanban() {
   const [t] = useTranslation();
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
   const { isAdmin, isOwner } = useAdmin();
 
   const stopTask = useStop();
@@ -380,7 +381,7 @@ export default function Kanban() {
                     borderColor: colors.$20,
                   }}
                   theme={{
-                    ...useFullTheme(),
+                    ...theme,
                     color: colors.$3,
                     backgroundColor: colors.$1,
                     hoverBackgroundColor: colors.$4,
@@ -409,7 +410,7 @@ export default function Kanban() {
                     borderColor: colors.$20,
                   }}
                   theme={{
-                    ...useFullTheme(),
+                    ...theme,
                     color: colors.$3,
                     backgroundColor: colors.$1,
                     hoverBackgroundColor: colors.$4,
@@ -437,7 +438,7 @@ export default function Kanban() {
                     borderColor: colors.$20,
                   }}
                   theme={{
-                    ...useFullTheme(),
+                    ...theme,
                     color: colors.$3,
                     backgroundColor: colors.$1,
                     hoverBackgroundColor: colors.$4,
@@ -517,7 +518,7 @@ export default function Kanban() {
                           ref={columnDraggableProvided.innerRef}
                           {...columnDraggableProvided.draggableProps}
                           theme={{
-                            ...useFullTheme(),
+                            ...theme,
                             minWidth: 360,
                             color: colors.$3,
                             backgroundColor: colors.$1,
@@ -550,7 +551,7 @@ export default function Kanban() {
                                 }}
                                 style={{ borderColor: colors.$21 }}
                                 theme={{
-                                  ...useFullTheme(),
+                                  ...theme,
                                   backgroundColor: colors.$1,
                                   hoverBackgroundColor: colors.$4,
                                 }}
@@ -704,7 +705,7 @@ export default function Kanban() {
                                           {...dragProvided.draggableProps}
                                           {...dragProvided.dragHandleProps}
                                           theme={{
-                                            ...useFullTheme(),
+                                            ...theme,
                                             backgroundColor: colors.$7,
                                             color: colors.$3,
                                           }}
@@ -842,7 +843,7 @@ export default function Kanban() {
                   borderColor: colors.$21,
                 }}
                 theme={{
-                  ...useFullTheme(),
+                  ...theme,
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$4,
                 }}

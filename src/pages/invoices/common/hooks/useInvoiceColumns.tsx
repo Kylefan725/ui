@@ -35,6 +35,9 @@ import { useGetTimezone } from '$app/common/hooks/useGetTimezone';
 import { useDateTime } from '$app/common/hooks/useDateTime';
 import { useGetSetting } from '$app/common/hooks/useGetSetting';
 import classNames from 'classnames';
+import { Icon } from '$app/components/icons/Icon';
+import { MdTextSnippet } from 'react-icons/md';
+import { useColorScheme } from '$app/common/colors';
 
 export type DataTableColumnsExtended<TResource = any, TColumn = string> = {
   column: TColumn;
@@ -137,6 +140,7 @@ export function useInvoiceColumns(): DataTableColumns<Invoice> {
   const formatMoney = useFormatMoney();
   const resolveCountry = useResolveCountry();
   const formatCustomFieldValue = useFormatCustomFieldValue();
+  const colors = useColorScheme();
 
   const [firstCustom, secondCustom, thirdCustom, fourthCustom] =
     useEntityCustomFields({
@@ -155,12 +159,31 @@ export function useInvoiceColumns(): DataTableColumns<Invoice> {
       id: 'number',
       label: t('number'),
       format: (value, invoice) => (
-        <DynamicLink
-          to={route('/invoices/:id/edit', { id: invoice.id })}
-          renderSpan={disableNavigation('invoice', invoice)}
-        >
-          {value}
-        </DynamicLink>
+        <span className="inline-flex items-center space-x-1">
+          <DynamicLink
+            to={route('/invoices/:id/edit', { id: invoice.id })}
+            renderSpan={disableNavigation('invoice', invoice)}
+          >
+            {value}
+          </DynamicLink>
+
+          {invoice.uploaded_document_id ? (
+            <Tooltip
+              placement="bottom"
+              withoutArrow
+              message={t('uploaded_document') as string}
+              centerVertically
+            >
+              <span
+                aria-label={t('uploaded_document') as string}
+                title={t('uploaded_document') as string}
+                style={{ color: colors.$17 }}
+              >
+                <Icon element={MdTextSnippet} size={16} />
+              </span>
+            </Tooltip>
+          ) : null}
+        </span>
       ),
     },
     {

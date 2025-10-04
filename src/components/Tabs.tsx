@@ -71,6 +71,7 @@ export function Tabs(props: Props) {
   const params = useParams();
   const location = useLocation();
   const colors = useColorScheme();
+  const theme = useFullTheme();
   const [searchParams] = useSearchParams();
   const tabBar = useRef<HTMLDivElement>(null);
 
@@ -175,7 +176,7 @@ export function Tabs(props: Props) {
                     to={tab.href}
                     onClick={(event) => handleScroll(event)}
                     theme={{
-                      ...useFullTheme(),
+                      ...theme,
                       textColor: isActive(tab) ? colors.$3 : colors.$17,
                       hoverTextColor: colors.$3,
                     }}

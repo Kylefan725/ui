@@ -49,6 +49,8 @@ import { $refetch } from '$app/common/hooks/useRefetch';
 import { InputLabel } from '$app/components/forms';
 import { confirmActionModalAtom } from '$app/pages/recurring-invoices/common/components/ConfirmActionModal';
 import { DeleteInvoicesConfirmationModal } from '../common/components/DeleteInvoicesConfirmationModal';
+import { Link } from '$app/components/forms';
+import { useCurrentCompany } from '$app/common/hooks/useCurrentCompany';
 
 export default function Invoices() {
   const { documentTitle } = useTitle('invoices');
@@ -59,6 +61,7 @@ export default function Invoices() {
 
   const hasPermission = useHasPermission();
   const disableNavigation = useDisableNavigation();
+  const company = useCurrentCompany();
 
   const [sliderInvoiceId, setSliderInvoiceId] = useState<string>('');
   const [invoiceSlider, setInvoiceSlider] = useAtom(invoiceSliderAtom);
@@ -134,6 +137,15 @@ export default function Invoices() {
               columns={invoiceColumns as unknown as string[]}
               defaultColumns={defaultColumns}
             />
+
+            {company?.settings?.enable_internal_invoicing &&
+              hasPermission('create_invoice') && (
+                <Link to="/invoices/create/internal">
+                  <span className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                    {t('internal_invoice')}
+                  </span>
+                </Link>
+              )}
 
             <Guard
               type="component"

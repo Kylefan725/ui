@@ -51,6 +51,7 @@ export function Pagination(props: Props) {
 
   const [t] = useTranslation();
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const goToPage = (pageNumber: number) => {
     if (pageNumber >= 1 && pageNumber <= props.totalPages) {
@@ -74,7 +75,7 @@ export function Pagination(props: Props) {
           <PaginationButton
             className="p-2 sm:p-[0.725rem] border rounded-l-md shadow-sm cursor-pointer"
             theme={{
-              ...useFullTheme(),
+              ...theme,
               hoverColor: colors.$4,
               backgroundColor: colors.$1,
               borderColor: colors.$24,
@@ -87,7 +88,7 @@ export function Pagination(props: Props) {
           <PaginationButton
             className="p-2 sm:p-[0.725rem] border-b border-t border-r rounded-r-md shadow-sm cursor-pointer"
             theme={{
-              ...useFullTheme(),
+              ...theme,
               hoverColor: colors.$4,
               backgroundColor: colors.$1,
               borderColor: colors.$24,
@@ -106,7 +107,7 @@ export function Pagination(props: Props) {
           <PaginationButton
             className="p-2 sm:p-[0.725rem] border-t border-b border-l rounded-l-md shadow-sm cursor-pointer"
             theme={{
-              ...useFullTheme(),
+              ...theme,
               hoverColor: colors.$4,
               backgroundColor: colors.$1,
               borderColor: colors.$24,
@@ -119,7 +120,7 @@ export function Pagination(props: Props) {
           <PaginationButton
             className="p-2 sm:p-[0.725rem] border rounded-r-md shadow-sm cursor-pointer"
             theme={{
-              ...useFullTheme(),
+              ...theme,
               hoverColor: colors.$4,
               backgroundColor: colors.$1,
               borderColor: colors.$24,

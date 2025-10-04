@@ -87,6 +87,7 @@ export function UploadCompanyImport(props: Props) {
   };
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
   const reactSettings = useReactSettings();
 
   const { numberOfTemplates, templates } = useEntityImportTemplates({
@@ -545,7 +546,7 @@ export function UploadCompanyImport(props: Props) {
               <Box
                 className="flex items-center justify-center py-2 px-3 border-2 border-dashed rounded cursor-pointer"
                 theme={{
-                  ...useFullTheme(),
+                  ...theme,
                   borderColor: colors.$24,
                   hoverBorderColor: colors.$5,
                 }}

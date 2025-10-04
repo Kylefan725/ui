@@ -38,18 +38,18 @@ export function ArrowsOppositeDirection({
         y2="8.25"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={strokeWidth}
         data-color="color-2"
       ></line>
       <polyline
         points="8.75 5.75 11.25 8.25 8.75 10.75"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={strokeWidth}
         data-color="color-2"
       ></polyline>
       <line
@@ -59,17 +59,17 @@ export function ArrowsOppositeDirection({
         y2="3.75"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={strokeWidth}
       ></line>
       <polyline
         points="3.25 1.25 .75 3.75 3.25 6.25"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={strokeWidth}
       ></polyline>
     </svg>
   );

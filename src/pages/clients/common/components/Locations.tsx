@@ -61,6 +61,7 @@ export default function Locations() {
   const { id } = useParams();
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const resolveCountry = useResolveCountry();
 
@@ -143,7 +144,7 @@ export default function Locations() {
             <NewLocationCard
               className="flex flex-col space-y-2 items-center justify-center border-dashed border p-6 rounded-md cursor-pointer h-48"
               theme={{
-                ...useFullTheme(),
+                ...theme,
                 backgroundColor: colors.$1,
                 hoverBackgroundColor: colors.$20,
                 borderColor: colors.$24,
@@ -158,7 +159,7 @@ export default function Locations() {
               <LocationCard
                 key={index}
                 theme={{
-                  ...useFullTheme(),
+                  ...theme,
                   borderColor: colors.$24,
                 }}
                 className="px-3 py-4 flex justify-between space-x-4 border rounded-md h-48"
@@ -215,7 +216,7 @@ export default function Locations() {
                     )}
                     style={{ borderColor: colors.$24 }}
                     theme={{
-                      ...useFullTheme(),
+                      ...theme,
                       hoverBackgroundColor: colors.$20,
                       backgroundColor: colors.$1,
                     }}
@@ -236,7 +237,7 @@ export default function Locations() {
                     )}
                     style={{ borderColor: colors.$24 }}
                     theme={{
-                      ...useFullTheme(),
+                      ...theme,
                       hoverBackgroundColor: colors.$20,
                       backgroundColor: colors.$1,
                     }}

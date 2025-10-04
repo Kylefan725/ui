@@ -43,6 +43,7 @@ export function XMLImport(props: Props) {
   const { entity } = props;
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const [files, setFiles] = useState<File[]>([]);
   const [errors, setErrors] = useState<ValidationBag>();
@@ -191,7 +192,7 @@ export function XMLImport(props: Props) {
             <Div
               className="relative block w-full border-2 border-dashed rounded-lg p-12 text-center"
               theme={{
-                ...useFullTheme(),
+                ...theme,
                 borderColor: colors.$24,
                 hoverBorderColor: colors.$5,
               }}

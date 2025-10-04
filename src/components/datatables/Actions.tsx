@@ -197,6 +197,7 @@ export function SelectWithApplyButton(props: any) {
   const CustomMenu = (menuProps: MenuProps<SelectOption, true>) => {
     const [t] = useTranslation();
     const colors = useColorScheme();
+    const theme = useFullTheme();
     const reactSettings = useReactSettings();
 
     const handleReset = () => {
@@ -222,7 +223,7 @@ export function SelectWithApplyButton(props: any) {
               })}
               onClick={handleReset}
               theme={{
-                ...useFullTheme(),
+                ...theme,
                 textColor: colors.$3,
                 backgroundColor: '#09090B1A',
               }}
@@ -268,6 +269,7 @@ export function Actions(props: Props) {
   const { customFilter } = props;
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const customFilterDropdowns = props.customFilters
     ? collect(props.customFilters)

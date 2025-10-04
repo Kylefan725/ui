@@ -194,13 +194,14 @@ function Control(props: ControlProps<SelectOption, true>) {
 function Option(props: OptionProps<SelectOption, true>) {
   const { isSelected, label, data, innerProps } = props;
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   return (
     <Box
       {...innerProps}
       className="flex space-x-3 items-center w-full truncate px-[0.75rem] py-2 cursor-pointer rounded-[0.1875rem]"
       theme={{
-        ...useFullTheme(),
+        ...theme,
         backgroundColor: colors.$1,
         hoverBackgroundColor: colors.$4,
       }}
@@ -306,6 +307,7 @@ interface Props {
 
 export function CustomMultiSelect(props: Props) {
   const colors = useColorScheme();
+  const theme = useFullTheme();
   const {
     id,
     defaultValue,

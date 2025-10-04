@@ -45,6 +45,7 @@ const getCheckmarkSvgUrl = (color: string): string => {
 
 export function Checkbox(props: Props) {
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const checkmarkDataUrl = getCheckmarkSvgUrl(colors.$9);
 
@@ -70,7 +71,7 @@ export function Checkbox(props: Props) {
             height: '1.1rem',
           }}
           theme={{
-            ...useFullTheme(),
+            ...theme,
             backgroundColor: colors.$1,
             checkedBorderColor: colors.$3,
             borderColor: colors.$5,

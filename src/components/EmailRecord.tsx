@@ -47,6 +47,7 @@ export function EmailRecord(props: Props) {
   const navigate = useNavigate();
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const { dateFormat } = useCurrentCompanyDateFormats();
 
@@ -89,7 +90,7 @@ export function EmailRecord(props: Props) {
             'cursor-pointer': Boolean(emailRecord.events.length),
           }
         )}
-        theme={{ ...useFullTheme(), hoverColor: colors.$25 }}
+        theme={{ ...theme, hoverColor: colors.$25 }}
         onClick={() =>
           Boolean(emailRecord.events.length) &&
           setIsCollapsed((current) => !current)

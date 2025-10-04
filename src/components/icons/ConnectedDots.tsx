@@ -33,9 +33,9 @@ export function ConnectedDots({ color = '#000', size = '18px' }: Props) {
         y2="4.664"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
         data-color="color-2"
       ></line>
       <line
@@ -45,9 +45,9 @@ export function ConnectedDots({ color = '#000', size = '18px' }: Props) {
         y2="7.586"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
         data-color="color-2"
       ></line>
       <line
@@ -57,9 +57,9 @@ export function ConnectedDots({ color = '#000', size = '18px' }: Props) {
         y2="13.336"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
         data-color="color-2"
       ></line>
       <line
@@ -69,9 +69,9 @@ export function ConnectedDots({ color = '#000', size = '18px' }: Props) {
         y2="10.414"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
         data-color="color-2"
       ></line>
       <circle
@@ -80,9 +80,9 @@ export function ConnectedDots({ color = '#000', size = '18px' }: Props) {
         r="2"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       ></circle>
       <circle
         cx="3.25"
@@ -90,9 +90,9 @@ export function ConnectedDots({ color = '#000', size = '18px' }: Props) {
         r="2"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       ></circle>
       <circle
         cx="9"
@@ -100,9 +100,9 @@ export function ConnectedDots({ color = '#000', size = '18px' }: Props) {
         r="2"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       ></circle>
       <circle
         cx="14.75"
@@ -110,9 +110,9 @@ export function ConnectedDots({ color = '#000', size = '18px' }: Props) {
         r="2"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       ></circle>
     </svg>
   );

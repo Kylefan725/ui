@@ -135,6 +135,7 @@ export function QuoteSlider() {
   const navigate = useNavigate();
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
   const reactSettings = useReactSettings();
 
   const actions = useActions({
@@ -316,7 +317,7 @@ export function QuoteSlider() {
                 borderColor: colors.$20,
               }}
               theme={{
-                ...useFullTheme(),
+                ...theme,
                 backgroundColor: colors.$1,
                 hoverBackgroundColor: colors.$4,
               }}
@@ -349,7 +350,7 @@ export function QuoteSlider() {
                   borderColor: colors.$20,
                 }}
                 theme={{
-                  ...useFullTheme(),
+                  ...theme,
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$4,
                 }}
@@ -480,7 +481,7 @@ export function QuoteSlider() {
                   borderColor: colors.$20,
                 }}
                 theme={{
-                  ...useFullTheme(),
+                  ...theme,
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$4,
                 }}
@@ -536,7 +537,7 @@ export function QuoteSlider() {
                         )
                       }
                       theme={{
-                        ...useFullTheme(),
+                        ...theme,
                         backgroundColor: colors.$1,
                         hoverBackgroundColor: colors.$25,
                       }}
@@ -631,7 +632,7 @@ export function QuoteSlider() {
                   key={activity.id}
                   className="flex space-x-3 p-4 rounded-md flex-1 min-w-0"
                   theme={{
-                    ...useFullTheme(),
+                    ...theme,
                     backgroundColor: colors.$1,
                     hoverBackgroundColor: colors.$25,
                   }}

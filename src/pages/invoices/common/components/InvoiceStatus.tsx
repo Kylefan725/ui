@@ -9,6 +9,7 @@
  */
 
 import { Badge } from '$app/components/Badge';
+import { Tooltip } from '$app/components/Tooltip';
 import { useTranslation } from 'react-i18next';
 import { Invoice } from '$app/common/interfaces/invoice';
 import { InvoiceStatus as InvoiceStatusEnum } from '$app/common/enums/invoice-status';
@@ -26,6 +27,104 @@ export function InvoiceStatus(props: Props) {
     props.entity;
 
   const statusThemeColors = useStatusThemeColorScheme();
+
+  const renderInternalAndApprovalBadges = () => {
+    const badges: JSX.Element[] = [];
+
+    if (props.entity.is_internal) {
+      badges.push(
+        <Badge key="internal" variant="purple">
+          {t('internal')}
+        </Badge>
+      );
+    }
+
+    const approvalStatus = props.entity.approval_status;
+
+    if (props.entity.is_internal && approvalStatus) {
+      const approverName = props.entity.approver_name;
+      const approvedAt = props.entity.approved_at
+        ? dayjs(props.entity.approved_at).format('YYYY-MM-DD')
+        : '';
+      const rejectedAt = props.entity.rejected_at
+        ? dayjs(props.entity.rejected_at).format('YYYY-MM-DD')
+        : '';
+
+      if (approvalStatus === 'approved') {
+        const message = [
+          approverName ? `${t('approved')}: ${approverName}` : t('approved'),
+          approvedAt ? `(${approvedAt})` : '',
+        ]
+          .filter(Boolean)
+          .join(' ');
+
+        badges.push(
+          <Tooltip
+            key="approval-approved"
+            placement="bottom"
+            withoutArrow
+            message={message}
+            centerVertically
+          >
+            <span aria-label={message} title={message}>
+              <Badge
+                variant="green"
+                style={{ backgroundColor: statusThemeColors.$3 || '#22C55E' }}
+              >
+                {t('approved')}
+              </Badge>
+            </span>
+          </Tooltip>
+        );
+      } else if (approvalStatus === 'pending') {
+        const message = t('pending') as string;
+
+        badges.push(
+          <Tooltip
+            key="approval-pending"
+            placement="bottom"
+            withoutArrow
+            message={message}
+            centerVertically
+          >
+            <span aria-label={message} title={message}>
+              <Badge
+                variant="yellow"
+                style={{ backgroundColor: statusThemeColors.$4 || '#F59E0B' }}
+              >
+                {t('pending')}
+              </Badge>
+            </span>
+          </Tooltip>
+        );
+      } else if (approvalStatus === 'rejected') {
+        const reason = props.entity.rejection_reason;
+        const message = [
+          t('rejected') as string,
+          rejectedAt ? `(${rejectedAt})` : '',
+          reason ? `- ${reason}` : '',
+        ]
+          .filter(Boolean)
+          .join(' ');
+
+        badges.push(
+          <Tooltip
+            key="approval-rejected"
+            placement="bottom"
+            withoutArrow
+            message={message}
+            centerVertically
+          >
+            <span aria-label={message} title={message}>
+              <Badge variant="red">{t('rejected')}</Badge>
+            </span>
+          </Tooltip>
+        );
+      }
+    }
+
+    return badges;
+  };
 
   const checkInvoiceInvitationsViewedDate = () => {
     return props.entity.invitations.some(
@@ -60,9 +159,7 @@ export function InvoiceStatus(props: Props) {
   if (isDeleted) {
     return (
       <div className="flex items-center gap-2">
-        {props.entity.is_internal && (
-          <Badge variant="purple">{t('internal')}</Badge>
-        )}
+        {renderInternalAndApprovalBadges()}
         <Badge variant="red">{t('deleted')}</Badge>
       </div>
     );
@@ -71,9 +168,7 @@ export function InvoiceStatus(props: Props) {
   if (props.entity.archived_at) {
     return (
       <div className="flex items-center gap-2">
-        {props.entity.is_internal && (
-          <Badge variant="purple">{t('internal')}</Badge>
-        )}
+        {renderInternalAndApprovalBadges()}
         <Badge variant="orange">{t('archived')}</Badge>
       </div>
     );
@@ -82,9 +177,7 @@ export function InvoiceStatus(props: Props) {
   if (isPastDue() && !isCancelledOrReversed) {
     return (
       <div className="flex items-center gap-2">
-        {props.entity.is_internal && (
-          <Badge variant="purple">{t('internal')}</Badge>
-        )}
+        {renderInternalAndApprovalBadges()}
         <Badge variant="red" style={{ backgroundColor: statusThemeColors.$5 }}>
           {t('past_due')}
         </Badge>
@@ -95,9 +188,7 @@ export function InvoiceStatus(props: Props) {
   if (isViewed && isUnpaid && !isPartial && !isCancelledOrReversed) {
     return (
       <div className="flex items-center gap-2">
-        {props.entity.is_internal && (
-          <Badge variant="purple">{t('internal')}</Badge>
-        )}
+        {renderInternalAndApprovalBadges()}
         <Badge
           variant="yellow"
           style={{ backgroundColor: statusThemeColors.$4 }}
@@ -111,9 +202,7 @@ export function InvoiceStatus(props: Props) {
   if (status_id === InvoiceStatusEnum.Draft) {
     return (
       <div className="flex items-center gap-2">
-        {props.entity.is_internal && (
-          <Badge variant="purple">{t('internal')}</Badge>
-        )}
+        {renderInternalAndApprovalBadges()}
         <Badge variant="generic">{t('draft')}</Badge>
       </div>
     );
@@ -122,9 +211,7 @@ export function InvoiceStatus(props: Props) {
   if (status_id === InvoiceStatusEnum.Sent) {
     return (
       <div className="flex items-center gap-2">
-        {props.entity.is_internal && (
-          <Badge variant="purple">{t('internal')}</Badge>
-        )}
+        {renderInternalAndApprovalBadges()}
         <Badge
           variant="light-blue"
           style={{ backgroundColor: statusThemeColors.$1 }}
@@ -138,9 +225,7 @@ export function InvoiceStatus(props: Props) {
   if (status_id === InvoiceStatusEnum.Partial) {
     return (
       <div className="flex items-center gap-2">
-        {props.entity.is_internal && (
-          <Badge variant="purple">{t('internal')}</Badge>
-        )}
+        {renderInternalAndApprovalBadges()}
         <Badge
           variant="dark-blue"
           style={{ backgroundColor: statusThemeColors.$2 }}
@@ -154,9 +239,7 @@ export function InvoiceStatus(props: Props) {
   if (status_id === InvoiceStatusEnum.Paid) {
     return (
       <div className="flex items-center gap-2">
-        {props.entity.is_internal && (
-          <Badge variant="purple">{t('internal')}</Badge>
-        )}
+        {renderInternalAndApprovalBadges()}
         <Badge
           variant="green"
           style={{ backgroundColor: statusThemeColors.$3 }}
@@ -170,9 +253,7 @@ export function InvoiceStatus(props: Props) {
   if (status_id === InvoiceStatusEnum.Cancelled) {
     return (
       <div className="flex items-center gap-2">
-        {props.entity.is_internal && (
-          <Badge variant="purple">{t('internal')}</Badge>
-        )}
+        {renderInternalAndApprovalBadges()}
         <Badge variant="black">{t('cancelled')}</Badge>
       </div>
     );
@@ -181,9 +262,7 @@ export function InvoiceStatus(props: Props) {
   if (status_id === InvoiceStatusEnum.Reversed) {
     return (
       <div className="flex items-center gap-2">
-        {props.entity.is_internal && (
-          <Badge variant="purple">{t('internal')}</Badge>
-        )}
+        {renderInternalAndApprovalBadges()}
         <Badge variant="purple">{t('reversed')}</Badge>
       </div>
     );
@@ -191,9 +270,7 @@ export function InvoiceStatus(props: Props) {
 
   return (
     <div className="flex items-center gap-2">
-      {props.entity.is_internal && (
-        <Badge variant="purple">{t('internal')}</Badge>
-      )}
+      {renderInternalAndApprovalBadges()}
       <Badge variant="purple">{t('reversed')}</Badge>
     </div>
   );

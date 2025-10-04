@@ -53,6 +53,7 @@ export function Dropdown(props: Props) {
   const [visible, setVisible] = useState(false);
 
   const colors = useColorScheme();
+  const fullTheme = useFullTheme();
   const accentColor = useAccentColor();
 
   const [children, setChildren] = useState<ReactNode>();
@@ -87,7 +88,7 @@ export function Dropdown(props: Props) {
         interactive={true}
         render={() => (
           <DropdownElements
-            theme={{ ...useFullTheme(), hoverColor: colors.$2 }}
+            theme={{ ...fullTheme, hoverColor: colors.$2 }}
             className={`border box rounded-md shadow-lg focus:outline-none whitespace-normal ${props.className}`}
             style={{
               backgroundColor: colors.$1,
@@ -125,7 +126,7 @@ export function Dropdown(props: Props) {
         ) : (
           <LabelButton
             theme={{
-              ...useFullTheme(),
+              ...fullTheme,
               backgroundColor: colors.$18,
               color: colors.$1,
               borderColor: props.labelButtonBorderColor || colors.$24,

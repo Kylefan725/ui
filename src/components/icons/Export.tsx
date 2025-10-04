@@ -35,27 +35,27 @@ export function Export({
         y2="8.75"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={strokeWidth}
         data-color="color-2"
       ></line>
       <polyline
         points="8.25 3 6 .75 3.75 3"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={strokeWidth}
         data-color="color-2"
       ></polyline>
       <path
         d="m3.5,5.25h-.25c-1.105,0-2,.895-2,2v2c0,1.105.895,2,2,2h5.5c1.105,0,2-.895,2-2v-2c0-1.105-.895-2-2-2h-.25"
         fill="none"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={strokeWidth}
       ></path>
     </svg>
   );

@@ -19,20 +19,20 @@ const StyledLink = styled.a`
 `;
 
 export function HostedLinks() {
-  const colors = useFullTheme();
+  const theme = useFullTheme();
 
   return (
     <div
       className="grid grid-cols-3 text-sm border rounded"
       style={{
-        backgroundColor: colors.$1,
-        borderColor: colors.$5,
-        color: colors.$3,
+        backgroundColor: theme.backgroundColor,
+        borderColor: theme.borderColor,
+        color: theme.color,
       }}
     >
       <div className="col-span-3 md:col-span-1">
         <StyledLink
-          theme={{ ...useFullTheme(), hoverColor: colors.$2 }}
+          theme={{ ...theme, hoverColor: theme.color }}
           href="https://status.invoiceninja.com/"
           target="_blank"
           className="py-3 w-full px-2 inline-flex justify-center items-center rounded-l"
@@ -44,7 +44,7 @@ export function HostedLinks() {
       </div>
       <div className="col-span-3 md:col-span-1">
         <StyledLink
-          theme={{ ...useFullTheme(), hoverColor: colors.$2 }}
+          theme={{ ...theme, hoverColor: theme.color }}
           href="https://www.invoiceninja.com/mobile/"
           target="_blank"
           className="py-3 w-full px-2 inline-flex justify-center items-center"
@@ -56,7 +56,7 @@ export function HostedLinks() {
       </div>
       <div className="col-span-3 md:col-span-1">
         <StyledLink
-          theme={{ ...useFullTheme(), hoverColor: colors.$2 }}
+          theme={{ ...theme, hoverColor: theme.color }}
           href="https://invoiceninja.github.io"
           target="_blank"
           className="py-3 w-full hover:bg-gray-100 px-2 inline-flex justify-center items-center rounded-r"

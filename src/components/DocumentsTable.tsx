@@ -220,9 +220,13 @@ export function DocumentsTable(props: Props) {
                     <span>{document.name}</span>
 
                     {document.is_public ? (
-                      <LockOpen color={colors.$3} size="1.4rem" />
+                      <span title={String(t('public_document'))}>
+                        <LockOpen color={colors.$3} size="1.4rem" />
+                      </span>
                     ) : (
-                      <Lock color={colors.$3} size="1.4rem" />
+                      <span title={String(t('private_document'))}>
+                        <Lock color={colors.$3} size="1.4rem" />
+                      </span>
                     )}
                   </div>
 

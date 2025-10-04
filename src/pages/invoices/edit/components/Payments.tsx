@@ -40,6 +40,7 @@ function Payments() {
   const { invoice } = context;
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const navigate = useNavigate();
   const formatMoney = useFormatMoney();
@@ -86,7 +87,7 @@ function Payments() {
                       borderColor: colors.$20,
                     }}
                     theme={{
-                      ...useFullTheme(),
+                      ...theme,
                       backgroundColor: colors.$1,
                       hoverBackgroundColor: colors.$4,
                     }}

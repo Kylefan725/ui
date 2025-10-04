@@ -37,6 +37,7 @@ export function SidebarItem(props: Props) {
   const { item } = props;
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const user = useInjectUserChanges();
 
@@ -53,7 +54,7 @@ export function SidebarItem(props: Props) {
   return (
     <Div
       theme={{
-        ...useFullTheme(),
+        ...theme,
         color: item.current
           ? themeColors.$1 || colors.$8
           : themeColors.$3 || 'transparent',
@@ -91,7 +92,7 @@ export function SidebarItem(props: Props) {
       {item.rightButton && !isMiniSidebar && item.rightButton.visible && (
         <LinkStyled
           theme={{
-            ...useFullTheme(),
+            ...theme,
             hoverColor: colors.$25,
           }}
           to={item.rightButton.to}

@@ -32,20 +32,39 @@ import { useTaskColumns } from '../common/hooks/useTaskColumns';
 import { useInvoiceUtilities } from '../create/hooks/useInvoiceUtilities';
 import { Card } from '$app/components/cards';
 import { InvoiceStatus as InvoiceStatusBadge } from '../common/components/InvoiceStatus';
+// import { Alert } from '$app/components/Alert';
+import { Badge } from '$app/components/Badge';
+import { Icon } from '$app/components/icons/Icon';
+import {
+  ExternalLink as ExternalLinkIcon,
+  FileText as FileTextIcon,
+  Info as InfoIcon,
+  Clock as ClockIcon,
+  CheckCircle as CheckCircleIcon,
+  XCircle as XCircleIcon,
+} from 'react-feather';
+import { useDateTime } from '$app/common/hooks/useDateTime';
 import {
   ChangeTemplateModal,
   useChangeTemplate,
 } from '$app/pages/settings/invoice-design/pages/custom-designs/components/ChangeTemplate';
 import { Invoice as IInvoice, Invoice } from '$app/common/interfaces/invoice';
+import { InvoiceItem } from '$app/common/interfaces/invoice-item';
 import { ValidationBag } from '$app/common/interfaces/validation-bag';
 import { Client } from '$app/common/interfaces/client';
 import { Assigned } from '$app/components/Assigned';
 import { route } from '$app/common/helpers/route';
 import { Project } from '$app/common/interfaces/project';
-import { Icon } from '$app/components/icons/Icon';
-import { ExternalLink } from 'react-feather';
 import { InputLabel } from '$app/components/forms';
 import { useColorScheme } from '$app/common/colors';
+import { Banner } from '$app/components/Banner';
+import InvoiceTab from './components/InvoiceTab';
+import { ResubmitInvoiceButton } from './components/ResubmitInvoiceButton';
+import { ResendApprovalButton } from './components/ResendApprovalButton';
+import { endpoint } from '$app/common/helpers';
+import { request } from '$app/common/helpers/request';
+import { $refetch } from '$app/common/hooks/useRefetch';
+import { isInternalInvoiceEditingLocked } from './utils/isInternalInvoiceEditingLocked';
 
 export interface Context {
   invoice: Invoice | undefined;
@@ -69,6 +88,7 @@ export default function Edit() {
   const context: Context = useOutletContext();
   const {
     invoice,
+    setInvoice,
     isDefaultTerms,
     setIsDefaultTerms,
     isDefaultFooter,
@@ -95,27 +115,328 @@ export default function Edit() {
   const { changeTemplateVisible, setChangeTemplateVisible } =
     useChangeTemplate();
 
+  const isInternalInvoice = Boolean(client?.is_internal);
+  const hasUploadedDocument = invoice?.uploaded_document_id;
+  const hasNoLineItems = (invoice?.line_items?.length ?? 0) === 0;
+  const dateTime = useDateTime({ withTimezone: true, formatOnlyDate: true });
+
+  const approvalStatus = invoice?.approval_status;
+  const approverName = invoice?.approver_name;
+  const approvedAt = invoice?.approved_at;
+  const rejectedAt = invoice?.rejected_at;
+  const rejectionReason = invoice?.rejection_reason;
+  const approvalRecord = invoice?.approval_record;
+
+  const latestApprovalDocumentId = approvalRecord?.document_id;
+  const approvalDocumentUrl = latestApprovalDocumentId
+    ? route('/documents/:id/download', {
+        id: latestApprovalDocumentId,
+      })
+    : undefined;
+
+  const approvalStatusCopy = (() => {
+    if (!approvalStatus) {
+      return undefined;
+    }
+
+    if (approvalStatus === 'approved') {
+      return {
+        title: t('approval_approved_callout'),
+        icon: CheckCircleIcon,
+        iconColor: 'text-green-500',
+        badgeVariant: 'green' as const,
+        description: t('approval_status_approved_help'),
+      };
+    }
+
+    if (approvalStatus === 'rejected') {
+      return {
+        title: t('approval_rejected_callout'),
+        icon: XCircleIcon,
+        iconColor: 'text-red-500',
+        badgeVariant: 'red' as const,
+        description: t('approval_status_rejected_help'),
+      };
+    }
+
+    return {
+      title: t('approval_pending_callout'),
+      icon: ClockIcon,
+      iconColor: 'text-yellow-500',
+      badgeVariant: 'yellow' as const,
+      description: t('approval_status_pending_help'),
+    };
+  })();
+
+  const refreshInvoice = () => {
+    if (!invoice?.id) {
+      return;
+    }
+
+    request('GET', endpoint('/api/v1/invoices/:id', { id: invoice.id })).then(
+      (response) => {
+        if (response.data?.data) {
+          setInvoice(response.data.data as Invoice);
+          $refetch(['invoices']);
+        }
+      }
+    );
+  };
+
+  const renderApprovalTimeline = () => {
+    if (!isInternalInvoice || !approvalStatusCopy) {
+      return null;
+    }
+
+    return (
+      <Card
+        className="col-span-12 lg:col-span-8 px-6 py-5 shadow-sm"
+        style={{ borderColor: colors.$24 }}
+        title={t('approval_details')}
+      >
+        <div className="flex flex-col gap-4">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-3">
+                <Icon
+                  element={approvalStatusCopy.icon}
+                  className={approvalStatusCopy.iconColor}
+                  size={24}
+                />
+
+                <div className="flex flex-col gap-1">
+                  <span className="text-sm uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                    {t('approval_status')}
+                  </span>
+
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <Badge variant={approvalStatusCopy.badgeVariant}>
+                      {t(approvalStatus ?? 'pending')}
+                    </Badge>
+
+                    {approvalStatus === 'pending' &&
+                      invoice?.requires_approval && (
+                        <span className="inline-flex items-center gap-1 text-xs font-medium text-gray-600 dark:text-gray-300">
+                          <Icon element={InfoIcon} size={16} />
+                          {t('approval_status_pending_help')}
+                        </span>
+                      )}
+                  </div>
+                </div>
+              </div>
+
+              <p className="mt-3 text-sm text-gray-600 dark:text-gray-300 max-w-2xl">
+                {approvalStatusCopy.description}
+              </p>
+            </div>
+
+            {approvalDocumentUrl && (
+              <a
+                href={approvalDocumentUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-medium text-primary-600 hover:text-primary-500"
+                aria-label={String(t('view_signed_document'))}
+              >
+                <Icon element={FileTextIcon} size={18} />
+                {t('view_signed_document')}
+              </a>
+            )}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Card
+              withoutBodyPadding
+              className="border border-gray-200 dark:border-gray-700"
+            >
+              <div className="p-4 flex flex-col gap-2">
+                <span className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                  {approvalStatus === 'rejected'
+                    ? t('rejected_on')
+                    : t('approved_on')}
+                </span>
+                <span className="text-sm text-gray-900 dark:text-gray-100">
+                  {approvalStatus === 'rejected'
+                    ? rejectedAt
+                      ? dateTime(rejectedAt)
+                      : t('approval_timestamps_missing')
+                    : approvedAt
+                    ? dateTime(approvedAt)
+                    : t('approval_timestamps_missing')}
+                </span>
+              </div>
+            </Card>
+
+            <Card
+              withoutBodyPadding
+              className="border border-gray-200 dark:border-gray-700"
+            >
+              <div className="p-4 flex flex-col gap-2">
+                <span className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                  {approvalStatus === 'rejected'
+                    ? t('rejected_by')
+                    : t('approved_by')}
+                </span>
+                <span className="text-sm text-gray-900 dark:text-gray-100">
+                  {approverName || t('not_available')}
+                </span>
+              </div>
+            </Card>
+          </div>
+
+          {approvalStatus === 'rejected' && rejectionReason && (
+            <>
+              <Card
+                withoutBodyPadding
+                className="border border-red-200 dark:border-red-800 bg-red-50/70 dark:bg-red-900/20"
+              >
+                <div className="p-4 flex items-start gap-3">
+                  <Icon
+                    element={InfoIcon}
+                    size={18}
+                    className="text-red-600 dark:text-red-300"
+                  />
+                  <div className="flex flex-col gap-1">
+                    <span className="text-sm font-semibold text-red-700 dark:text-red-300">
+                      {t('rejection_reason')}
+                    </span>
+                    <span className="text-sm leading-relaxed text-red-800 dark:text-red-200">
+                      {rejectionReason}
+                    </span>
+                  </div>
+                </div>
+              </Card>
+
+              <div className="flex justify-end">
+                <ResubmitInvoiceButton
+                  invoice={invoice}
+                  onSuccess={refreshInvoice}
+                />
+              </div>
+            </>
+          )}
+
+          {approvalStatus === 'pending' && hasUploadedDocument && invoice && (
+            <div className="flex justify-end">
+              <ResendApprovalButton
+                invoice={invoice}
+                onSuccess={refreshInvoice}
+              />
+            </div>
+          )}
+
+          {approvalStatus === 'approved' && !approvalDocumentUrl && (
+            <Card
+              withoutBodyPadding
+              className="border border-yellow-200 dark:border-yellow-800 bg-yellow-50/70 dark:bg-yellow-900/20"
+            >
+              <div className="p-4 flex items-center gap-3 text-sm text-yellow-800 dark:text-yellow-200">
+                <Icon element={InfoIcon} size={18} />
+                {t('approval_document_missing')}
+              </div>
+            </Card>
+          )}
+        </div>
+      </Card>
+    );
+  };
+
+  const tableParam = searchParams.get('table');
+
+  const isEditingLocked = isInternalInvoiceEditingLocked({ invoice, client });
+
+  const tabDefinitions = isInternalInvoice
+    ? [
+        { key: 'invoice', label: t('invoice') },
+        { key: 'products', label: t('products') },
+        { key: 'tasks', label: t('tasks') },
+      ]
+    : [
+        { key: 'products', label: t('products') },
+        { key: 'tasks', label: t('tasks') },
+      ];
+
+  const tabLabels = tabDefinitions.map((definition) => definition.label);
+
+  const defaultTabIndex = (() => {
+    if (!tableParam) {
+      return 0;
+    }
+
+    const matchedIndex = tabDefinitions.findIndex(
+      (definition) => definition.key === tableParam
+    );
+
+    if (matchedIndex >= 0) {
+      return matchedIndex;
+    }
+
+    return 0;
+  })();
+
   return (
     <>
       <div className="grid grid-cols-12 gap-4">
+        {isInternalInvoice && (
+          <div className="col-span-12">
+            <Banner variant="orange" id="internal-invoice-edit-info">
+              {t('internal_invoice')}:{' '}
+              {hasUploadedDocument
+                ? t('internal_invoice_uploaded_doc_hint')
+                : t('internal_invoice_generated_hint')}
+            </Banner>
+          </div>
+        )}
+
+        {isInternalInvoice && renderApprovalTimeline()}
+
+        {isInternalInvoice && hasUploadedDocument && hasNoLineItems && (
+          <div className="col-span-12">
+            <Banner
+              variant="orange"
+              id="internal-invoice-no-lines-edit-warning"
+            >
+              {t('internal_invoice_summary_required_with_upload')}{' '}
+              {t('add_line_items_using_products_or_tasks_tabs_below')}
+            </Banner>
+          </div>
+        )}
+
         <Card
           className="col-span-12 xl:col-span-4 h-max px-6 py-2 shadow-sm"
           style={{ borderColor: colors.$24 }}
         >
           <div className="flex flex-col space-y-4">
             {invoice && (
-              <div className="flex items-center space-x-9">
-                <span
-                  className="text-sm font-medium"
-                  style={{ color: colors.$22 }}
-                >
-                  {t('status')}
-                </span>
+              <>
+                <div className="flex items-center space-x-9">
+                  <span
+                    className="text-sm font-medium"
+                    style={{ color: colors.$22 }}
+                  >
+                    {t('status')}
+                  </span>
 
-                <div>
-                  <InvoiceStatusBadge entity={invoice} />
+                  <div>
+                    <InvoiceStatusBadge entity={invoice} />
+                  </div>
                 </div>
-              </div>
+
+                {isInternalInvoice && (
+                  <div className="flex items-center space-x-9">
+                    <span
+                      className="text-sm font-medium"
+                      style={{ color: colors.$22 }}
+                    >
+                      {t('type')}
+                    </span>
+
+                    <div className="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                      {t('internal_invoice')}
+                    </div>
+                  </div>
+                )}
+              </>
             )}
 
             <Assigned
@@ -143,7 +464,7 @@ export default function Edit() {
                       }
                     >
                       <Icon
-                        element={ExternalLink}
+                        element={ExternalLinkIcon}
                         style={{ width: '1.17rem', height: '1.17rem' }}
                       />
                     </div>
@@ -174,66 +495,121 @@ export default function Edit() {
         />
 
         <div className="col-span-12">
-          <TabGroup
-            tabs={[t('products'), t('tasks')]}
-            defaultTabIndex={searchParams.get('table') === 'tasks' ? 1 : 0}
-          >
-            <div>
-              {invoice && client ? (
-                <ProductsTable
-                  type="product"
-                  resource={invoice}
-                  shouldCreateInitialLineItem={
-                    searchParams.get('table') !== 'tasks'
-                  }
-                  items={invoice.line_items.filter((item) =>
-                    [
-                      InvoiceItemType.Product,
-                      InvoiceItemType.UnpaidFee,
-                      InvoiceItemType.PaidFee,
-                      InvoiceItemType.LateFee,
-                    ].includes(item.type_id)
-                  )}
-                  columns={productColumns}
-                  relationType="client_id"
-                  onLineItemChange={handleLineItemChange}
-                  onSort={(lineItems) => handleChange('line_items', lineItems)}
-                  onLineItemPropertyChange={handleLineItemPropertyChange}
-                  onCreateItemClick={() =>
-                    handleCreateLineItem(InvoiceItemType.Product)
-                  }
-                  onDeleteRowClick={handleDeleteLineItem}
-                />
-              ) : (
-                <Spinner />
-              )}
-            </div>
+          <TabGroup tabs={tabLabels} defaultTabIndex={defaultTabIndex}>
+            {tabDefinitions.map((definition) => {
+              if (definition.key === 'invoice') {
+                return (
+                  <div key={definition.key}>
+                    {invoice ? (
+                      <InvoiceTab
+                        invoice={invoice}
+                        setInvoice={setInvoice}
+                        client={client}
+                        errors={errors}
+                        handleChange={handleChange}
+                        handleLineItemPropertyChange={(key, value, index) =>
+                          handleLineItemPropertyChange(
+                            key as keyof InvoiceItem,
+                            value,
+                            index
+                          )
+                        }
+                        handleCreateLineItem={handleCreateLineItem}
+                        handleDeleteLineItem={handleDeleteLineItem}
+                        isEditLocked={isEditingLocked}
+                      />
+                    ) : (
+                      <Spinner />
+                    )}
+                  </div>
+                );
+              }
 
-            <div>
-              {invoice && client ? (
-                <ProductsTable
-                  type="task"
-                  resource={invoice}
-                  shouldCreateInitialLineItem={
-                    searchParams.get('table') === 'tasks'
-                  }
-                  items={invoice.line_items.filter(
-                    (item) => item.type_id === InvoiceItemType.Task
+              if (definition.key === 'products') {
+                return (
+                  <div key={definition.key}>
+                    {invoice ? (
+                      <ProductsTable
+                        type="product"
+                        resource={invoice}
+                        shouldCreateInitialLineItem={tableParam !== 'tasks'}
+                        items={invoice.line_items.filter((lineItem) =>
+                          [
+                            InvoiceItemType.Product,
+                            InvoiceItemType.UnpaidFee,
+                            InvoiceItemType.PaidFee,
+                            InvoiceItemType.LateFee,
+                          ].includes(lineItem.type_id)
+                        )}
+                        columns={productColumns}
+                        relationType="client_id"
+                        onLineItemChange={handleLineItemChange}
+                        onSort={(lineItems) =>
+                          handleChange('line_items', lineItems)
+                        }
+                        onLineItemPropertyChange={(
+                          key: string | number | symbol,
+                          value,
+                          index
+                        ) =>
+                          handleLineItemPropertyChange(
+                            key as keyof InvoiceItem,
+                            value,
+                            index
+                          )
+                        }
+                        onCreateItemClick={() =>
+                          handleCreateLineItem(InvoiceItemType.Product)
+                        }
+                        onDeleteRowClick={handleDeleteLineItem}
+                        isLocked={isEditingLocked}
+                      />
+                    ) : (
+                      <Spinner />
+                    )}
+                  </div>
+                );
+              }
+
+              return (
+                <div key={definition.key}>
+                  {invoice ? (
+                    <ProductsTable
+                      type="task"
+                      resource={invoice}
+                      shouldCreateInitialLineItem={tableParam === 'tasks'}
+                      items={invoice.line_items.filter(
+                        (lineItem) => lineItem.type_id === InvoiceItemType.Task
+                      )}
+                      columns={taskColumns}
+                      relationType="client_id"
+                      onLineItemChange={handleLineItemChange}
+                      onSort={(lineItems) =>
+                        handleChange('line_items', lineItems)
+                      }
+                      onLineItemPropertyChange={(
+                        key: string | number | symbol,
+                        value,
+                        index
+                      ) =>
+                        handleLineItemPropertyChange(
+                          key as keyof InvoiceItem,
+                          value,
+                          index
+                        )
+                      }
+                      onCreateItemClick={() =>
+                        handleCreateLineItem(InvoiceItemType.Task)
+                      }
+                      onDeleteRowClick={handleDeleteLineItem}
+                      isLocked={isEditingLocked}
+                    />
+                  ) : (
+                    <Spinner />
                   )}
-                  columns={taskColumns}
-                  relationType="client_id"
-                  onLineItemChange={handleLineItemChange}
-                  onSort={(lineItems) => handleChange('line_items', lineItems)}
-                  onLineItemPropertyChange={handleLineItemPropertyChange}
-                  onCreateItemClick={() =>
-                    handleCreateLineItem(InvoiceItemType.Task)
-                  }
-                  onDeleteRowClick={handleDeleteLineItem}
-                />
-              ) : (
-                <Spinner />
-              )}
-            </div>
+                </div>
+              );
+            })}
           </TabGroup>
         </div>
 

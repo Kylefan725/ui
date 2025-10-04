@@ -1,13 +1,3 @@
-/**
- * Invoice Ninja (https://invoiceninja.com).
- *
- * @link https://github.com/invoiceninja/invoiceninja source repository
- *
- * @copyright Copyright (c) 2025. Invoice Ninja LLC
- *
- * @license https://www.elastic.co/licensing/elastic-license
- */
-
 import { Card } from '$app/components/cards';
 import { useTranslation } from 'react-i18next';
 import { useOutletContext, useSearchParams } from 'react-router-dom';
@@ -22,6 +12,7 @@ import { Spinner } from '$app/components/Spinner';
 import { useProductColumns } from '../common/hooks/useProductColumns';
 import { useTaskColumns } from '../common/hooks/useTaskColumns';
 import { InvoiceItemType } from '$app/common/interfaces/invoice-item';
+import InvoiceTab from '../edit/components/InvoiceTab';
 import { Banner } from '$app/components/Banner';
 
 export default function InternalInvoiceForm() {
@@ -40,6 +31,31 @@ export default function InternalInvoiceForm() {
   } = useOutletContext<CreateInvoiceContext>();
 
   const [searchParams] = useSearchParams();
+  const tableParam = searchParams.get('table');
+
+  const tabDefinitions = [
+    { key: 'invoice', label: t('invoice') },
+    { key: 'products', label: t('products') },
+    { key: 'tasks', label: t('tasks') },
+  ];
+
+  const tabLabels = tabDefinitions.map((definition) => definition.label);
+
+  const defaultTabIndex = (() => {
+    if (!tableParam) {
+      return 0;
+    }
+
+    const matchedIndex = tabDefinitions.findIndex(
+      (definition) => definition.key === tableParam
+    );
+
+    if (matchedIndex >= 0) {
+      return matchedIndex;
+    }
+
+    return 0;
+  })();
 
   const productColumns = useProductColumns();
   const taskColumns = useTaskColumns();
@@ -67,6 +83,20 @@ export default function InternalInvoiceForm() {
           {t('select_an_internal_client_and_contact_to_proceed')}
         </Banner>
       </div>
+      {invoice &&
+        (invoice.uploaded_document_id ? (
+          <div className="col-span-12">
+            <Banner variant="orange" id="internal-invoice-summary-hint">
+              {t('internal_invoice_uploaded_doc_hint')}
+            </Banner>
+          </div>
+        ) : (
+          <div className="col-span-12">
+            <Banner variant="orange" id="internal-invoice-generated-hint">
+              {t('internal_invoice_generated_hint')}
+            </Banner>
+          </div>
+        ))}
       <Card className="col-span-12 xl:col-span-4 h-max shadow-sm" withContainer>
         <ClientSelector
           resource={invoice}
@@ -91,68 +121,106 @@ export default function InternalInvoiceForm() {
       />
 
       <div className="col-span-12">
-        <TabGroup
-          tabs={[t('products'), t('tasks')]}
-          defaultTabIndex={searchParams.get('table') === 'tasks' ? 1 : 0}
-        >
-          <div>
-            {invoice ? (
-              <ProductsTable
-                type="product"
-                resource={invoice}
-                shouldCreateInitialLineItem={
-                  searchParams.get('table') !== 'tasks'
-                }
-                items={invoice.line_items.filter((item) =>
-                  [
-                    InvoiceItemType.Product,
-                    InvoiceItemType.UnpaidFee,
-                    InvoiceItemType.PaidFee,
-                    InvoiceItemType.LateFee,
-                  ].includes(item.type_id)
-                )}
-                columns={productColumns}
-                relationType="client_id"
-                onLineItemChange={handleLineItemChange}
-                onSort={(lineItems) => handleChange('line_items', lineItems)}
-                onLineItemPropertyChange={handleLineItemPropertyChange}
-                onCreateItemClick={() =>
-                  handleCreateLineItem(InvoiceItemType.Product)
-                }
-                onDeleteRowClick={handleDeleteLineItem}
-              />
-            ) : (
-              <Spinner />
-            )}
-          </div>
+        <TabGroup tabs={tabLabels} defaultTabIndex={defaultTabIndex}>
+          {tabDefinitions.map((definition) => {
+            if (definition.key === 'invoice') {
+              return (
+                <div key={definition.key}>
+                  {invoice ? (
+                    <InvoiceTab
+                      invoice={invoice}
+                      setInvoice={setInvoice}
+                      client={client}
+                      errors={errors}
+                      handleChange={handleChange}
+                      handleLineItemPropertyChange={
+                        handleLineItemPropertyChange
+                      }
+                      handleCreateLineItem={handleCreateLineItem}
+                      handleDeleteLineItem={handleDeleteLineItem}
+                    />
+                  ) : (
+                    <Spinner />
+                  )}
+                </div>
+              );
+            }
 
-          <div>
-            {invoice ? (
-              <ProductsTable
-                type="task"
-                resource={invoice}
-                shouldCreateInitialLineItem={
-                  searchParams.get('table') === 'tasks'
-                }
-                items={invoice.line_items.filter(
-                  (item) => item.type_id === InvoiceItemType.Task
+            if (definition.key === 'products') {
+              return (
+                <div key={definition.key}>
+                  {invoice ? (
+                    <ProductsTable
+                      type="product"
+                      resource={invoice}
+                      shouldCreateInitialLineItem={tableParam !== 'tasks'}
+                      items={invoice.line_items.filter((item) =>
+                        [
+                          InvoiceItemType.Product,
+                          InvoiceItemType.UnpaidFee,
+                          InvoiceItemType.PaidFee,
+                          InvoiceItemType.LateFee,
+                        ].includes(item.type_id)
+                      )}
+                      columns={productColumns}
+                      relationType="client_id"
+                      onLineItemChange={handleLineItemChange}
+                      onSort={(lineItems) =>
+                        handleChange('line_items', lineItems)
+                      }
+                      onLineItemPropertyChange={handleLineItemPropertyChange}
+                      onCreateItemClick={() =>
+                        handleCreateLineItem(InvoiceItemType.Product)
+                      }
+                      onDeleteRowClick={handleDeleteLineItem}
+                    />
+                  ) : (
+                    <Spinner />
+                  )}
+                </div>
+              );
+            }
+
+            return (
+              <div key={definition.key}>
+                {invoice ? (
+                  <ProductsTable
+                    type="task"
+                    resource={invoice}
+                    shouldCreateInitialLineItem={tableParam === 'tasks'}
+                    items={invoice.line_items.filter(
+                      (item) => item.type_id === InvoiceItemType.Task
+                    )}
+                    columns={taskColumns}
+                    relationType="client_id"
+                    onLineItemChange={handleLineItemChange}
+                    onSort={(lineItems) =>
+                      handleChange('line_items', lineItems)
+                    }
+                    onLineItemPropertyChange={handleLineItemPropertyChange}
+                    onCreateItemClick={() =>
+                      handleCreateLineItem(InvoiceItemType.Task)
+                    }
+                    onDeleteRowClick={handleDeleteLineItem}
+                  />
+                ) : (
+                  <Spinner />
                 )}
-                columns={taskColumns}
-                relationType="client_id"
-                onLineItemChange={handleLineItemChange}
-                onSort={(lineItems) => handleChange('line_items', lineItems)}
-                onLineItemPropertyChange={handleLineItemPropertyChange}
-                onCreateItemClick={() =>
-                  handleCreateLineItem(InvoiceItemType.Task)
-                }
-                onDeleteRowClick={handleDeleteLineItem}
-              />
-            ) : (
-              <Spinner />
-            )}
-          </div>
+              </div>
+            );
+          })}
         </TabGroup>
       </div>
+
+      {invoice &&
+        invoice.uploaded_document_id &&
+        (invoice.line_items?.length ?? 0) === 0 && (
+          <div className="col-span-12">
+            <Banner variant="red" id="internal-invoice-no-lines-warning">
+              {t('internal_invoice_summary_required_with_upload')}
+            </Banner>
+          </div>
+        )}
 
       {invoice && (
         <InvoiceTotals

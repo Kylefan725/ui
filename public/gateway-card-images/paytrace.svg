@@ -8,11 +8,11 @@
 	.st2{fill:#2A283C;}
 	.st3{fill:#F15A24;}
 	.st4{fill:#FF9F37;}
-	.st5{fill:none;stroke:#3C3C64;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	.st6{fill:none;stroke:#3C3C64;stroke-width:0.5;stroke-miterlimit:10;}
-	.st7{fill:#FFFFFF;stroke:#3C3C64;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st5{fill:none;stroke:#3C3C64;strokeWidth:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st6{fill:none;stroke:#3C3C64;strokeWidth:0.5;stroke-miterlimit:10;}
+	.st7{fill:#FFFFFF;stroke:#3C3C64;strokeWidth:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 	.st8{fill:#F86A56;}
-	.st9{fill:#FFFFFF;stroke:#3C3C64;stroke-width:0.5;stroke-miterlimit:10;}
+	.st9{fill:#FFFFFF;stroke:#3C3C64;strokeWidth:0.5;stroke-miterlimit:10;}
 	.st10{fill:#2665E0;}
 	.st11{fill:#338BFF;}
 	.st12{fill:#111E7B;}
@@ -25,13 +25,13 @@
 	.st19{fill:#6E6E78;}
 	.st20{fill-rule:evenodd;clip-rule:evenodd;fill:#E6E6F0;}
 	.st21{fill:#6666FF;}
-	.st22{fill:#6666FF;stroke:#F2F2F4;stroke-width:1.65;stroke-miterlimit:10;}
-	.st23{fill:#F86A56;stroke:#2A283C;stroke-width:2;stroke-miterlimit:10;}
+	.st22{fill:#6666FF;stroke:#F2F2F4;strokeWidth:1.65;stroke-miterlimit:10;}
+	.st23{fill:#F86A56;stroke:#2A283C;strokeWidth:2;stroke-miterlimit:10;}
 	.st24{fill:#E26C4A;}
-	.st25{fill:none;stroke:#3C3C64;stroke-width:1.25;stroke-miterlimit:10;}
-	.st26{fill:none;stroke:#3C3C64;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st25{fill:none;stroke:#3C3C64;strokeWidth:1.25;stroke-miterlimit:10;}
+	.st26{fill:none;stroke:#3C3C64;strokeWidth:1.25;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 	.st27{fill:none;stroke:#3C3C64;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	.st28{fill:#FFFFFF;stroke:#3C3C64;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st28{fill:#FFFFFF;stroke:#3C3C64;strokeWidth:1.25;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 	.st29{fill:#FFFFFF;stroke:#3C3C64;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 	.st30{fill:#3C3C64;}
 	.st31{fill-rule:evenodd;clip-rule:evenodd;fill:#3C3C64;}
@@ -41,7 +41,7 @@
 	.st35{fill:none;stroke:#2A283C;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 	.st36{fill:none;stroke:#F86A56;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 	.st37{fill-rule:evenodd;clip-rule:evenodd;fill:#F86A56;}
-	.st38{fill:#E26C4A;stroke:#E26C4A;stroke-width:0.5;stroke-miterlimit:10;}
+	.st38{fill:#E26C4A;stroke:#E26C4A;strokeWidth:0.5;stroke-miterlimit:10;}
 	.st39{fill:url(#SVGID_1_);}
 	.st40{fill:url(#SVGID_2_);}
 </style>

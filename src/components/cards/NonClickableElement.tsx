@@ -28,11 +28,12 @@ const DivStyled = styled.div`
 export function NonClickableElement(props: Props) {
   const { padding = 'regular', className, style } = props;
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   return (
     <DivStyled
       style={{ ...style }}
-      theme={{ ...useFullTheme(), hoverColor: colors.$2, color: colors.$3 }}
+      theme={{ ...theme, hoverColor: colors.$2, color: colors.$3 }}
       className={classNames(
         `w-full text-left block hover:bg-gray-50 text-sm ${className}`,
         {

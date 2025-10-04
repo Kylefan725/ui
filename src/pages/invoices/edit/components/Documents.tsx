@@ -19,6 +19,7 @@ import { Context } from '../Edit';
 import { Card } from '$app/components/cards';
 import { useTranslation } from 'react-i18next';
 import { useColorScheme } from '$app/common/colors';
+import { InternalCustomDocumentUpload } from './InternalCustomDocumentUpload';
 
 export default function Documents() {
   const [t] = useTranslation();
@@ -49,6 +50,22 @@ export default function Documents() {
           </div>
         ) : (
           <>
+            {invoice?.is_internal && (
+              <div className="w-full lg:w-2/3 mb-6">
+                <InternalCustomDocumentUpload
+                  endpoint={endpoint(
+                    '/api/v1/invoices/:id/upload_custom_document',
+                    { id }
+                  )}
+                  onSuccess={() => $refetch(['invoices'])}
+                  disabled={
+                    !hasPermission('edit_invoice') && !entityAssigned(invoice)
+                  }
+                  hasExisting={Boolean(invoice?.uploaded_document_id)}
+                />
+              </div>
+            )}
+
             <div className="w-full lg:w-2/3">
               <Upload
                 widgetOnly

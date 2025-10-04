@@ -24,7 +24,7 @@ import { useAtom } from 'jotai';
 import { cloneDeep } from 'lodash';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Outlet, useSearchParams } from 'react-router-dom';
+import { Outlet, useSearchParams, useNavigate } from 'react-router-dom';
 import { invoiceAtom, invoiceSumAtom } from '../common/atoms';
 import { useHandleCreate } from './hooks/useHandleCreate';
 import { useInvoiceUtilities } from './hooks/useInvoiceUtilities';
@@ -67,11 +67,22 @@ export default function Create() {
   const [invoiceSum, setInvoiceSum] = useAtom(invoiceSumAtom);
 
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [errors, setErrors] = useState<ValidationBag>();
   const [client, setClient] = useState<Client | undefined>();
   const [isFormBusy, setIsFormBusy] = useState<boolean>(false);
   const [isDefaultTerms, setIsDefaultTerms] = useState<boolean>(false);
   const [isDefaultFooter, setIsDefaultFooter] = useState<boolean>(false);
+
+  // Redirect to internal invoice form if internal query param is present
+  useEffect(() => {
+    if (
+      searchParams.get('internal') === 'true' &&
+      window.location.pathname === '/invoices/create'
+    ) {
+      navigate('/invoices/create/internal', { replace: true });
+    }
+  }, [searchParams, navigate]);
 
   const pages: Page[] = [
     { name: t('invoices'), href: '/invoices' },
@@ -81,19 +92,28 @@ export default function Create() {
     },
   ];
 
+  const isInternalInvoice =
+    window.location.pathname.includes('/internal') ||
+    searchParams.get('internal') === 'true';
+
   const tabs: Tab[] = [
     {
-      name:
-        searchParams.get('internal') === 'true' ? t('internal') : t('create'),
-      href: '/invoices/create',
+      name: isInternalInvoice ? t('internal') : t('create'),
+      href: isInternalInvoice
+        ? '/invoices/create/internal'
+        : '/invoices/create',
     },
     {
       name: t('documents'),
-      href: '/invoices/create/documents',
+      href: isInternalInvoice
+        ? '/invoices/create/documents?internal=true'
+        : '/invoices/create/documents',
     },
     {
       name: t('settings'),
-      href: '/invoices/create/settings',
+      href: isInternalInvoice
+        ? '/invoices/create/settings?internal=true'
+        : '/invoices/create/settings',
     },
   ];
 
@@ -254,8 +274,11 @@ export default function Create() {
         disableSaveButton={
           invoice?.client_id.length === 0 ||
           isFormBusy ||
-          (searchParams.get('internal') === 'true' &&
-            (invoice?.invitations?.length ?? 0) === 0)
+          (isInternalInvoice &&
+            ((invoice?.invitations?.length ?? 0) === 0 ||
+              (invoice?.uploaded_document_id
+                ? (invoice?.line_items?.length ?? 0) === 0
+                : false)))
         }
       >
         {!isLoading ? (

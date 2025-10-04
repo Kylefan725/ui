@@ -36,8 +36,8 @@ export function LockCircle({
         d="m16,8v-3c0-2.209-1.791-4-4-4h0c-2.209,0-4,1.791-4,4v3"
         fill="none"
         stroke={color}
-        stroke-miterlimit="10"
-        stroke-width="2"
+        strokeMiterlimit="10"
+        strokeWidth="2"
         data-color="color-2"
         data-cap="butt"
       ></path>
@@ -47,9 +47,9 @@ export function LockCircle({
         r="8"
         fill="none"
         stroke={color}
-        stroke-linecap="square"
-        stroke-miterlimit="10"
-        stroke-width="2"
+        strokeLinecap="square"
+        strokeMiterlimit="10"
+        strokeWidth="2"
       ></circle>
       <line
         x1="12"
@@ -58,9 +58,9 @@ export function LockCircle({
         y2="17"
         fill={fillColor}
         stroke={color}
-        stroke-linecap="square"
-        stroke-miterlimit="10"
-        stroke-width="2"
+        strokeLinecap="square"
+        strokeMiterlimit="10"
+        strokeWidth="2"
         data-color="color-2"
       ></line>
       <circle
@@ -69,9 +69,9 @@ export function LockCircle({
         r="1"
         fill="#000"
         stroke="#000"
-        stroke-linecap="square"
-        stroke-miterlimit="10"
-        stroke-width="2"
+        strokeLinecap="square"
+        strokeMiterlimit="10"
+        strokeWidth="2"
         data-color="color-2"
       ></circle>
     </svg>

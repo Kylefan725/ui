@@ -50,6 +50,7 @@ const OptionElement = styled.div`
 function ExpenseCategoriesDropdown(props: DropdownProps) {
   const [t] = useTranslation();
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const hasPermission = useHasPermission();
 
@@ -94,7 +95,7 @@ function ExpenseCategoriesDropdown(props: DropdownProps) {
                     setVisible(false);
                     save({ ...expense, category_id: expenseCategory.id });
                   }}
-                  theme={{ ...useFullTheme(), hoverColor: colors.$5 }}
+                  theme={{ ...theme, hoverColor: colors.$5 }}
                 >
                   <div>
                     {expenseCategory.id === expense.category_id ? (
@@ -126,7 +127,7 @@ function ExpenseCategoriesDropdown(props: DropdownProps) {
                   setIsModalOpen(true);
                   setVisible(false);
                 }}
-                theme={{ ...useFullTheme(), hoverColor: colors.$5 }}
+                theme={{ ...theme, hoverColor: colors.$5 }}
               >
                 <div className="flex items-center gap-2">
                   <Plus color={colors.$17} size="1.2rem" />

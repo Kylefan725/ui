@@ -57,6 +57,7 @@ function PaymentSchedule() {
   const { invoice } = context;
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
   const queryClient = useQueryClient();
 
   const formatMoney = useFormatMoney();
@@ -471,7 +472,7 @@ function PaymentSchedule() {
                 key={index}
                 className="py-4 flex justify-between items-center"
                 theme={{
-                  ...useFullTheme(),
+                  ...theme,
                   backgroundColor: colors.$1,
                   hoverBackgroundColor: colors.$4,
                 }}

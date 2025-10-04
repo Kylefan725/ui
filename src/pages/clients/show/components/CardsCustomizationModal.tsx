@@ -63,6 +63,7 @@ export function CardsCustomizationModal() {
 
   const user = useCurrentUser();
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const dispatch = useDispatch();
 
@@ -141,7 +142,7 @@ export function CardsCustomizationModal() {
       <Box
         className="p-1.5 sm:p-[0.6rem] border rounded-md shadow-sm cursor-pointer"
         theme={{
-          ...useFullTheme(),
+          ...theme,
           hoverColor: colors.$4,
           backgroundColor: colors.$1,
           borderColor: colors.$24,

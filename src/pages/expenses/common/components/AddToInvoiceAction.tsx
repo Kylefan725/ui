@@ -59,6 +59,7 @@ export function AddToInvoiceAction(props: Props) {
   const { calculatedTaxRate } = useInvoiceExpense();
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
   const queryClient = useQueryClient();
 
   const setInvoice = useSetAtom(invoiceAtom);
@@ -176,7 +177,7 @@ export function AddToInvoiceAction(props: Props) {
         <div className="flex flex-col space-y-1">
           {invoices.map((invoice) => (
             <Div
-              theme={{ ...useFullTheme(), hoverColor: colors.$5 }}
+              theme={{ ...theme, hoverColor: colors.$5 }}
               key={invoice.id}
               onClick={() => handleAddToInvoice(invoice)}
               className="flex items-center justify-between cursor-pointer rounded py-1 px-2"

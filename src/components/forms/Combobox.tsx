@@ -118,6 +118,7 @@ export function Combobox<T = any>({
 }: ComboboxStaticProps<T>) {
   const colors = useColorScheme();
   const reactSettings = useReactSettings();
+  const fullTheme = useFullTheme();
 
   const [inputValue, setInputValue] = useState(
     String(inputOptions.value ?? '')
@@ -425,7 +426,7 @@ export function Combobox<T = any>({
             {filteredOptions.map((option, index) => (
               <LiStyled
                 theme={{
-                  ...useFullTheme(),
+                  ...fullTheme,
                   backgroundColor: colors.$1,
                   hoverColor: colors.$20,
                 }}
@@ -462,7 +463,7 @@ export function Combobox<T = any>({
             >
               <ActionButtonStyled
                 theme={{
-                  ...useFullTheme(),
+                  ...fullTheme,
                   hoverColor: colors.$20,
                 }}
                 data-testid="combobox-action-button"
@@ -512,6 +513,7 @@ export function ComboboxStatic<T = any>({
 
   const colors = useColorScheme();
   const reactSettings = useReactSettings();
+  const fullTheme = useFullTheme();
 
   const [query, setQuery] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(initiallyVisible);
@@ -734,7 +736,7 @@ export function ComboboxStatic<T = any>({
               {nullable && query.length > 0 && !isDataLoading && (
                 <HeadlessOptionStyled
                   theme={{
-                    ...useFullTheme(),
+                    ...fullTheme,
                     hoverColor: colors.$20,
                   }}
                   key="combobox-not-found"
@@ -761,7 +763,7 @@ export function ComboboxStatic<T = any>({
                 filteredValues.map((entry) => (
                   <HeadlessOptionStyled
                     theme={{
-                      ...useFullTheme(),
+                      ...fullTheme,
                       hoverColor: colors.$20,
                     }}
                     key={entry.id}
@@ -803,7 +805,7 @@ export function ComboboxStatic<T = any>({
               >
                 <ActionButtonStyled
                   theme={{
-                    ...useFullTheme(),
+                    ...fullTheme,
                     hoverColor: colors.$20,
                   }}
                   data-testid="combobox-action-button"

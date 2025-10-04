@@ -49,6 +49,7 @@ interface Props {
   onDeleteRowClick: (index: number) => unknown;
   onCreateItemClick: () => unknown;
   shouldCreateInitialLineItem?: boolean;
+  isLocked?: boolean;
 }
 
 export function ProductsTable(props: Props) {
@@ -57,7 +58,7 @@ export function ProductsTable(props: Props) {
 
   const themeColors = useThemeColorScheme();
 
-  const { resource, items, columns, relationType } = props;
+  const { resource, items, columns, relationType, isLocked } = props;
 
   const setIsDeleteActionTriggered = useSetAtom(isDeleteActionTriggeredAtom);
 
@@ -110,7 +111,7 @@ export function ProductsTable(props: Props) {
           </Th>
         ))}
       </Thead>
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragEnd={isLocked ? () => undefined : onDragEnd}>
         <Droppable droppableId="product-table">
           {(provided) => (
             <Tbody {...provided.droppableProps} innerRef={provided.innerRef}>
@@ -119,6 +120,7 @@ export function ProductsTable(props: Props) {
                   key={getLineItemIndex(lineItem)}
                   draggableId={getLineItemIndex(lineItem).toString()}
                   index={getLineItemIndex(lineItem)}
+                  isDragDisabled={Boolean(isLocked)}
                 >
                   {(provided) => (
                     <Tr
@@ -143,6 +145,11 @@ export function ProductsTable(props: Props) {
                                 <button
                                   {...provided.dragHandleProps}
                                   onMouseEnter={(e) => e.currentTarget.focus()}
+                                  disabled={Boolean(isLocked)}
+                                  className={classNames({
+                                    'pointer-events-none cursor-default opacity-40':
+                                      isLocked,
+                                  })}
                                 >
                                   <AlignJustify size={18} />
                                 </button>
@@ -150,7 +157,8 @@ export function ProductsTable(props: Props) {
 
                               {resolveInputField(
                                 column,
-                                getLineItemIndex(lineItem)
+                                getLineItemIndex(lineItem),
+                                Boolean(isLocked)
                               )}
                             </div>
                           )}
@@ -159,20 +167,32 @@ export function ProductsTable(props: Props) {
                             <div className="flex justify-between items-center">
                               {resolveInputField(
                                 column,
-                                getLineItemIndex(lineItem)
+                                getLineItemIndex(lineItem),
+                                Boolean(isLocked)
                               )}
 
                               {resource && (
                                 <button
                                   style={{ color: colors.$3 }}
-                                  className="ml-2 text-gray-600 hover:text-red-600"
+                                  className={classNames(
+                                    'ml-2 text-gray-600 hover:text-red-600',
+                                    {
+                                      'pointer-events-none opacity-40 hover:text-gray-600':
+                                        isLocked,
+                                    }
+                                  )}
                                   onClick={() => {
+                                    if (isLocked) {
+                                      return;
+                                    }
+
                                     setIsDeleteActionTriggered(true);
 
                                     props.onDeleteRowClick(
                                       getLineItemIndex(lineItem)
                                     );
                                   }}
+                                  disabled={Boolean(isLocked)}
                                 >
                                   <Trash2 size={18} />
                                 </button>
@@ -192,9 +212,12 @@ export function ProductsTable(props: Props) {
                 <Td colSpan={100}>
                   <button
                     onClick={() =>
-                      !isAnyLineItemEmpty() && props.onCreateItemClick()
+                      !isLocked &&
+                      !isAnyLineItemEmpty() &&
+                      props.onCreateItemClick()
                     }
                     className="w-full py-2 inline-flex justify-center items-center space-x-2"
+                    disabled={Boolean(isLocked)}
                   >
                     <Plus size={18} />
                     <span>

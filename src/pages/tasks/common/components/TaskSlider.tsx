@@ -109,6 +109,7 @@ function useGenerateActivityElement() {
 export function TaskSlider() {
   const [t] = useTranslation();
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   const actions = useActions({
     showCommonBulkAction: true,
@@ -229,7 +230,7 @@ export function TaskSlider() {
                   className="flex items-center justify-between p-4 w-full shadow-sm border rounded-md"
                   style={{ borderColor: colors.$20 }}
                   theme={{
-                    ...useFullTheme(),
+                    ...theme,
                     backgroundColor: colors.$1,
                     hoverBackgroundColor: colors.$4,
                   }}

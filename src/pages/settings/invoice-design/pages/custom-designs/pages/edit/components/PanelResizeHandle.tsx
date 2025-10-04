@@ -23,11 +23,12 @@ export function PanelResizeHandle() {
   const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' });
 
   const colors = useColorScheme();
+  const theme = useFullTheme();
 
   return isLargeScreen ? (
     <PanelResizeHandleBaseStyled
       theme={{
-        ...useFullTheme(),
+        ...theme,
         hoverColor: '#3366CC',
         backgroundColor: colors.$5,
       }}

@@ -27,6 +27,8 @@ import { AxiosError } from 'axios';
 import { route } from '$app/common/helpers/route';
 import styled from 'styled-components';
 import { ErrorMessage } from '$app/components/ErrorMessage';
+import { CloudUpload } from '$app/components/icons/CloudUpload';
+import { useFullTheme } from '$app/common/colors';
 
 interface Props {
   endpoint: string;
@@ -49,6 +51,7 @@ export function Upload(props: Props) {
 
   const user = useCurrentUser();
   const colors = useColorScheme();
+  const fullTheme = useFullTheme();
 
   const [formData, setFormData] = useState(new FormData());
 
@@ -121,7 +124,29 @@ export function Upload(props: Props) {
           {...getRootProps()}
           className="flex flex-col md:flex-row md:items-center"
         >
-          <Box className="cursor-pointer">{/* for upload or drag area */}</Box>
+          <Box
+            className="relative block w-full border-2 border-dashed rounded-lg p-12 text-center cursor-pointer"
+            theme={{
+              ...fullTheme,
+              borderColor: colors.$21,
+              hoverBorderColor: colors.$17,
+            }}
+          >
+            <input {...getInputProps()} />
+
+            <div className="flex justify-center">
+              <CloudUpload size="2.3rem" color={colors.$3} />
+            </div>
+
+            <span
+              className="mt-2 block text-sm font-medium"
+              style={{ color: colors.$3, colorScheme: colors.$0 }}
+            >
+              {isDragActive
+                ? t('drop_file_here')
+                : t('dropzone_default_message')}
+            </span>
+          </Box>
         </div>
 
         {errors &&
@@ -161,7 +186,29 @@ export function Upload(props: Props) {
             {...getRootProps()}
             className="flex flex-col md:flex-row md:items-center"
           >
-            <Box className="cursor-pointer">{/* for another instance */}</Box>
+            <Box
+              className="relative block w-full border-2 border-dashed rounded-lg p-12 text-center cursor-pointer"
+              theme={{
+                ...fullTheme,
+                borderColor: colors.$21,
+                hoverBorderColor: colors.$17,
+              }}
+            >
+              <input {...getInputProps()} />
+
+              <div className="flex justify-center">
+                <CloudUpload size="2.3rem" color={colors.$3} />
+              </div>
+
+              <span
+                className="mt-2 block text-sm font-medium"
+                style={{ color: colors.$3, colorScheme: colors.$0 }}
+              >
+                {isDragActive
+                  ? t('drop_file_here')
+                  : t('dropzone_default_message')}
+              </span>
+            </Box>
           </div>
         </Element>
       </Card>
