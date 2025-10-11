@@ -16,7 +16,7 @@ import Toggle from '$app/components/forms/Toggle';
 import { ProductItemsSelector } from '$app/pages/reports/common/components/ProductItemsSelector';
 import { StatusSelector } from '$app/pages/reports/common/components/StatusSelector';
 import { Identifier, useReports } from '$app/pages/reports/common/useReports';
-import { ranges } from '$app/pages/reports/index/Reports';
+import { ranges } from '$app/pages/reports/common/constants/ranges';
 import { useTranslation } from 'react-i18next';
 import { ClientSelector } from '$app/components/clients/ClientSelector';
 import { MultiClientSelector } from '$app/pages/reports/common/components/MultiClientSelector';
