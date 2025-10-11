@@ -116,6 +116,7 @@ export function useAllInvoiceColumns() {
     'tax_amount',
     'created_at',
     'updated_at',
+    'submit_to_sz_date',
   ] as const;
 
   return invoiceColumns;
@@ -516,6 +517,15 @@ export function useInvoiceColumns(): DataTableColumns<Invoice> {
       id: 'updated_at',
       label: t('last_updated'),
       format: (value) => date(value, dateFormat),
+    },
+    {
+      column: 'submit_to_sz_date',
+      id: 'approval_record',
+      label: t('submit_to_sz_date'),
+      format: (_value, invoice) => {
+        const submitDate = invoice.approval_record?.submit_to_sz_date;
+        return submitDate ? date(submitDate, dateFormat) : '';
+      },
     },
   ];
 

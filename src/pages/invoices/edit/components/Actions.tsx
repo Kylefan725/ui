@@ -8,6 +8,7 @@
  * @license https://www.elastic.co/licensing/elastic-license
  */
 
+import { useState } from 'react';
 import { InvoiceStatus } from '$app/common/enums/invoice-status';
 import { route } from '$app/common/helpers/route';
 import { Invoice } from '$app/common/interfaces/invoice';
@@ -26,6 +27,7 @@ import {
   MdCloudCircle,
   MdComment,
   MdControlPointDuplicate,
+  MdDateRange,
   MdDelete,
   MdDesignServices,
   MdDownload,
@@ -62,6 +64,8 @@ import { EntityActionElement } from '$app/components/EntityActionElement';
 import { useChangeTemplate } from '$app/pages/settings/invoice-design/pages/custom-designs/components/ChangeTemplate';
 import { useCurrentCompany } from '$app/common/hooks/useCurrentCompany';
 import { AddActivityComment } from '$app/pages/dashboard/hooks/useGenerateActivityElement';
+import { SetSubmitToSzDateModal } from '$app/pages/invoices/common/components/SetSubmitToSzDateModal';
+import { useSetSubmitToSzDate } from '$app/pages/invoices/common/hooks/useSetSubmitToSzDate';
 
 export const isInvoiceAutoBillable = (invoice: Invoice) => {
   return (
@@ -156,6 +160,12 @@ export function useActions(params?: Params) {
 
     navigate('/invoices/create?action=clone');
   };
+
+  const [submitToSzDateModalVisible, setSubmitToSzDateModalVisible] =
+    useState(false);
+  const [selectedInvoiceForSzDate, setSelectedInvoiceForSzDate] =
+    useState<Invoice | null>(null);
+  const { setSubmitToSzDate } = useSetSubmitToSzDate();
 
   return [
     (invoice: Invoice) =>
@@ -534,6 +544,37 @@ export function useActions(params?: Params) {
         >
           {t('cancel_invoice')}
         </EntityActionElement>
+      ),
+    (invoice: Invoice) =>
+      invoice.is_internal &&
+      invoice.approval_record?.status === 'approved' &&
+      hasPermission('edit_invoice') && (
+        <DropdownElement
+          onClick={() => {
+            setSelectedInvoiceForSzDate(invoice);
+            setSubmitToSzDateModalVisible(true);
+          }}
+          icon={<Icon element={MdDateRange} />}
+        >
+          {t('set_submit_to_sz_date')}
+        </DropdownElement>
+      ),
+    () =>
+      selectedInvoiceForSzDate && (
+        <SetSubmitToSzDateModal
+          invoice={selectedInvoiceForSzDate}
+          visible={submitToSzDateModalVisible}
+          onClose={() => {
+            setSubmitToSzDateModalVisible(false);
+            setSelectedInvoiceForSzDate(null);
+          }}
+          onSuccess={() => {
+            queryClient.invalidateQueries('/api/v1/invoices');
+          }}
+          onSubmit={(date) =>
+            setSubmitToSzDate(selectedInvoiceForSzDate.id, date)
+          }
+        />
       ),
   ];
 }

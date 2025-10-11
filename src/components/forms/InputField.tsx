@@ -32,6 +32,7 @@ interface Props extends CommonProps {
   disabled?: boolean;
   list?: string;
   min?: string;
+  max?: string;
   onValueChange?: (value: string) => unknown;
   textareaRows?: number;
   step?: string;
@@ -85,7 +86,7 @@ export function InputField(props: Props) {
             ...props.style,
           }}
           min={props.min}
-          max={props.type === 'date' ? '9999-12-31' : undefined}
+          max={props.max ?? (props.type === 'date' ? '9999-12-31' : undefined)}
           maxLength={props.maxLength}
           autoComplete={props.autoComplete || 'new-password'}
           disabled={props.disabled}

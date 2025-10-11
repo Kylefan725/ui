@@ -265,6 +265,7 @@ export function DatePicker(props: Props) {
       portalId="root"
       id={props.id}
       selected={date}
+      popperClassName="z-[9999]"
       showPopperArrow={false}
       required={props.required}
       disabled={props.disabled}

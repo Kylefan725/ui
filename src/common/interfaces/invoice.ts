@@ -158,4 +158,5 @@ export interface InternalInvoiceApproval {
      */
     document_id: string | null;
     approver_name: string | null;
+    submit_to_sz_date?: string | null;
 }
