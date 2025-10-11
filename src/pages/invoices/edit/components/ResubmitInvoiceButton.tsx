@@ -18,6 +18,8 @@ import { toast } from '$app/common/helpers/toast/toast';
 import { AxiosError } from 'axios';
 import { ValidationBag } from '$app/common/interfaces/validation-bag';
 import { Invoice } from '$app/common/interfaces/invoice';
+import { Upload } from '$app/pages/settings/company/documents/components/Upload';
+import { uploadInvoiceDocument } from '$app/common/queries/invoices';
 
 interface Props {
   invoice: Invoice;
@@ -30,6 +32,19 @@ export function ResubmitInvoiceButton(props: Props) {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submittedDocumentId, setSubmittedDocumentId] = useState<string | null>(
+    null
+  );
+
+  const openModal = () => {
+    setSubmittedDocumentId(null);
+    setIsModalVisible(true);
+  };
+
+  const handleClose = () => {
+    setSubmittedDocumentId(null);
+    setIsModalVisible(false);
+  };
 
   const handleResubmit = () => {
     if (!invoice?.id) {
@@ -66,12 +81,64 @@ export function ResubmitInvoiceButton(props: Props) {
       });
   };
 
+  const handleDocumentUpload = async (file: File) => {
+    if (!invoice) {
+      return;
+    }
+
+    try {
+      const document = await uploadInvoiceDocument(invoice.id, file, false);
+      setSubmittedDocumentId(document.id);
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
+  const handleError = (error: any) => {
+    if (error.response?.status === 422) {
+      const errorMessages = error.response.data;
+      if (errorMessages.message) {
+        toast.error(errorMessages.message);
+      } else {
+        toast.error('error_title');
+      }
+    } else {
+      toast.error('error_title');
+    }
+  };
+
+  const resendInvoice = async (message: string) => {
+    if (!invoice?.id) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    toast.processing();
+
+    try {
+      await request(
+        'POST',
+        endpoint('/api/v1/invoices/:id/resubmit', { id: invoice.id }),
+        {
+          submitted_document_id: submittedDocumentId,
+        }
+      );
+      toast.success(message);
+      setIsModalVisible(false);
+      onSuccess();
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <>
       <Button
         type="minimal"
         behavior="button"
-        onClick={() => setIsModalVisible(true)}
+        onClick={openModal}
         disabled={isSubmitting}
       >
         {t('resubmit_internal_invoice')}
@@ -79,7 +146,7 @@ export function ResubmitInvoiceButton(props: Props) {
 
       <Modal
         visible={isModalVisible}
-        onClose={setIsModalVisible}
+        onClose={handleClose}
         title={t('resubmit_internal_invoice')}
         size="small"
       >
@@ -94,11 +161,17 @@ export function ResubmitInvoiceButton(props: Props) {
             <li>{t('resubmit_contact_can_review_again')}</li>
           </ul>
 
+          <Upload
+            onSuccess={(file) => handleDocumentUpload(file.file)}
+            onError={handleError}
+            label={t('upload_submitted_invoice_optional')}
+          />
+
           <div className="flex justify-end space-x-3 pt-4">
             <Button
               type="minimal"
               behavior="button"
-              onClick={() => setIsModalVisible(false)}
+              onClick={handleClose}
               disabled={isSubmitting}
             >
               {t('cancel')}
@@ -106,7 +179,7 @@ export function ResubmitInvoiceButton(props: Props) {
 
             <Button
               behavior="button"
-              onClick={handleResubmit}
+              onClick={() => resendInvoice('resubmit_internal_invoice')}
               disabled={isSubmitting}
             >
               {isSubmitting ? t('processing') : t('resubmit_invoice')}

@@ -39,6 +39,10 @@ import {
   MdSchedule,
 } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+import { endpoint } from '$app/common/helpers';
+import { request } from '$app/common/helpers/request';
+import { useQueryClient } from 'react-query';
+import { toast } from '$app/common/helpers/toast/toast';
 import { useScheduleEmailRecord } from '$app/pages/invoices/common/hooks/useScheduleEmailRecord';
 import { usePrintPdf } from '$app/pages/invoices/common/hooks/usePrintPdf';
 import { getEntityState } from '$app/common/helpers';
@@ -103,6 +107,27 @@ export function useActions(params?: Params) {
   const downloadEInvoice = useDownloadEInvoice({ resource: 'invoice' });
   const printPdf = usePrintPdf({ entity: 'invoice' });
   const scheduleEmailRecord = useScheduleEmailRecord({ entity: 'invoice' });
+  const queryClient = useQueryClient();
+  const openViewPdf = (invoice: Invoice) => {
+    toast.processing();
+
+    queryClient
+      .fetchQuery(['/api/v1/invoices/bulk', invoice.id, 'view_inline'], () =>
+        request(
+          'POST',
+          endpoint('/api/v1/invoices/bulk'),
+          { action: 'download', ids: [invoice.id] },
+          { responseType: 'arraybuffer' }
+        ).then((response) => {
+          const blob = new Blob([response.data], { type: 'application/pdf' });
+          const url = URL.createObjectURL(blob);
+
+          window.open(url, '_blank');
+          toast.dismiss();
+        })
+      )
+      .catch(() => toast.error('error_title'));
+  };
   const {
     setChangeTemplateVisible,
     setChangeTemplateResources,
@@ -161,8 +186,9 @@ export function useActions(params?: Params) {
         actionKey="view_pdf"
         isCommonActionSection={!dropdown}
         tooltipText={t('view_pdf')}
-        to={route('/invoices/:id/pdf', { id: invoice.id })}
+        onClick={() => openViewPdf(invoice)}
         icon={MdPictureAsPdf}
+        disablePreventNavigation
       >
         {t('view_pdf')}
       </EntityActionElement>

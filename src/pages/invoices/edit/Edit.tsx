@@ -65,6 +65,9 @@ import { endpoint } from '$app/common/helpers';
 import { request } from '$app/common/helpers/request';
 import { $refetch } from '$app/common/hooks/useRefetch';
 import { isInternalInvoiceEditingLocked } from './utils/isInternalInvoiceEditingLocked';
+import { defaultHeaders } from '$app/common/queries/common/headers';
+import { toast } from '$app/common/helpers/toast/toast';
+import { useQueryClient } from 'react-query';
 
 export interface Context {
   invoice: Invoice | undefined;
@@ -115,6 +118,8 @@ export default function Edit() {
   const { changeTemplateVisible, setChangeTemplateVisible } =
     useChangeTemplate();
 
+  const queryClient = useQueryClient();
+
   const isInternalInvoice = Boolean(client?.is_internal);
   const hasUploadedDocument = invoice?.uploaded_document_id;
   const hasNoLineItems = (invoice?.line_items?.length ?? 0) === 0;
@@ -127,12 +132,38 @@ export default function Edit() {
   const rejectionReason = invoice?.rejection_reason;
   const approvalRecord = invoice?.approval_record;
 
-  const latestApprovalDocumentId = approvalRecord?.document_id;
-  const approvalDocumentUrl = latestApprovalDocumentId
-    ? route('/documents/:id/download', {
-        id: latestApprovalDocumentId,
+  const downloadApprovalDocument = (hash: string | null | undefined) => {
+    if (!hash) {
+      return;
+    }
+
+    toast.processing();
+
+    queryClient
+      .fetchQuery(
+        ['/api/v1/documents', hash],
+        () =>
+          request(
+            'GET',
+            endpoint('/documents/:hash', { hash }),
+            { headers: defaultHeaders() },
+            { responseType: 'arraybuffer' }
+          ),
+        { staleTime: Infinity }
+      )
+      .then((response) => {
+        const blob = new Blob([response.data], {
+          type: response.headers['content-type'],
+        });
+        const url = URL.createObjectURL(blob);
+
+        window.open(url, '_blank');
+        toast.dismiss();
       })
-    : undefined;
+      .catch(() => {
+        toast.error('error_downloading_document');
+      });
+  };
 
   const approvalStatusCopy = (() => {
     if (!approvalStatus) {
@@ -230,17 +261,20 @@ export default function Edit() {
               </p>
             </div>
 
-            {approvalDocumentUrl && (
-              <a
-                href={approvalDocumentUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+            {approvalRecord?.approved_document_hash && (
+              <button
+                type="button"
+                onClick={() =>
+                  downloadApprovalDocument(
+                    approvalRecord?.approved_document_hash
+                  )
+                }
                 className="inline-flex items-center gap-2 text-sm font-medium text-primary-600 hover:text-primary-500"
                 aria-label={String(t('view_signed_document'))}
               >
                 <Icon element={FileTextIcon} size={18} />
                 {t('view_signed_document')}
-              </a>
+              </button>
             )}
           </div>
 
@@ -325,17 +359,18 @@ export default function Edit() {
             </div>
           )}
 
-          {approvalStatus === 'approved' && !approvalDocumentUrl && (
-            <Card
-              withoutBodyPadding
-              className="border border-yellow-200 dark:border-yellow-800 bg-yellow-50/70 dark:bg-yellow-900/20"
-            >
-              <div className="p-4 flex items-center gap-3 text-sm text-yellow-800 dark:text-yellow-200">
-                <Icon element={InfoIcon} size={18} />
-                {t('approval_document_missing')}
-              </div>
-            </Card>
-          )}
+          {approvalStatus === 'approved' &&
+            !approvalRecord?.approved_document_hash && (
+              <Card
+                withoutBodyPadding
+                className="border border-yellow-200 dark:border-yellow-800 bg-yellow-50/70 dark:bg-yellow-900/20"
+              >
+                <div className="p-4 flex items-center gap-3 text-sm text-yellow-800 dark:text-yellow-200">
+                  <Icon element={InfoIcon} size={18} />
+                  {t('approval_document_missing')}
+                </div>
+              </Card>
+            )}
         </div>
       </Card>
     );

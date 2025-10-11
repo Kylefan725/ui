@@ -98,17 +98,7 @@ export interface Invoice {
     rejected_at?: string;
     rejection_reason?: string;
     approver_name?: string;
-    approval_record?: {
-        id?: string;
-        status?: string;
-        approved_at?: string;
-        approved_by?: string;
-        rejected_at?: string;
-        rejection_reason?: string;
-        client_contact_id?: string;
-        document_id?: string;
-        approver_name?: string;
-    } | null;
+    approval_record?: InternalInvoiceApproval | null;
 }
 
 export interface Backup {
@@ -151,4 +141,21 @@ export interface History {
     created_at: number;
     updated_at: number;
     tax_info?: TaxInfo;
+}
+
+export interface InternalInvoiceApproval {
+    id: string;
+    status: string;
+    submitted_document_id: string | null;
+    approved_document_id: string | null;
+    submitted_document_hash?: string | null;
+    approved_document_hash?: string | null;
+    submitted_document_url?: string | null;
+    approved_document_url?: string | null;
+    current_document_url?: string | null;
+    /**
+     * @deprecated Use approved_document_id instead.
+     */
+    document_id: string | null;
+    approver_name: string | null;
 }

@@ -143,3 +143,22 @@ export function useBulk(params?: Params) {
     });
   };
 }
+
+export const uploadInvoiceDocument = (
+  invoiceId: string,
+  file: File,
+  isPublic = false
+) => {
+  const formData = new FormData();
+  formData.append('document', file);
+  formData.append('is_public', isPublic ? 'true' : 'false');
+
+  return request(
+    'POST',
+    endpoint('/api/v1/invoices/:id/upload', { id: invoiceId }),
+    formData,
+    {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }
+  ).then((response: GenericSingleResourceResponse<Invoice>) => response.data);
+};

@@ -1,4 +1,12 @@
-import { Dispatch, SetStateAction, useMemo, useState, useEffect } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  useMemo,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { endpoint } from '$app/common/helpers';
 import { request } from '$app/common/helpers/request';
@@ -70,11 +78,22 @@ export default function InvoiceTab(props: Props) {
     Record<number, SummaryItemErrorState>
   >({});
 
+  const initialSummaryState = useRef<{
+    invoiceKey: string;
+    created: boolean;
+  }>({
+    invoiceKey: '',
+    created: false,
+  });
+
+  const invoiceKey = invoice.id ?? '__new__';
+
   const ensureSummaryLineDefaults = (lineItem: InvoiceItem): InvoiceItem => ({
     ...lineItem,
     product_key: '__summary__',
     quantity: 1,
     cost: Number(lineItem.cost) || 0,
+    notes: lineItem.notes?.trim() ? lineItem.notes : t('total'),
     tax_name1: '',
     tax_rate1: 0,
     tax_name2: '',
@@ -126,28 +145,7 @@ export default function InvoiceTab(props: Props) {
     setValidationErrors(nextErrors);
   }, [summaryItems, validateSummaryItem]);
 
-  const resolveServiceEndpoint = () =>
-    invoice.id
-      ? endpoint('/api/v1/invoices/:id/upload_custom_document', {
-          id: invoice.id,
-        })
-      : '';
-
-  const refreshInvoice = () => {
-    if (!invoice.id) {
-      return;
-    }
-
-    request('GET', endpoint('/api/v1/invoices/:id', { id: invoice.id })).then(
-      (response) => {
-        if (response.data?.data) {
-          setInvoice(response.data.data as Invoice);
-        }
-      }
-    );
-  };
-
-  const handleAddSummaryItem = () => {
+  const handleAddSummaryItem = useCallback(() => {
     if (isEditLocked) {
       return;
     }
@@ -166,6 +164,46 @@ export default function InvoiceTab(props: Props) {
             ),
           } as Invoice)
         : current
+    );
+  }, [isEditLocked, setValidationErrors, handleCreateLineItem, setInvoice]);
+
+  // Auto-create one summary line item if none exist
+  useEffect(() => {
+    if (initialSummaryState.current.invoiceKey !== invoiceKey) {
+      initialSummaryState.current = {
+        invoiceKey,
+        created: false,
+      };
+    }
+
+    if (
+      summaryItems.length === 0 &&
+      !isEditLocked &&
+      !initialSummaryState.current.created
+    ) {
+      initialSummaryState.current.created = true;
+      handleAddSummaryItem();
+    }
+  }, [invoiceKey, summaryItems.length, isEditLocked, handleAddSummaryItem]);
+
+  const resolveServiceEndpoint = () =>
+    invoice.id
+      ? endpoint('/api/v1/invoices/:id/upload_custom_document', {
+          id: invoice.id,
+        })
+      : '';
+
+  const refreshInvoice = () => {
+    if (!invoice.id) {
+      return;
+    }
+
+    request('GET', endpoint('/api/v1/invoices/:id', { id: invoice.id })).then(
+      (response) => {
+        if (response.data?.data) {
+          setInvoice(response.data.data as Invoice);
+        }
+      }
     );
   };
 
@@ -297,7 +335,7 @@ export default function InvoiceTab(props: Props) {
                 </span>
               </div>
               <p className="text-sm text-gray-700 dark:text-gray-200 flex-1">
-                {t('internal_invoice_guidance_upload_step')}
+                {t('internal_invoice_guidance_summary_step')}
               </p>
             </div>
             <div className="flex items-start gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50">
@@ -307,7 +345,7 @@ export default function InvoiceTab(props: Props) {
                 </span>
               </div>
               <p className="text-sm text-gray-700 dark:text-gray-200 flex-1">
-                {t('internal_invoice_guidance_summary_step')}
+                {t('internal_invoice_guidance_upload_step')}
               </p>
             </div>
             <div className="flex items-start gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50">
@@ -363,6 +401,7 @@ export default function InvoiceTab(props: Props) {
                   onSuccess={refreshInvoice}
                   hasExisting={Boolean(invoice.uploaded_document_id)}
                   disabled={!canUploadDocument || isEditLocked}
+                  isApproved={invoice.approval_status === 'approved'}
                 />
 
                 <div

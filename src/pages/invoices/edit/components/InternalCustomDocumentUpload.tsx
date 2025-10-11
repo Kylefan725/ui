@@ -15,6 +15,7 @@ interface Props {
   onSuccess?: () => unknown;
   disabled?: boolean;
   hasExisting?: boolean;
+  isApproved?: boolean;
 }
 
 const Box = styled.div`
@@ -94,7 +95,7 @@ export function InternalCustomDocumentUpload(props: Props) {
     maxSize: MAX_BYTES,
     maxFiles: 1,
     multiple: false,
-    disabled: props.disabled,
+    disabled: props.disabled || props.isApproved,
     onDropAccepted: (acceptedFiles) => {
       if (acceptedFiles.length) {
         handleUpload(acceptedFiles[0]);

@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { InvoiceViewer } from '../common/components/InvoiceViewer';
 import { useGeneratePdfUrl } from '../common/hooks/useGeneratePdfUrl';
+import { endpoint } from '$app/common/helpers';
 import { Actions } from './components/Actions';
 import { Page } from '$app/components/Breadcrumbs';
 import { route } from '$app/common/helpers/route';
@@ -27,6 +28,8 @@ export default function Pdf() {
 
   const [t] = useTranslation();
   const [pdfUrl, setPdfUrl] = useState<string>();
+  const [requestMethod, setRequestMethod] = useState<'GET' | 'POST'>('GET');
+  const [payload, setPayload] = useState<any>();
   const [blobUrl, setBlobUrl] = useState('');
   const [invoice, setInvoice] = useState<Invoice>();
 
@@ -48,7 +51,16 @@ export default function Pdf() {
 
   useEffect(() => {
     if (invoice && !searchParams.has('delivery_note')) {
-      setPdfUrl(url(invoice));
+      if (invoice.is_internal) {
+        // Use authenticated API to download PDF for internal invoices to avoid token issues
+        setPdfUrl(endpoint('/api/v1/invoices/bulk'));
+        setRequestMethod('POST');
+        setPayload({ action: 'download', ids: [invoice.id] });
+      } else {
+        setRequestMethod('GET');
+        setPayload(undefined);
+        setPdfUrl(url(invoice));
+      }
     }
   }, [invoice]);
 
@@ -87,7 +99,12 @@ export default function Pdf() {
       }
     >
       {pdfUrl ? (
-        <InvoiceViewer onLink={onLink} link={pdfUrl} method="GET" />
+        <InvoiceViewer
+          onLink={onLink}
+          link={pdfUrl}
+          method={requestMethod}
+          resource={payload}
+        />
       ) : (
         <div
           className="flex justify-center items-center"
