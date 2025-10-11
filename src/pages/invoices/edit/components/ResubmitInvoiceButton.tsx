@@ -8,17 +8,14 @@
  * @license https://www.elastic.co/licensing/elastic-license
  */
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '$app/components/forms';
 import { Modal } from '$app/components/Modal';
 import { endpoint } from '$app/common/helpers';
 import { request } from '$app/common/helpers/request';
 import { toast } from '$app/common/helpers/toast/toast';
-import { AxiosError } from 'axios';
-import { ValidationBag } from '$app/common/interfaces/validation-bag';
 import { Invoice } from '$app/common/interfaces/invoice';
-import { Upload } from '$app/pages/settings/company/documents/components/Upload';
 import { uploadInvoiceDocument } from '$app/common/queries/invoices';
 
 interface Props {
@@ -35,62 +32,42 @@ export function ResubmitInvoiceButton(props: Props) {
   const [submittedDocumentId, setSubmittedDocumentId] = useState<string | null>(
     null
   );
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const openModal = () => {
     setSubmittedDocumentId(null);
+    setUploadedFileName(null);
     setIsModalVisible(true);
   };
 
   const handleClose = () => {
     setSubmittedDocumentId(null);
+    setUploadedFileName(null);
     setIsModalVisible(false);
   };
 
-  const handleResubmit = () => {
-    if (!invoice?.id) {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (!file || !invoice) {
       return;
     }
 
-    setIsSubmitting(true);
+    setIsUploading(true);
     toast.processing();
 
-    request(
-      'POST',
-      endpoint('/api/v1/invoices/:id/resubmit', { id: invoice.id }),
-      {}
-    )
-      .then(() => {
-        toast.success('resubmitted_internal_invoice');
-        setIsModalVisible(false);
-        onSuccess();
-      })
-      .catch((error: AxiosError<ValidationBag>) => {
-        if (error.response?.status === 422) {
-          const errorMessages = error.response.data;
-          if (errorMessages.message) {
-            toast.error(errorMessages.message);
-          } else {
-            toast.error('error_title');
-          }
-        } else {
-          toast.error('error_title');
-        }
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
-  };
-
-  const handleDocumentUpload = async (file: File) => {
-    if (!invoice) {
-      return;
-    }
-
     try {
-      const document = await uploadInvoiceDocument(invoice.id, file, false);
-      setSubmittedDocumentId(document.id);
+      const response = await uploadInvoiceDocument(invoice.id, file, false);
+      setSubmittedDocumentId(response.data.id);
+      setUploadedFileName(file.name);
+      toast.success('uploaded_document');
     } catch (error) {
       handleError(error);
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -161,18 +138,39 @@ export function ResubmitInvoiceButton(props: Props) {
             <li>{t('resubmit_contact_can_review_again')}</li>
           </ul>
 
-          <Upload
-            onSuccess={(file) => handleDocumentUpload(file.file)}
-            onError={handleError}
-            label={t('upload_submitted_invoice_optional')}
-          />
+          <div className="flex flex-col space-y-2">
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              {t('upload_submitted_invoice_optional')}
+            </label>
+            <div className="flex items-center space-x-3">
+              <input
+                ref={fileInputRef}
+                type="file"
+                onChange={handleFileChange}
+                disabled={isUploading || isSubmitting}
+                className="block w-full text-sm text-gray-500 dark:text-gray-400
+                  file:mr-4 file:py-2 file:px-4
+                  file:rounded file:border-0
+                  file:text-sm file:font-semibold
+                  file:bg-blue-50 file:text-blue-700
+                  hover:file:bg-blue-100
+                  dark:file:bg-gray-700 dark:file:text-gray-300
+                  dark:hover:file:bg-gray-600"
+              />
+            </div>
+            {uploadedFileName && (
+              <p className="text-xs text-green-600 dark:text-green-400">
+                {t('uploaded')}: {uploadedFileName}
+              </p>
+            )}
+          </div>
 
           <div className="flex justify-end space-x-3 pt-4">
             <Button
               type="minimal"
               behavior="button"
               onClick={handleClose}
-              disabled={isSubmitting}
+              disabled={isSubmitting || isUploading}
             >
               {t('cancel')}
             </Button>
@@ -180,7 +178,7 @@ export function ResubmitInvoiceButton(props: Props) {
             <Button
               behavior="button"
               onClick={() => resendInvoice('resubmit_internal_invoice')}
-              disabled={isSubmitting}
+              disabled={isSubmitting || isUploading}
             >
               {isSubmitting ? t('processing') : t('resubmit_invoice')}
             </Button>
