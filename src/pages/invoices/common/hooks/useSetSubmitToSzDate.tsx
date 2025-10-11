@@ -21,24 +21,20 @@ export function useSetSubmitToSzDate() {
   const setSubmitToSzDate = async (invoiceId: string, date: string) => {
     toast.processing();
 
-    try {
-      await request(
-        'POST',
-        endpoint('/api/v1/invoices/:id/set-submit-to-sz-date', {
-          id: invoiceId,
-        }),
-        {
-          submit_to_sz_date: date,
-        }
-      );
+    await request(
+      'POST',
+      endpoint('/api/v1/invoices/:id/set-submit-to-sz-date', {
+        id: invoiceId,
+      }),
+      {
+        submit_to_sz_date: date,
+      }
+    );
 
-      // Invalidate invoice queries to refresh data
-      await queryClient.invalidateQueries('/api/v1/invoices');
+    // Invalidate invoice queries to refresh data
+    await queryClient.invalidateQueries('/api/v1/invoices');
 
-      toast.success(t('submit_to_sz_date_set_successfully') ?? undefined);
-    } catch (error) {
-      throw error; // Re-throw to let modal handle error display
-    }
+    toast.success(t('submit_to_sz_date_set_successfully') ?? undefined);
   };
 
   return { setSubmitToSzDate };
